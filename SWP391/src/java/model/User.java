@@ -14,13 +14,13 @@ public class User {
     private String password;
     private int gender;
     private String email;
-    private int phone;
+    private String phone;
     private int roleid;
 
     public User() {
     }
 
-    public User(int userid, String username, String password, int gender, String email, int phone, int roleid) {
+    public User(int userid, String username, String password, int gender, String email, String phone, int roleid) {
         this.userid = userid;
         this.username = username;
         this.password = password;
@@ -29,6 +29,15 @@ public class User {
         this.phone = phone;
         this.roleid = roleid;
     }
+    public User(String username, String password, int gender, String email, String phone) {
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    
 
     public int getUserid() {
         return userid;
@@ -70,11 +79,11 @@ public class User {
         this.email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
