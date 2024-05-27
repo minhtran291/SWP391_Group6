@@ -65,9 +65,19 @@ public class ActionCustomer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response)
-        getAllProduct(request, response);
-//        request.getRequestDispatcher("home.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        switch (action) {
+            case "getListFood":
+                getAllFood(request, response, 8);
+                break;
+            case "getFoodBySearch":
+                getFoodBySearch(request, response, 5);
+                break;
+            case "getFoodByCategory":
+                getFoodByCategory(request, response, 5);
+                break;
+        }
+
     }
 
     /**
@@ -94,44 +104,24 @@ public class ActionCustomer extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void getAllProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void getAllFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String categoryId = request.getParameter("cid");
-        String search = request.getParameter("search");
-        if (session.getAttribute("cList") != null
-                && session.getAttribute("fList") != null) {
-            if (categoryId == null && search == null) {
-                ArrayList<Food> fList = (ArrayList) session.getAttribute("fList");
-//            ArrayList<Product> cList = (ArrayList) session.getAttribute("cList");
-                pagingForFood(request, response, 8, fList, session);
-            } else if (categoryId != null && search == null) {
-                ArrayList<Food> fList = fd.getAllFood(categoryId, "");
-                pagingForFood(request, response, 8, fList, session);
-            } else if (categoryId == null && search != null) {
-                ArrayList<Food> fList = fd.getAllFood("", search.trim());
-                pagingForFood(request, response, 8, fList, session);
-            }else if(categoryId != null && search != null){
-                ArrayList<Food> fList = fd.getAllFood(categoryId, search.trim());
-                pagingForFood(request, response, 8, fList, session);
-            }
-            // ko phan phai lan dau tien chay ko can get all nua chi goi du lieu ve
-        } else if (session.getAttribute("cList") == null
-                && session.getAttribute("fList") == null) {
-            ArrayList<Food> fList = fd.getAllFood("", "");
-            ArrayList<Category> cList = cd.getAllCategory();
-            session.setAttribute("fList", fList);
-            session.setAttribute("cList", cList);
-            /* bat buoc phai set cac thuoc tinh ben tren theo dung thu tu va dat cai
+
+        ArrayList<Food> fList = (ArrayList)session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList)session.getAttribute("fList");
+        ArrayList<Category> cList = (ArrayList)session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList)session.getAttribute("cList");
+        // ko phan phai lan dau tien chay ko can get all nua chi goi du lieu ve
+        session.setAttribute("fList", fList);
+        session.setAttribute("cList", cList);
+        /* bat buoc phai set cac thuoc tinh ben tren theo dung thu tu va dat cai
             phan trang o cuoi vi khi vao phan trang se chuyen sang trang luon
-             */
-            pagingForFood(request, response, 8, fList, session);
-            // lan dau tien chay trang web thi su dung get all de lay du lieu
-        }
+         */
+        pagingForFood(request, response, numberPerPage, fList);
+        // lan dau tien chay trang web thi su dung get all de lay du lieu
     }
 
     private void pagingForFood(HttpServletRequest request, HttpServletResponse response,
-            int numberPerPage, ArrayList listFood, HttpSession session) throws ServletException, IOException {
-//        ArrayList<Product> listProduct = pd.getAll();
+            int numberPerPage, ArrayList<Food> listFood) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         int currentPage = 1;
         if (request.getParameter("page") != null) {
             currentPage = Integer.parseInt(request.getParameter("page"));
@@ -166,4 +156,21 @@ public class ActionCustomer extends HttpServlet {
         session.setAttribute("foodOnCurrentPage", foodOnCurrentPage);
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
+
+    private void getFoodBySearch(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String search = request.getParameter("search");
+        ArrayList<Food> listSearch = fd.getFoodBySearch(search);
+        request.setAttribute("listSearch", listSearch);
+        request.setAttribute("search", search);
+        pagingForFood(request, response, numberPerPage, listSearch);
+    }
+
+    private void getFoodByCategory(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String categoryId = request.getParameter("cid");
+        ArrayList<Food> listFoodByCategory = fd.getFoodByCategory(categoryId);
+        request.setAttribute("listFoodByCategory", listFoodByCategory);
+        request.setAttribute("cid", categoryId);
+        pagingForFood(request, response, numberPerPage, listFoodByCategory);
+    }
+
 }

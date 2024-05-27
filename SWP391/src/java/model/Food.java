@@ -9,45 +9,54 @@ import java.sql.Date;
  * @author Dell
  */
 public class Food {
-    private int foodIid;
-    private String foodNname;
+    private int foodId;
+    private String foodName;
     private double price;
     private int stock;
     private Date createDate;
     private String description;
     private int sold;
-    private Category categoryIid;
+    private Category categoryId;
     private String image;
 
     public Food() {
     }
-
-    public Food(int foodIid, String foodNname, double price, int stock, Date createDate, String description, int sold, Category categoryIid, String image) {
-        this.foodIid = foodIid;
-        this.foodNname = foodNname;
+    
+    public Food(String foodName, double price, int stock, Category categoryId, String description, String image){
+        this.foodName = foodName;
+        this.price = price;
+        this.stock = stock;
+        this.categoryId = categoryId;
+        this.description = description;
+        this.image = image;
+    }
+    
+    public Food(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image) {
+        this.foodId = foodId;
+        this.foodName = foodName;
         this.price = price;
         this.stock = stock;
         this.createDate = createDate;
         this.description = description;
         this.sold = sold;
-        this.categoryIid = categoryIid;
+        this.categoryId = categoryId;
         this.image = image;
     }
 
-    public int getFoodIid() {
-        return foodIid;
+    public int getFoodId() {
+        return foodId;
     }
 
-    public void setFoodIid(int foodIid) {
-        this.foodIid = foodIid;
+    public void setFoodId(int foodId) {
+        this.foodId = foodId;
     }
 
-    public String getFoodNname() {
-        return foodNname;
+    public String getFoodName() {
+        return foodName;
     }
 
-    public void setFoodNname(String foodNname) {
-        this.foodNname = foodNname;
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
     }
 
     public double getPrice() {
@@ -90,12 +99,12 @@ public class Food {
         this.sold = sold;
     }
 
-    public Category getCategoryIid() {
-        return categoryIid;
+    public Category getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryIid(Category categoryIid) {
-        this.categoryIid = categoryIid;
+    public void setCategoryId(Category categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getImage() {
@@ -105,6 +114,5 @@ public class Food {
     public void setImage(String image) {
         this.image = image;
     }
-
     
 }
