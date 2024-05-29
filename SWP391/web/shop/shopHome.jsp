@@ -129,7 +129,7 @@
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center">
                     <c:forEach var="f" items="${foodOnCurrentPage}">
                         <li class="m-3 border rounded-1 border-dark text-center">
-                            <a class="text-decoration-none" href="">
+                            <a class="text-decoration-none" href="detail">
                                 <img src="${f.image}" class="img-fluid" 
                                      style="width: 250px; height: 210px" alt="${f.foodName}"/>
                                 <p class="text-muted fw-bold fs-5">${f.foodName}</p>

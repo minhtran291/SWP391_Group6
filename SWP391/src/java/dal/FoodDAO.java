@@ -9,6 +9,7 @@ import model.Food;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -247,5 +248,64 @@ public class FoodDAO extends DBContext {
         } catch (SQLException e) {
         }
         return true;
+    }
+    
+    public Food getFoodByID(String foodIid) {
+        String sql = "select * from dbo.food f join dbo.image i on f.food_id=i.food_id where f.food_id=?";
+        //chay lenhj truy van
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, foodIid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new Food(rs.getInt(1), 
+                        rs.getString(2), 
+                        rs.getDouble(3), 
+                        rs.getInt(4), 
+                        rs.getDate(5), 
+                        rs.getString(6), 
+                        rs.getInt(7), 
+                        cd.getCategoryById(rs.getInt("category_id")), 
+                        rs.getString(9));
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+      public List<Food> getsameFood(String id) {
+        List<Food> list = new ArrayList<>();
+        String sql = "  SELECT top(4) * \n"
+                + "FROM food \n"
+                + "WHERE food_id<> ? and category_id IN (\n"
+                + "    SELECT category_id \n"
+                + "    FROM food \n"
+                + "    WHERE food_id = ? \n"
+                + ");\n"
+                + "";
+        //chay lenhj truy van
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            st.setString(2, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Food s = new Food(rs.getInt(1), 
+                        rs.getString(2), 
+                        rs.getDouble(3), 
+                        rs.getInt(4), 
+                        rs.getDate(5), 
+                        rs.getString(6), 
+                        rs.getInt(7), 
+                        cd.getCategoryById(rs.getInt("category_id")), 
+                        rs.getString(9));
+                list.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return list;
     }
 }

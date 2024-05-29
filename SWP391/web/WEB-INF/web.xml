@@ -70,6 +70,10 @@
         <servlet-name>EditFoodServlet</servlet-name>
         <servlet-class>controller.EditFoodServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DetailControl</servlet-name>
+        <servlet-class>controller.DetailControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>
         <url-pattern>/actioncustomer</url-pattern>
@@ -125,5 +129,9 @@
     <servlet-mapping>
         <servlet-name>EditFoodServlet</servlet-name>
         <url-pattern>/EditFoodServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailControl</servlet-name>
+        <url-pattern>/detail</url-pattern>
     </servlet-mapping>
 </web-app>

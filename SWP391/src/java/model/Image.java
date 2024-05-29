@@ -11,13 +11,15 @@ package model;
 public class Image {
     private int image_id;
     private String image;
+    private int food_id;
 
     public Image() {
     }
 
-    public Image(int image_id, String image) {
+    public Image(int image_id, String image, int food_id) {
         this.image_id = image_id;
         this.image = image;
+        this.food_id = food_id;
     }
 
     public int getImage_id() {
@@ -35,6 +37,13 @@ public class Image {
     public void setImage(String image) {
         this.image = image;
     }
-    
-    
+
+    public int getFood_id() {
+        return food_id;
+    }
+
+    public void setFood_id(int food_id) {
+        this.food_id = food_id;
+    }
+   
 }
