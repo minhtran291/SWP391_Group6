@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>Filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/actionshop</url-pattern>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/changepass</url-pattern>
+        <url-pattern>/manageFood.jsp</url-pattern>
+        <url-pattern>/shopHome.jsp</url-pattern>
+        <url-pattern>/changepass.jsp</url-pattern>
+        <url-pattern>/profile.jsp</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>ActionCustomer</servlet-name>
         <servlet-class>controller.ActionCustomer</servlet-class>
@@ -26,7 +40,7 @@
     </servlet>
     <servlet>
         <servlet-name>ChangePasswordServlet</servlet-name>
-        <servlet-class>controller.ChangePasswordServlet</servlet-class>
+        <servlet-class>controller.ChangePasswordServerlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgetPassword</servlet-name>
@@ -34,11 +48,11 @@
     </servlet>
     <servlet>
         <servlet-name>ValidateServlet</servlet-name>
-        <servlet-class>controller.ValidateServlet</servlet-class>
+        <servlet-class>controller.ValidateServerlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ResetPasswordServlet</servlet-name>
-        <servlet-class>controller.ResetPasswordServlet</servlet-class>
+        <servlet-class>controller.ResetPasswordServerlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>

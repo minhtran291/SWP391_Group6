@@ -99,7 +99,13 @@ public class Login extends HttpServlet {
         }else{
             HttpSession session = request.getSession();
             session.setAttribute("acc", acc);
-            response.sendRedirect("actioncustomer?action=getListFood");
+            if(acc.getRoleid() == 1){
+                response.sendRedirect("actioncustomer?action=getListFood");
+            }
+            else if(acc.getRoleid() == 2){
+                response.sendRedirect("actionshop?action=homeFood");
+            }
+            
         }
     }
 

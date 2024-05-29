@@ -87,7 +87,7 @@ public class User {
         this.phone = phone;
     }
 
-    public String getRoleid() {
+    public String getRoleidString() {
         if(roleid == 2) return "Quản lí cửa hàng";
         if(roleid == 3) return "Nhân viên giao hàng";
         if(roleid == 4) return "Quản trị hệ thống";
@@ -98,5 +98,7 @@ public class User {
         this.roleid = roleid;
     }
     
-    
+    public int getRoleid(){
+        return roleid;
+    }
 }

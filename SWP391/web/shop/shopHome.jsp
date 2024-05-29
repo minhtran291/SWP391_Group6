@@ -20,6 +20,16 @@
                 display: flex;
                 flex-direction: row;
             }
+            .dropdown-toggle::after {
+                display: none;
+            }
+            .dropdown-menu {
+                width: auto; /* Tự động điều chỉnh độ rộng theo nội dung */
+                min-width: unset; /* Bỏ giá trị min-width mặc định */
+            }
+            .dropdown-item {
+                white-space: nowrap; /* Đảm bảo nội dung không bị cắt xuống dòng */
+            }
         </style>
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
@@ -44,7 +54,7 @@
 
                 <div style="margin-right: 20px">
                     <!-- da dang nhap -->
-                    <c:if test="${account!=null}">
+                    <c:if test="${acc!=null}">
                         <form class="d-flex" action="actionshop" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
                             <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
@@ -52,27 +62,29 @@
                             <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                                 <i class="fa fa-search text-body"></i>
                             </button>
-                            <a class="btn btn-square bg-white rounded-circle me-2" href="">
+<!--                            <a class="btn btn-square bg-white rounded-circle me-2" href="">
                                 <i class="fa fa-user text-body"></i>
-                            </a>
+                            </a>-->
 
 
-                            <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
-                                    data-bs-toggle="dropdown">
-                                <i class="fa fa-user text-body"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item">
-                                        Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item">
-                                        Logout
-                                    </a>
-                                </li>
-                            </ul>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
+                                        data-bs-toggle="dropdown">
+                                    <i class="fa fa-user text-body"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="profile">
+                                            Hồ sơ
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="logout">
+                                            Đăng xuất
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
 
 
 
@@ -80,28 +92,12 @@
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
-                        <span class="btn btn text-white me-2 d-inline-block text-nowrap">
+<!--                        <span class="btn btn text-white me-2 d-inline-block text-nowrap">
                             <a class="nav-link" href="">Hello ${account.username}</a>
                         </span>
-                        <a class="btn btn-primary text-white" href="">Đăng xuất</a>
+                        <a class="btn btn-primary text-white" href="">Đăng xuất</a>-->
                     </c:if>
-                    <!-- chua dang nhap -->    
-                    <c:if test="${account==null}">
-                        <form class="d-flex" action="actionshop" method="get">
-                            <input type="hidden" name="action" value="getFoodBySearch">
-                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                   style="width: 300px">
-                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                <i class="fa fa-search text-body"></i>
-                            </button>
-                            <a class="btn btn-square bg-white rounded-circle me-2" href="">
-                                <i class="fa fa-user text-body"></i>
-                            </a>
-                            <a class="btn btn-square bg-white rounded-circle" href="">
-                                <i class="fa fa-shopping-bag text-body"></i>
-                            </a>
-                        </form>
-                    </c:if>
+                    
                 </div>
             </div>
         </nav>
