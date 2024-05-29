@@ -74,7 +74,7 @@
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <h5 class="fw-bolder"><a href="detail?foodIid=${s.foodId}" title="Views Food">${s.foodName}</a></h5>
+                                        <h5 class="fw-bolder"><a href="detail?foodId=${s.foodId}" title="Views Food">${s.foodName}</a></h5>
                                         <!-- Product price-->
                                         <div >${s.price}00đ</div>
                                     </div>
