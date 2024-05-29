@@ -70,16 +70,16 @@
     </head>
     <body>
         <div class="container">
-            <h2>Enter your email address</h2>
+            <h2>Nhập email của bạn</h2>
             <form action="forget" method="post">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
                 <div class="instructions">
-                    Enter the registered email address. Then we'll email a OTP to this address.
+                    Nhập email đã được đăng ký. Chúng tôi sẽ gửi 1 mã OTP về địa chỉ email này
                 </div>
                 <div class="buttons">
-                    <button type="submit" class="submit-btn">Get New Password</button>
-                    <button type="button" class="back-btn" onclick="window.location.href = 'login.jsp'">Back to Login</button>
+                    <button type="submit" class="submit-btn">Đổi mật khẩu mới</button>
+                    <button type="button" class="back-btn" onclick="window.location.href = 'login'">Quay lại đăng nhập</button>
                 </div>
             </form>
         </div>

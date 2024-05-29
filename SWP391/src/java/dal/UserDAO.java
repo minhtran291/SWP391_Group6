@@ -111,4 +111,65 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
+    
+    public User getUser(String username) {
+        User user = null;
+        String sql = "SELECT * FROM users WHERE user_name = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = new User();
+                user.setUserid(resultSet.getInt("user_id"));
+                user.setUsername(resultSet.getString("user_name"));
+                user.setPassword(resultSet.getString("password"));
+                user.setGender(resultSet.getInt("gender"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone_number"));
+                user.setRoleid(resultSet.getInt("role_id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public boolean updatePassword(User u, String newPassword) {
+        String sql = "UPDATE users SET password = ? WHERE user_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, newPassword);
+            statement.setInt(2, u.getUserid());
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public User getUserByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setUserid(rs.getInt("user_id"));
+                user.setUsername(rs.getString("user_name"));
+                user.setPassword(rs.getString("password"));
+                user.setGender(rs.getInt("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone_number"));
+
+                user.setRoleid(rs.getInt("role_id"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -70,13 +70,13 @@
     <body>
         <div class="container">
             <img src="https://png.pngtree.com/png-vector/20190216/ourlarge/pngtree-vector-lock-icon-png-image_540594.jpg" alt="Lock Icon">
-            <h2>Enter OTP</h2>
+            <h2>Nhập OTP</h2>
             <form action="validate" method="post">
                 <div class="input-group">
                     <label for="code"><img src="https://icons.iconarchive.com/icons/custom-icon-design/flatastic-11/48/Mailbox-icon.png" alt="Mail Icon"></label>
                     <input type="text" id="code" name="code" placeholder="Enter OTP" required>
                 </div>
-                <button type="submit">Reset Password</button>
+                <button type="submit">Đặt lại mật khẩu</button>
             </form>
         </div>
 

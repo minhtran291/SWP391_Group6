@@ -66,7 +66,7 @@
     </head>
     <body>
         <div class="container">
-            <h2>Reset Password</h2>
+            <h2>Đặt lại mật khẩu</h2>
             <form action="reset" method="post">
                 <div class="input-group">
                     <label for="password">
@@ -80,7 +80,7 @@
                     </label>
                     <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm New Password" required>
                 </div>
-                <button type="submit">Reset</button>
+                <button type="submit">Đặt lại</button>
             </form>
         </div>
 

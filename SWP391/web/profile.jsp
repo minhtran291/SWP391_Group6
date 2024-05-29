@@ -138,7 +138,7 @@
                                            value="${sessionScope.acc.roleid}">
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="btn btn-success" href="#">Thay đổi mặt khẩu</a>
+                                    <a class="btn btn-success" href="changepass">Thay đổi mặt khẩu</a>
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">

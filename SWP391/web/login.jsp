@@ -51,7 +51,7 @@
                 </div>
                 <div class="mb-3">
                     <input type="checkbox" ${(cookie.cremem!=null?'checked':'')} name="remember" value="ON"/>Ghi nhớ đăng nhập
-                    <a href="#" class="text-end text-decoration-none float-end">Quên mật khẩu?</a>
+                    <a href="forget" class="text-end text-decoration-none float-end">Quên mật khẩu?</a>
                 </div>
 
                 <div class="form-group">
