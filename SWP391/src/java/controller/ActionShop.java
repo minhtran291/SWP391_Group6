@@ -6,6 +6,7 @@ package controller;
 
 import dal.CategoryDAO;
 import dal.FoodDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,6 +19,7 @@ import java.util.List;
 import model.Category;
 import model.Food;
 import java.sql.Date;
+import model.User;
 
 /**
  *
@@ -27,6 +29,7 @@ public class ActionShop extends HttpServlet {
 
     CategoryDAO cd = new CategoryDAO();
     FoodDAO fd = new FoodDAO();
+    UserDAO ud = new UserDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -88,6 +91,12 @@ public class ActionShop extends HttpServlet {
                 getFoodByCategory(request, response, 5);
                 request.getRequestDispatcher("shop/shopHome.jsp").forward(request, response);
                 break;
+            case "profile":
+                getProfile(request, response);
+                break;
+            case "changepass":
+                changePassJSP(request, response);
+                
         }
 
     }
@@ -110,6 +119,9 @@ public class ActionShop extends HttpServlet {
                 break;
             case "updateFood":
                 updateFood(request, response, 5);
+                break;
+            case "changepass":
+                changePass(request, response);
                 break;
         }
     }
@@ -296,5 +308,42 @@ public class ActionShop extends HttpServlet {
         request.setAttribute("listFoodByCategory", listFoodByCategory);
         request.setAttribute("cid", categoryId);
         pagingForFood(request, response, numberPerPage, listFoodByCategory);
+    }
+
+    private void getProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User)session.getAttribute("acc");
+        session.setAttribute("acc", u);
+        request.getRequestDispatcher("shop/profileShop.jsp").forward(request, response);
+    }
+
+    private void changePassJSP(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+        session.setAttribute("acc", u);
+        request.getRequestDispatcher("/shop/changepass.jsp").forward(request, response);
+    }
+
+    private void changePass(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPassword = request.getParameter("currentPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
+
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+
+        if (!currentPassword.equals(u.getPassword())) {
+            request.setAttribute("message", "Mật khẩu cũ không chính xác");
+            request.getRequestDispatcher("/shop/changepass.jsp").forward(request, response);
+
+        } else if (!newPassword.equals(confirmPassword)) {
+            request.setAttribute("message", "Mật khẩu mới và xác nhận mật khẩu không khớp");
+            request.getRequestDispatcher("/shop/changepass.jsp").forward(request, response);
+
+        } else {
+            ud.updatePassword(u, newPassword);
+            request.getRequestDispatcher("/shop/profileShop.jsp").forward(request, response);
+
+        }
     }
 }

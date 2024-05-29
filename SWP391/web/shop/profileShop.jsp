@@ -37,7 +37,7 @@
             <div class="container">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="actioncustomer?action=getListFood">
+                        <a class="nav-link" href="actionshop?action=homeFood">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -45,7 +45,7 @@
                 </ul>
 
                 <div>
-                    <form class="d-flex" action="actioncustomer" method="get">
+                    <form class="d-flex" action="actionshop" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
                         <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                style="width: 300px">
@@ -60,7 +60,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="actionshop?action=profile">
                                         Hồ sơ
                                     </a>
                                 </li>
@@ -135,10 +135,10 @@
                                 </div>
                                 <div class="col-md-4">
                                     <input class="form-control" readonly=""
-                                           value="${sessionScope.acc.roleid}">
+                                           value="${sessionScope.acc.getRoleidString()}">
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="btn btn-success" href="changepass">Thay đổi mặt khẩu</a>
+                                    <a class="btn btn-success" href="actionshop?action=changepass">Thay đổi mặt khẩu</a>
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">

@@ -86,7 +86,7 @@ public class Profile extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User)session.getAttribute("acc");
         session.setAttribute("acc", u);
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
     }
 
 }

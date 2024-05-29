@@ -9,6 +9,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <title>Quên Mật Khẩu</title>
         <style>
             body {
@@ -73,7 +75,7 @@
             <h2>Nhập email của bạn</h2>
             <form action="forget" method="post">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" required="">
                 <div class="instructions">
                     Nhập email đã được đăng ký. Chúng tôi sẽ gửi 1 mã OTP về địa chỉ email này
                 </div>
@@ -83,12 +85,13 @@
                 </div>
             </form>
         </div>
-
+        <h6 class="text-center text-danger">
         <%
             String message = (String) request.getAttribute("message");
             if (message != null) {
-                out.println("<p>" + message + "</p>");
+                out.println(message );
             }
         %>
+        </h6>
     </body>
 </html>

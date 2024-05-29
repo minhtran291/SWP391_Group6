@@ -110,7 +110,7 @@
                 <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="actioncustomer?action=getListFood" style="font-size: 16px;">Trang chủ</a>
+                            <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
                         </li>
                         <li class="nav-item dropdown">
                             <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
@@ -118,7 +118,7 @@
                             <ul class="dropdown-menu">
                                 <c:forEach var="c" items="${cList}">
                                     <li><a class="dropdown-item" 
-                                           href="actioncustomer?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
+                                           href="actionshop?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
                                     </c:forEach>
                             </ul>
                         </li>

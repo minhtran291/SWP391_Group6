@@ -101,7 +101,7 @@
                 <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="actioncustomer?action=getListFood" style="font-size: 16px;">Trang chủ</a>
+                            <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
                         </li>
                         <li class="nav-item dropdown">
                             <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
@@ -109,7 +109,7 @@
                             <ul class="dropdown-menu">
                                 <c:forEach var="c" items="${cList}">
                                     <li><a class="dropdown-item" 
-                                           href="actioncustomer?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
+                                           href="actionshop?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
                                     </c:forEach>
                             </ul>
                         </li>
@@ -207,56 +207,56 @@
                 </div>
             </div>
 
-                <!-- Pagination -->
-                <ul class="pagination justify-content-center">
-                    <!-- Pagination logic here -->
-                    <c:forEach var="p" begin="${1}" end="${totalPages}">
-                        <li class="page-item ${p == currentPage ? 'active' : ''}">
-                            <a class="page-link" href="CategoryServlet?action=list&page=${p}">${p}</a>
-                        </li>
-                    </c:forEach>
-                </ul>
+            <!-- Pagination -->
+            <ul class="pagination justify-content-center">
+                <!-- Pagination logic here -->
+                <c:forEach var="p" begin="${1}" end="${totalPages}">
+                    <li class="page-item ${p == currentPage ? 'active' : ''}">
+                        <a class="page-link" href="CategoryServlet?action=list&page=${p}">${p}</a>
+                    </li>
+                </c:forEach>
+            </ul>
 
-                <footer>
-                    <!-- Footer content here -->
-                    <div class="bg-dark p-3">
-                        <div class="container text-white">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4>Liên hệ</h4>
-                                    <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
-                                    <p>Email: minh291@gmail.com</p>
-                                    <p>Số điện thoại: 0123456789</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <h4>Liên kết</h4>
-                                    <ul class="list-unstyled">
-                                        <li><a href="#">Trang chủ</a></li>
-                                        <li><a href="#">Giới thiệu</a></li>
-                                        <li><a href="#">Sản phẩm</a></li>
-                                        <li><a href="#">Liên hệ</a></li>
-                                    </ul>
-                                </div>
+            <footer>
+                <!-- Footer content here -->
+                <div class="bg-dark p-3">
+                    <div class="container text-white">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Liên hệ</h4>
+                                <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
+                                <p>Email: minh291@gmail.com</p>
+                                <p>Số điện thoại: 0123456789</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Liên kết</h4>
+                                <ul class="list-unstyled">
+                                    <li><a href="#">Trang chủ</a></li>
+                                    <li><a href="#">Giới thiệu</a></li>
+                                    <li><a href="#">Sản phẩm</a></li>
+                                    <li><a href="#">Liên hệ</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </footer>
+                </div>
+            </footer>
 
-                <script>
-                    // JavaScript logic here
-                    var errorName = "${requestScope.errorName}";
-                    if (errorName && errorName.trim() !== "") {
-                        $(document).ready(function () {
-                            $('#addCategory').modal('show');
-                        });
-                    }
+            <script>
+                // JavaScript logic here
+                var errorName = "${requestScope.errorName}";
+                if (errorName && errorName.trim() !== "") {
+                    $(document).ready(function () {
+                        $('#addCategory').modal('show');
+                    });
+                }
 
-                    var errorNameUpdate = "${requestScope.errorNameUpdate}";
-                    if (errorNameUpdate && errorNameUpdate.trim() !== "") {
-                        $(document).ready(function () {
-                            $('#updateCategory${id}').modal('show');
-                        });
-                    }
-                </script>
-                </body>
-                </html>
+                var errorNameUpdate = "${requestScope.errorNameUpdate}";
+                if (errorNameUpdate && errorNameUpdate.trim() !== "") {
+                    $(document).ready(function () {
+                        $('#updateCategory${id}').modal('show');
+                    });
+                }
+            </script>
+    </body>
+</html>

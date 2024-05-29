@@ -63,7 +63,7 @@ public class ChangePasswordServerlet extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("acc");
         session.setAttribute("acc", u);
-        request.getRequestDispatcher("changepass.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/changepass.jsp").forward(request, response);
     }
 
     /**
@@ -86,15 +86,15 @@ public class ChangePasswordServerlet extends HttpServlet {
 
         if (!currentPassword.equals(u.getPassword())) {
             request.setAttribute("message", "Mật khẩu cũ không chính xác");
-            request.getRequestDispatcher("changepass.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/changepass.jsp").forward(request, response);
 
         } else if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("message", "Mật khẩu mới và xác nhận mật khẩu không khớp");
-            request.getRequestDispatcher("changepass.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/changepass.jsp").forward(request, response);
 
         } else {
             ud.updatePassword(u, newPassword);
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
 
         }
 

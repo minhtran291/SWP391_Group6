@@ -74,7 +74,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="profile">
+                                        <a class="dropdown-item" href="actionshop?action=profile">
                                             Hồ sơ
                                         </a>
                                     </li>
@@ -92,10 +92,7 @@
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
-<!--                        <span class="btn btn text-white me-2 d-inline-block text-nowrap">
-                            <a class="nav-link" href="">Hello ${account.username}</a>
-                        </span>
-                        <a class="btn btn-primary text-white" href="">Đăng xuất</a>-->
+
                     </c:if>
                     
                 </div>

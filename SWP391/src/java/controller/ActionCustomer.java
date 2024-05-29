@@ -154,7 +154,7 @@ public class ActionCustomer extends HttpServlet {
         session.setAttribute("currentPage", currentPage);
         session.setAttribute("totalPages", totalPages);
         session.setAttribute("foodOnCurrentPage", foodOnCurrentPage);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/home.jsp").forward(request, response);
     }
 
     private void getFoodBySearch(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
