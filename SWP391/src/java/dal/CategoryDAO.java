@@ -45,4 +45,38 @@ public class CategoryDAO extends DBContext{
         }
         return listCategory;
     }
+
+    public void addCategory(String categoryName) {
+        String sql = "Insert into Category ([category_name]) values(?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, categoryName);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void updateCategory(int categoryId, String categoryName) {
+        String sql = "Update category set [category_name] = ? Where [category_id] = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, categoryName);
+            ps.setInt(2, categoryId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
+
+    public void deleteCategory(int categoryId) {
+        String sql = "delete from category where category_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
 }

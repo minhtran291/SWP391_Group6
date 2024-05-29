@@ -338,6 +338,8 @@
             <div class="offcanvas-body">
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
+                 <p><a class="btn text-white btn-primary" 
+                          href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary">Quản lí nhân viên</a></p>
                 <p><a class="btn text-white btn-primary">Phân đơn hàng</a></p>
