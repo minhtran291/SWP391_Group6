@@ -16,7 +16,7 @@
         <script src="https://kit.fontawesome.com/dd760d7b93.js" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <title>Quản lí sản phẩm</title>
+        <title>Quản lí nhân viên</title>
         <style>
             .navbar-nav {
                 display: flex;
@@ -79,12 +79,12 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li >
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="actionshop?action=profile">
                                         Profile
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="logout">
                                         Logout
                                     </a>
                                 </li>
@@ -126,67 +126,59 @@
                 </div>
             </div>
 
-            <h1 class="text-center m-3">Quản lý món ăn</h1>
+            <h1 class="text-center m-3">Quản lý nhân viên</h1>
 
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFood"
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployee"
                     style="margin-left: 20px">
-                Thêm món ăn
+                Thêm nhân viên
             </button>
-            <div class="modal fade" id="addFood">
+            <div class="modal fade" id="addEmployee">
                 <div class="modal-dialog modal-dialog-scrollable">    
                     <div class="modal-content">  
 
                         <div class="modal-header">
-                            <h4 class="modal-title">Thêm sản món ăn mới</h4>
+                            <h4 class="modal-title">Thêm nhân viên mới</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="actionshop" method="post">
-                            <input type="hidden" name="action" value="addFood">
+                        <form action="employee" method="post">
+                            <input type="hidden" name="action" value="addEmployee">
                             <input type="hidden" name="page" value="${n}">
                             <div class="modal-body">
-                                <b>Tên món ăn:</b>
+                                <b>Tên đăng nhập:</b>
                                 <input type="text"
                                        class="form-control"
                                        required=""
-                                       name="name"
+                                       name="username"
                                        >
                                 <h5 class="text-danger">${requestScope.errorName}</h5>
-                                <b>Giá:</b>
-                                <input type="number"
-                                       class="form-control"
-                                       step="1000"
-                                       required=""
-                                       name="price"
-                                       >
-                                <h5 class="text-danger">${requestScope.errorPrice}</h5>
-                                <b>Số lượng tồn kho:</b>
-                                <input type="number"
+                                <b>Mật khẩu</b>
+                                <input type="password"
                                        class="form-control"
                                        required=""
-                                       name="stock"
+                                       name="password"
                                        >
-                                <h5 class="text-danger">${requestScope.errorStock}</h5>
-                                <b>Thể loại:</b>
-                                <div>
-                                    <select class="form-select" name="cid">
-                                        <c:forEach var="c" items="${sessionScope.cList}">
-                                            <option value="${c.category_id}">${c.category_name}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <b>Miêu tả:</b>
-                                <input type="text"
-                                       class="form-control"
-                                       name="description"
-                                       >
-                                <b>Hình ảnh:</b>
+                                <b>Giới tính:</b><br>
+                                <input name="gender" required type="radio" value="1" id="genderMale" />
+                                <label for="genderMale">Nam</label><br>
+                                <input name="gender" required type="radio" value="0" id="genderFemale" />
+                                <label for="genderFemale">Nữ</label><br>
+                                <b>Email:</b>
                                 <input type="text"
                                        class="form-control"
                                        required=""
-                                       name="image"
+                                       name="email"
                                        >
+                                <h5 class="text-danger">${requestScope.errorEmail}</h5>
+                                <b>Số điện thoại</b>
+                                <input type="text"
+                                       class="form-control"
+                                       required=""
+                                       name="phone"
+                                       >
+                                <h5 class="text-danger">${requestScope.errorphone}</h5>
+
                             </div>
 
                             <div class="modal-footer">
@@ -201,114 +193,82 @@
 
             <table class="table text-center">
                 <tr>
-                    <th>Mã món ăn</th>
-                    <th>Tên món ăn</th>
-                    <th>Giá</th>
-                    <th>Sô lượng tồn kho</th>
-                    <th>Thể loại</th>
-                    <th>Ngày thêm vào</th>
-                    <th>Hình ảnh</th>
-                    <th>Số lượng đã bán</th>
-                    <th>Tùy chọn</th>
+                    <th>ID </th>
+                    <th>Tên đăng nhập </th>
+                    <th>Mật khẩu</th>
+                    <th>Giới tính</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
                 </tr>
-                <c:forEach var="f" items="${foodOnCurrentPage}">
+                <c:forEach var="f" items="${empOnCurrentPage}">
                     <tr style="vertical-align: middle">
-                        <td>${f.foodId}</td>
-                        <td>${f.foodName}</td>
-                        <td><fmt:formatNumber type="currency" 
-                                          currencyCode="VND"
-                                          maxFractionDigits="0"
-                                          value="${f.price}"/></td>
-                        <td>${f.stock}</td>
-                        <td>${f.categoryId.category_name}</td>
-                        <td><fmt:formatDate value="${f.createDate}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
-                        <td><img width="113px" height="113px"  src="${f.image}"></td>
-                        <td>${f.sold}</td>
+                        <td>${f.userid}</td>
+                        <td>${f.username}</td>             
+                        <td>${f.password}</td>
+                        <td>${f.gender == 1 ? "Nam" : "Nữ"}</td>
+                        <td>${f.email}</td>
+                        <td>${f.phone}</td>
                         <td>
-                            <button class="border-0 btn btn-lg" data-bs-toggle="modal" data-bs-target="#updateFood${f.foodId}">
+                            <button class="border-0 btn btn-lg" data-bs-toggle="modal" data-bs-target="#updateEmployee${f.userid}">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
-                            <div class="modal fade text-start" id="updateFood${f.foodId}">
+                            <div class="modal fade text-start" id="updateEmployee${f.userid}">
                                 <div class="modal-dialog modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Cập nhật món ăn</h4>
+                                            <h4 class="modal-title">Cập nhật nhân viên</h4>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">    
-                                            <form action="actionshop" method="post">
-                                                <input type="hidden" name="action" value="updateFood">
+                                            <form action="employee" method="post">
+                                                <input type="hidden" name="action" value="updateEmployee">
                                                 <input type="hidden" name="page" value="${n}">
 
-                                                <b>Mã món ăn:</b>
+                                                <b>ID:</b>
                                                 <input type="text"
                                                        class="form-control"
                                                        readonly=""
-                                                       value="${f.foodId}"
+                                                       value="${f.userid}"
                                                        name="id"
                                                        >
-                                                <b>Tên món ăn:</b>
+                                                <b>Tên đăng nhập:</b>
                                                 <input type="text"
                                                        class="form-control"
-                                                       value="${f.foodName}"
+                                                       value="${f.username}"
                                                        required=""
-                                                       name="name"
+                                                       name="username"
                                                        >
                                                 <h5 class="text-danger">${requestScope.errorNameUpdate}</h5>
-                                                <b>Giá:</b>
-                                                <input type="number"
+                                                <b>Mật khẩu:</b>
+                                                <input type="password"
                                                        class="form-control"
-                                                       value="<fmt:formatNumber groupingUsed="false" 
-                                                                         value="${f.price}"/>"
-                                                       name="price"
+                                                       value="${f.password}"
+                                                       name="password"
                                                        >
-                                                <h5 class="text-danger">${requestScope.errorPriceUpdate}</h5>
-                                                <b>Số lượng tồn kho:</b>
-                                                <input type="number"
-                                                       class="form-control"
-                                                       value="${f.stock}"
-                                                       required=""
-                                                       name="stock"
-                                                       >
-                                                <h5 class="text-danger">${requestScope.errorStockUpdate}</h5>
-                                                <b>Thể loại:</b>
-                                                <div>
-                                                    <select class="form-select" name="cidUpdate">
-                                                        <c:forEach var="c" items="${sessionScope.cList}">
-                                                            <option value="${c.category_id}" ${f.categoryId.category_name == c.category_name?"selected":""}>
-                                                                ${c.category_name}
-                                                            </option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <b>Ngày thêm vào:</b>
-                                                <input type="date"
-                                                       class="form-control"
-                                                       readonly=""
-                                                       value="${f.createDate}"
-                                                       name="creatDate"
-                                                       >
-                                                <b>Miêu tả:</b>
+
+                                                <b>Giới tính:</b>
+                                                <br>
+                                                <input name="gender" required type="radio" value="1" id="genderMale" />
+                                                <label for="genderMale">Nam</label><br>
+                                                <input name="gender" required type="radio" value="0" id="genderFemale" />
+                                                <label for="genderFemale">Nữ</label><br>
+
+
+                                                <b>Email:</b>
                                                 <input type="text"
                                                        class="form-control"
-                                                       value="${f.description}"
-                                                       name="description"
+                                                       value="${f.email}"
+                                                       required=""
+                                                       name="email"
                                                        >
-                                                <b>Hình ảnh:</b>
+                                                <h5 class="text-danger">${requestScope.errorEmailUpdate}</h5>
+                                                <b>Số điện thoại:</b>
                                                 <input type="text"
                                                        class="form-control"
-                                                       value="${f.image}"
-                                                       required=""
-                                                       name="image"
+                                                       value="${f.phone}"
+                                                       name="phone"
                                                        >
-                                                <b>Số lượng đã bán:</b>
-                                                <input type="number"
-                                                       class="form-control"
-                                                       value="${f.sold}"
-                                                       required=""
-                                                       step="1"
-                                                       name="sold"
-                                                       >
+                                                <h5 class="text-danger">${requestScope.errorphoneUpdate}</h5>
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
@@ -320,8 +280,8 @@
                                 </div>
                             </div>
                             <a class="btn btn-lg" 
-                               href="actionshop?action=deleteFood&&deleteId=${f.foodId}&&page=${n}"
-                               onclick="return confirm('Bạn có chắc chắn muốn xóa không món ăn ${f.foodId} ?')">
+                               href="employee?action=deleteEmp&&deleteId=${f.userid}&&page=${n}"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa không tài khoản ${f.userid} ?')">
                                 <i class="fa-solid fa-trash-can"></i>
                             </a>
                         </td>
@@ -338,10 +298,11 @@
             <div class="offcanvas-body">
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
-                 <p><a class="btn text-white btn-primary" 
-                          href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary">Quản lí đơn hàng</a></p>
-                <p><a href="employee?action=manageEmp" class="btn text-white btn-primary">Quản lí nhân viên</a></p>
+                <p><a class="btn text-white btn-primary"
+                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
                 <p><a class="btn text-white btn-primary">Phân đơn hàng</a></p>
             </div>
         </div>
@@ -351,7 +312,7 @@
             <c:forEach var="p" begin="${1}" end="${totalPages}">
                 <li class="page-item">
                     <a class="page-link ${p==n?"active":""}"  
-                       href="actionshop?action=manageFood&&page=${p}">${p}</a>
+                       href="employee?action=manageEmp&&page=${p}">${p}</a>
                 </li>
             </c:forEach>
         </ul>
@@ -384,19 +345,19 @@
 
         <script>
             var errorName = "${requestScope.errorName}";
-            var errorPrice = "${requestScope.errorPrice}";
-            var errorStock = "${requestScope.errorStock}";
-            if (errorName.trim() !== "" || errorPrice.trim() !== "" || errorStock.trim() !== "") {
+            var errorEmail = "${requestScope.errorPrice}";
+            var errorphone = "${requestScope.errorStock}";
+            if (errorName.trim() !== "" || errorEmail.trim() !== "" || errorphone.trim() !== "") {
                 $(document).ready(function () {
-                    $('#addFood').modal('show');
+                    $('#addEmployee').modal('show');
                 });
             }
             var errorNameUpdate = "${requestScope.errorNameUpdate}";
-            var errorPriceUpdate = "${requestScope.errorPriceUpdate}";
-            var errorStockUpdate = "${requestScope.errorStockUpdate}";
-            if (errorNameUpdate.trim() !== "" || errorPriceUpdate.trim() !== "" || errorStockUpdate.trim() !== "") {
+            var errorEmailUpdate = "${requestScope.errorEmailUpdate}";
+            var errorphoneUpdate = "${requestScope.errorphoneUpdate}";
+            if (errorNameUpdate.trim() !== "" || errorerrorEmailUpdate.trim() !== "" || errorphoneUpdate.trim() !== "") {
                 $(document).ready(function () {
-                    $('#updateFood${id}').modal('show');
+                    $('#updateEmployee${id}').modal('show');
                 });
             }
         </script>

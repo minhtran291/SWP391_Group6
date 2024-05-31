@@ -150,7 +150,8 @@
                     <div class="col-md-6">
                         <h1 class="display-5 fw-bolder">${detail.foodName}</h1>
                         <div>
-                            <h4> <span>Giá bán: ${detail.price}00đ</span></h4>
+                            <h4> <span>Giá bán: ${detail.price}">
+                                </span></h4>
                         </div>
                         <p class="lead">Số lượng: ${detail.stock}</p>
                         <p class="lead">Đã bán: ${detail.sold}</p>
