@@ -4,6 +4,7 @@
     Author     : anhdo
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -24,7 +25,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/dd760d7b93.js" crossorigin="anonymous"></script>
-        
+
         <style>
             .navbar-nav {
                 display: flex;
@@ -150,7 +151,12 @@
                     <div class="col-md-6">
                         <h1 class="display-5 fw-bolder">${detail.foodName}</h1>
                         <div>
-                            <h4> <span>Giá bán: ${detail.price}00đ</span></h4>
+                            <h4> <span>Giá bán: 
+                                    <fmt:formatNumber type="currency"
+                                                      currencyCode="VND"
+                                                      maxFractionDigits="0"
+                                                      value="${detail.price}"/>
+                                </span></h4>
                         </div>
                         <p class="lead">Số lượng: ${detail.stock}</p>
                         <p class="lead">Đã bán: ${detail.sold}</p>
@@ -186,7 +192,12 @@
                                         <!-- Product name-->
                                         <h5 class="fw-bolder"><a href="detail?foodId=${s.foodId}" title="Views Food">${s.foodName}</a></h5>
                                         <!-- Product price-->
-                                        <div >${s.price}00đ</div>
+                                        <div >
+                                            <fmt:formatNumber type="currency"
+                                                              currencyCode="VND"
+                                                              maxFractionDigits="0"
+                                                              value="${s.price}"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Product actions-->

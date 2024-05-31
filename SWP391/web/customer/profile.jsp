@@ -166,7 +166,7 @@
                 </form>
             </div>
 
-            <div class="container mt-5">
+<!--            <div class="container mt-5">
                 <form action="UploadServlet" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <input type="file" class="form-control w-25" id="file" name="file" accept="image/*" required
@@ -174,7 +174,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Tải lên</button>
                 </form>
-            </div>
+            </div>-->
 
         </div>
 

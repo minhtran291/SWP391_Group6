@@ -208,14 +208,14 @@
             </div>
 
             <!-- Pagination -->
-            <ul class="pagination justify-content-center">
-                <!-- Pagination logic here -->
+<!--            <ul class="pagination justify-content-center">
+                 Pagination logic here 
                 <c:forEach var="p" begin="${1}" end="${totalPages}">
                     <li class="page-item ${p == currentPage ? 'active' : ''}">
                         <a class="page-link" href="CategoryServlet?action=list&page=${p}">${p}</a>
                     </li>
                 </c:forEach>
-            </ul>
+            </ul>-->
 
             <footer>
                 <!-- Footer content here -->
