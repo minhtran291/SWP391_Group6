@@ -151,72 +151,74 @@
                     <div class="col-md-6">
                         <h1 class="display-5 fw-bolder">${detail.foodName}</h1>
                         <div>
+
                             <h4> <span>Giá bán: 
                                     <fmt:formatNumber type="currency"
                                                       currencyCode="VND"
                                                       maxFractionDigits="0"
                                                       value="${detail.price}"/>
-                                </span></h4>
-                        </div>
-                        <p class="lead">Số lượng: ${detail.stock}</p>
-                        <p class="lead">Đã bán: ${detail.sold}</p>
-                        <div class="d-flex">
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                                <a href=" add-to-cart?id=${detail.foodId}&detail=${detail.foodId}">
-                                    <i class="bi-cart-fill me-1"></i>
-                                    Add to Cart
-                                </a>
-                            </button>
-                        </div>
-                    </div>
-                </div>       
-                <p></p>
-                <div> <a href="actioncustomer?action=getListFood" class="btn btn-primary">Back to home</a></div>
-            </div>
-        </section>
-        <hr>
-        <section class="py-5 bg-light">
-
-            <div class="container px-4 px-lg-5 mt-5">
-
-                <h2 class="fw-bolder mb-4">Sản phẩm tương tự</h2>
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <c:forEach items="${sameF}" var="s">
-                        <div class="col mb-5">
-                            <div class="card h-100">
-                                <!-- Product image-->
-                                <img class="card-img-top" src="${s.image}" alt="..." />
-                                <!-- Product details-->
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <!-- Product name-->
-                                        <h5 class="fw-bolder"><a href="detail?foodId=${s.foodId}" title="Views Food">${s.foodName}</a></h5>
-                                        <!-- Product price-->
-                                        <div >
-                                            <fmt:formatNumber type="currency"
-                                                              currencyCode="VND"
-                                                              maxFractionDigits="0"
-                                                              value="${s.price}"/>
-                                        </div>
+                                    <h4> <span>Giá bán: ${detail.price}">
+                                        </span></h4>
                                     </div>
-                                </div>
-                                <!-- Product actions-->
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">                                 
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Thêm vào giỏ hàng</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>      
+                                    <p class="lead">Số lượng: ${detail.stock}</p>
+                                    <p class="lead">Đã bán: ${detail.sold}</p>
+                                    <div class="d-flex">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                            <a href=" add-to-cart?id=${detail.foodId}&detail=${detail.foodId}">
+                                                <i class="bi-cart-fill me-1"></i>
+                                                Thêm vào giỏ hàng
+                                            </a>
+                                        </button>
+                                    </div>
+                                    </div>
+                                    </div>       
+                                    <p></p>
+                                    <div> <a href="actioncustomer?action=getListFood" class="btn btn-primary">Quay lại trang chủ</a></div>
+                                    </div>
+                                    </section>
+                                    <hr>
+                                    <section class="py-5 bg-light">
+
+                                        <div class="container px-4 px-lg-5 mt-5">
+
+                                            <h2 class="fw-bolder mb-4">Sản phẩm tương tự</h2>
+                                            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                                                <c:forEach items="${sameF}" var="s">
+                                                    <div class="col mb-5">
+                                                        <div class="card h-100">
+                                                            <!-- Product image-->
+                                                            <img class="card-img-top" src="${s.image}" alt="..." />
+                                                            <!-- Product details-->
+                                                            <div class="card-body p-4">
+                                                                <div class="text-center">
+                                                                    <!-- Product name-->
+                                                                    <h5 class="fw-bolder"><a href="detail?foodId=${s.foodId}" title="Views Food">${s.foodName}</a></h5>
+                                                                    <!-- Product price-->
+                                                                    <div >
+                                                                        <fmt:formatNumber type="currency"
+                                                                                          currencyCode="VND"
+                                                                                          maxFractionDigits="0"
+                                                                                          value="${s.price}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Product actions-->
+                                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">                                 
+                                                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Thêm vào giỏ hàng</a></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>      
 
 
 
-                </div>
-            </div>
-        </section>
-        <!-- Footer-->
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
-</html>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <!-- Footer-->
+                                    <!-- Bootstrap core JS-->
+                                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+                                    <!-- Core theme JS-->
+                                    <script src="js/scripts.js"></script>
+                                    </body>
+                                    </html>

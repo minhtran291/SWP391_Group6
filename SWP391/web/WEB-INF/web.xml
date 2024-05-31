@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    
     <filter>
         <filter-name>ShopFilter</filter-name>
         <filter-class>Filter.ShopFilter</filter-class>
     </filter>
-    
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>Filter.LoginFilter</filter-class>
     </filter>
-    
     <filter-mapping>
         <filter-name>ShopFilter</filter-name>
         <url-pattern>/actionshop</url-pattern>
         <url-pattern>/AddFoodServlet</url-pattern>
         <url-pattern>/DeleteFoodServlet</url-pattern>
         <url-pattern>/EditFoodServlet</url-pattern>
-        
         <url-pattern>/shop/addCategory.jsp</url-pattern>
         <url-pattern>/shop/changepass.jsp</url-pattern>
         <url-pattern>/shop/editCategory.jsp</url-pattern>
@@ -32,7 +28,6 @@
         <url-pattern>/AddFoodServlet</url-pattern>
         <url-pattern>/DeleteFoodServlet</url-pattern>
         <url-pattern>/EditFoodServlet</url-pattern>
-        
         <url-pattern>/shop/addCategory.jsp</url-pattern>
         <url-pattern>/shop/changepass.jsp</url-pattern>
         <url-pattern>/shop/editCategory.jsp</url-pattern>
@@ -40,10 +35,8 @@
         <url-pattern>/shop/manageFood.jsp</url-pattern>
         <url-pattern>/shop/profileShop.jsp</url-pattern>
         <url-pattern>/shop/shopHome.jsp</url-pattern>
-        
         <url-pattern>/profile</url-pattern>
         <url-pattern>/changepass</url-pattern>
-        
         <url-pattern>/customer/changepass.jsp</url-pattern>
         <url-pattern>/customer/profile.jsp</url-pattern>
     </filter-mapping>
@@ -119,6 +112,10 @@
         <servlet-name>addToCart</servlet-name>
         <servlet-class>controller.addToCart</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeeControl</servlet-name>
+        <servlet-class>controller.EmployeeControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>
         <url-pattern>/actioncustomer</url-pattern>
@@ -190,5 +187,9 @@
     <servlet-mapping>
         <servlet-name>addToCart</servlet-name>
         <url-pattern>/add-to-cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeControl</servlet-name>
+        <url-pattern>/employee</url-pattern>
     </servlet-mapping>
 </web-app>

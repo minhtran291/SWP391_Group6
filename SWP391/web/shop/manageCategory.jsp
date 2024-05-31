@@ -202,7 +202,8 @@
                     <p><a class="btn text-white btn-primary" 
                           href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                     <p><a class="btn text-white btn-primary">Quản lí đơn hàng</a></p>
-                    <p><a class="btn text-white btn-primary">Quản lí nhân viên</a></p>
+                    <p><a href="employee?action=manageEmp"
+                            class="btn text-white btn-primary">Quản lí nhân viên</a></p>
                     <p><a class="btn text-white btn-primary">Phân đơn hàng</a></p>
                 </div>
             </div>
