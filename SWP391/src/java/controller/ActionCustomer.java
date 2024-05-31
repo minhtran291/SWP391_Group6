@@ -9,6 +9,7 @@ import dal.FoodDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -76,6 +77,9 @@ public class ActionCustomer extends HttpServlet {
             case "getFoodByCategory":
                 getFoodByCategory(request, response, 5);
                 break;
+            case "cart":
+                goToCart(request, response);
+                break;
         }
 
     }
@@ -103,6 +107,50 @@ public class ActionCustomer extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    
+    private void goToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        
+        HttpSession session = request.getSession();
+        
+        Cookie c[] = request.getCookies();
+        Cookie cart = null;
+        for(Cookie e: c){
+            if(e.getName().compareTo("cart") == 0){
+                cart = e;
+            }
+        }
+        
+        double total = 0;
+        
+        
+        if(cart != null && !cart.getValue().isEmpty()){
+            FoodDAO fd = new FoodDAO();
+            List<Food> list = new ArrayList<>();   // 2:1_3:1  =>  [2:1, 3:1];   2:1 => [2,1]
+            
+            String product[] = cart.getValue().split("_");
+            
+            for(String p : product){
+                String arr[] = p.split(":");
+                Food f = fd.getFoodByID(arr[0]);
+                f.setQuantity(Integer.parseInt(arr[1]));
+                list.add(f);
+                total += f.getPrice() * f.getQuantity();
+            }
+            
+            request.setAttribute("total",total);
+            request.setAttribute("count", list.size());
+            request.setAttribute("cart", list);
+            session.setAttribute("cart_s", list);
+            
+        }
+        else{
+            
+            request.setAttribute("cart", null);
+        }
+        
+       request.getRequestDispatcher("/customer/cart.jsp").forward(request, response);
+    }
 
     private void getAllFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -150,11 +198,38 @@ public class ActionCustomer extends HttpServlet {
         san pham cuoi trang 2 = 2 * 6 - 1 = 11
         doi tuong o chi muc thu 11 
         san pham cuoi o trang cuoi cung arrayList.size() - 1
+        
+        
          */
+        
+        Cookie c[] = request.getCookies();
+        Cookie cart = null;
+        int count = 0;
+        
+        for(Cookie e: c){
+            if(e.getName().compareTo("cart") == 0){
+                cart = e;
+            }
+        }
+        
+        if(cart != null){
+            String s[] = cart.getValue().split("_");
+            for(String f : s){
+                if(!f.isBlank()){
+                    count++;
+                }
+            }
+        }
+        
+        
+        
+        session.setAttribute("countfood", count);
         session.setAttribute("currentPage", currentPage);
         session.setAttribute("totalPages", totalPages);
         session.setAttribute("foodOnCurrentPage", foodOnCurrentPage);
+        request.setAttribute("page", currentPage);
         request.getRequestDispatcher("/customer/home.jsp").forward(request, response);
+        
     }
 
     private void getFoodBySearch(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
