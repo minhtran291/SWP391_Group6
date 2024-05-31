@@ -6,7 +6,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -31,6 +31,22 @@
             .dropdown-item {
                 white-space: nowrap; /* Đảm bảo nội dung không bị cắt xuống dòng */
             }
+            .cart{
+                position: relative;
+            }
+            .cart-count{
+                background-color: orange;
+                position: absolute;
+                top: -8px;
+                right: -5px;
+                color: white;
+                width: 20px;
+                border-radius: 50%;
+                height: 20px;
+                line-height: 20px;
+                text-align: center;
+            }
+
         </style>
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
@@ -77,9 +93,10 @@
                                     </li>
                                 </ul>
                             </div>
+                            
 
-
-                            <a class="btn btn-square bg-white rounded-circle" href="">
+                            <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
+                                <div class="cart-count">${countfood}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -96,7 +113,8 @@
                             <a class="btn btn-square bg-white rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>
-                            <a class="btn btn-square bg-white rounded-circle" href="">
+                           <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
+                                <div class="cart-count">${countfood}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -150,7 +168,7 @@
                             </c:if>
                             <c:if test="${f.stock > 0}">
                                 <a class="btn btn-primary"
-                                   href="#">
+                                   href="add-to-cart?id=${f.foodId}&page=${page}">
                                     Thêm vào giỏ hàng
                                 </a>
                             </c:if>

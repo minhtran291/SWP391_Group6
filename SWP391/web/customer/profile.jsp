@@ -11,10 +11,10 @@
 <html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Thông tin người dùng</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/dd760d7b93.js" crossorigin="anonymous"></script>
+        <title>Trang chủ</title>
         <style>
             .navbar-nav {
                 display: flex;
@@ -30,6 +30,22 @@
             .dropdown-item {
                 white-space: nowrap; /* Đảm bảo nội dung không bị cắt xuống dòng */
             }
+            .cart{
+                position: relative;
+            }
+            .cart-count{
+                background-color: orange;
+                position: absolute;
+                top: -8px;
+                right: -5px;
+                color: white;
+                width: 20px;
+                border-radius: 50%;
+                height: 20px;
+                line-height: 20px;
+                text-align: center;
+            }
+
         </style>
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
@@ -73,7 +89,8 @@
                         </div>
 
 
-                        <a class="btn btn-square bg-white rounded-circle" href="">
+                        <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
+                            <div class="cart-count">${countfood}</div>
                             <i class="fa fa-shopping-bag text-body"></i>
                         </a>
                     </form>

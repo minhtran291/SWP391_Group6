@@ -107,6 +107,18 @@
         <servlet-name>DetailControl</servlet-name>
         <servlet-class>controller.DetailControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteCart</servlet-name>
+        <servlet-class>controller.deleteCart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>order</servlet-name>
+        <servlet-class>controller.order</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addToCart</servlet-name>
+        <servlet-class>controller.addToCart</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>
         <url-pattern>/actioncustomer</url-pattern>
@@ -166,5 +178,17 @@
     <servlet-mapping>
         <servlet-name>DetailControl</servlet-name>
         <url-pattern>/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteCart</servlet-name>
+        <url-pattern>/delete-cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>order</servlet-name>
+        <url-pattern>/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addToCart</servlet-name>
+        <url-pattern>/add-to-cart</url-pattern>
     </servlet-mapping>
 </web-app>

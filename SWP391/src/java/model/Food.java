@@ -18,6 +18,8 @@ public class Food {
     private int sold;
     private Category categoryId;
     private String image;
+    
+    private int quantity;
 
     public Food() {
     }
@@ -30,7 +32,8 @@ public class Food {
         this.description = description;
         this.image = image;
     }
-    
+
+   
     public Food(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image) {
         this.foodId = foodId;
         this.foodName = foodName;
@@ -50,6 +53,14 @@ public class Food {
     public void setFoodId(int foodId) {
         this.foodId = foodId;
     }
+     public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
 
     public String getFoodName() {
         return foodName;
