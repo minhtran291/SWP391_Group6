@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    
+    <filter>
+        <filter-name>ShopFilter</filter-name>
+        <filter-class>Filter.ShopFilter</filter-class>
+    </filter>
+    
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>Filter.LoginFilter</filter-class>
     </filter>
+    
+    <filter-mapping>
+        <filter-name>ShopFilter</filter-name>
+        <url-pattern>/actionshop</url-pattern>
+        <url-pattern>/AddFoodServlet</url-pattern>
+        <url-pattern>/DeleteFoodServlet</url-pattern>
+        <url-pattern>/EditFoodServlet</url-pattern>
+        
+        <url-pattern>/shop/addCategory.jsp</url-pattern>
+        <url-pattern>/shop/changepass.jsp</url-pattern>
+        <url-pattern>/shop/editCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageFood.jsp</url-pattern>
+        <url-pattern>/shop/profileShop.jsp</url-pattern>
+        <url-pattern>/shop/shopHome.jsp</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/actionshop</url-pattern>
+        <url-pattern>/AddFoodServlet</url-pattern>
+        <url-pattern>/DeleteFoodServlet</url-pattern>
+        <url-pattern>/EditFoodServlet</url-pattern>
+        
+        <url-pattern>/shop/addCategory.jsp</url-pattern>
+        <url-pattern>/shop/changepass.jsp</url-pattern>
+        <url-pattern>/shop/editCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageFood.jsp</url-pattern>
+        <url-pattern>/shop/profileShop.jsp</url-pattern>
+        <url-pattern>/shop/shopHome.jsp</url-pattern>
+        
         <url-pattern>/profile</url-pattern>
         <url-pattern>/changepass</url-pattern>
-        <url-pattern>/manageFood.jsp</url-pattern>
-        <url-pattern>/shopHome.jsp</url-pattern>
-        <url-pattern>/changepass.jsp</url-pattern>
-        <url-pattern>/profile.jsp</url-pattern>
+        
+        <url-pattern>/customer/changepass.jsp</url-pattern>
+        <url-pattern>/customer/profile.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>ActionCustomer</servlet-name>
@@ -55,20 +88,20 @@
         <servlet-class>controller.ResetPasswordServerlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddFoodServlet</servlet-name>
-        <servlet-class>controller.AddFoodServlet</servlet-class>
+        <servlet-name>AddCategory</servlet-name>
+        <servlet-class>controller.AddCategory</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CategoryServlet</servlet-name>
         <servlet-class>controller.CategoryServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeleteFoodServlet</servlet-name>
-        <servlet-class>controller.DeleteFoodServlet</servlet-class>
+        <servlet-name>DeleteCategory</servlet-name>
+        <servlet-class>controller.DeleteCategory</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EditFoodServlet</servlet-name>
-        <servlet-class>controller.EditFoodServlet</servlet-class>
+        <servlet-name>EditCategory</servlet-name>
+        <servlet-class>controller.EditCategory</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DetailControl</servlet-name>
@@ -115,7 +148,7 @@
         <url-pattern>/reset</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddFoodServlet</servlet-name>
+        <servlet-name>AddCategory</servlet-name>
         <url-pattern>/AddFoodServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -123,11 +156,11 @@
         <url-pattern>/CategoryServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteFoodServlet</servlet-name>
+        <servlet-name>DeleteCategory</servlet-name>
         <url-pattern>/DeleteFoodServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditFoodServlet</servlet-name>
+        <servlet-name>EditCategory</servlet-name>
         <url-pattern>/EditFoodServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

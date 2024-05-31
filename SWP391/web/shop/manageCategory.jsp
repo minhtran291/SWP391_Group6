@@ -107,7 +107,7 @@
                             <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
                                 Thể loại</button>
                             <ul class="dropdown-menu">
-                                <c:forEach var="c" items="${cList}">
+                                <c:forEach var="c" items="${categoryList}">
                                     <li><a class="dropdown-item" 
                                            href="actionshop?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
                                     </c:forEach>

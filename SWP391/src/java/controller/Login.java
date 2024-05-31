@@ -105,7 +105,6 @@ public class Login extends HttpServlet {
             else if(acc.getRoleid() == 2){
                 response.sendRedirect("actionshop?action=homeFood");
             }
-            
         }
     }
 

@@ -12,12 +12,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import model.Category;
 
 /**
  *
  * @author admin
  */
-public class EditFoodServlet extends HttpServlet {
+public class AddCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +38,10 @@ public class EditFoodServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditFoodServlet</title>");
+            out.println("<title>Servlet AddFoodServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditFoodServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddFoodServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,9 +59,7 @@ public class EditFoodServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.getRequestDispatcher("editCategory.jsp").forward(request, response);
-
+        request.getRequestDispatcher("/shop/addCategory.jsp").forward(request, response);
     }
 
     /**
@@ -73,17 +73,14 @@ public class EditFoodServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String updateCategory = request.getParameter("updateCategory");
-        String categoryIdS = request.getParameter("foodId");
-        try {
-            int categoryId = Integer.parseInt(categoryIdS);
-            CategoryDAO cd = new CategoryDAO();
-            cd.updateCategory(categoryId, updateCategory);
-            
-            response.sendRedirect("actioncustomer?action=getListFood");
-        } catch (Exception e) {
-        }
+        String categoryname = (String)request.getParameter("categoryname");
+                
+        // Tạo đối tượng FoodDAO để thêm sản phẩm
+        CategoryDAO cd = new CategoryDAO();
+        cd.addCategory(categoryname);
 
+        // Chuyển hướng về trang hiển thị danh sách sản phẩm
+        response.sendRedirect("actioncustomer?action=getListFood");
     }
 
     /**

@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author admin
  */
-public class DeleteFoodServlet extends HttpServlet {
+public class DeleteCategory extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -58,7 +58,7 @@ public class DeleteFoodServlet extends HttpServlet {
         FoodDAO foodDAO = new FoodDAO();
         foodDAO.deleteFood(foodId);
         
-        response.sendRedirect("actioncustomer?action=getListFood");
+        response.sendRedirect("actionshop?action=manageFood");
     } 
 
     /** 

@@ -83,7 +83,7 @@ public class CategoryServlet extends HttpServlet {
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("addCategory.jsp").forward(request, response);
+        request.getRequestDispatcher("shop/addCategory.jsp").forward(request, response);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
@@ -91,7 +91,7 @@ public class CategoryServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Category existingCategory = categoryDAO.getCategoryById(id);
         request.setAttribute("category", existingCategory);
-        request.getRequestDispatcher("editCategory.jsp").forward(request, response);
+        request.getRequestDispatcher("shop/editCategory.jsp").forward(request, response);
     }
 
     private void insertCategory(HttpServletRequest request, HttpServletResponse response)
