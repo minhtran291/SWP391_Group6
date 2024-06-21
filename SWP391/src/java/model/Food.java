@@ -3,12 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+
 import java.sql.Date;
+
 /**
  *
  * @author Dell
  */
 public class Food {
+
     private int foodId;
     private String foodName;
     private double price;
@@ -18,13 +21,13 @@ public class Food {
     private int sold;
     private Category categoryId;
     private String image;
-    
+
     private int quantity;
 
     public Food() {
     }
-    
-    public Food(String foodName, double price, int stock, Category categoryId, String description, String image){
+
+    public Food(String foodName, double price, int stock, Category categoryId, String description, String image) {
         this.foodName = foodName;
         this.price = price;
         this.stock = stock;
@@ -33,7 +36,6 @@ public class Food {
         this.image = image;
     }
 
-   
     public Food(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image) {
         this.foodId = foodId;
         this.foodName = foodName;
@@ -53,14 +55,14 @@ public class Food {
     public void setFoodId(int foodId) {
         this.foodId = foodId;
     }
-     public int getQuantity() {
+
+    public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
 
     public String getFoodName() {
         return foodName;
@@ -125,5 +127,10 @@ public class Food {
     public void setImage(String image) {
         this.image = image;
     }
-    
+
+    @Override
+    public String toString() {
+        return String.valueOf(foodId);
+    }
+
 }

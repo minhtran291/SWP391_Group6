@@ -9,23 +9,73 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Image;
+
 /**
  *
  * @author anhdo
  */
-public class ImageDAO extends DBContext{
-    public ArrayList<Image> getImgbyFoodId(String foodIid){
-        ArrayList<Image> listimg = new ArrayList<>();
-        String sql = "select * from dbo.image where food_id = ?";
+public class ImageDAO extends DBContext {
+
+    public Image getImgbyFoodId1(String foodIid) {
+        String sql = "select top(1) *\n"
+                + "from dbo.image\n"
+                + "where food_id = ?\n"
+                + "order by image_id asc";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, foodIid);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                listimg.add(new Image(rs.getInt(1), rs.getString(2), rs.getInt(3)));
+            while (rs.next()) {
+                return new Image(rs.getInt(1), rs.getString(2), rs.getInt(3));
             }
         } catch (Exception e) {
         }
-        return listimg;
+        return null;
+    }
+
+    public Image getImgbyFoodId2(String foodIid) {
+        String sql = "WITH OrderedImages AS (\n"
+                + "    SELECT \n"
+                + "        image_id,\n"
+                + "        image,\n"
+                + "        food_id,\n"
+                + "        ROW_NUMBER() OVER (ORDER BY image_id) AS row_num,\n"
+                + "        COUNT(*) OVER () AS total_count\n"
+                + "    FROM [SWP391].[dbo].[image]\n"
+                + "    WHERE food_id = ?\n"
+                + ")\n"
+                + "SELECT \n"
+                + "    image_id,\n"
+                + "    image,\n"
+                + "    food_id\n"
+                + "FROM OrderedImages\n"
+                + "WHERE row_num = (total_count + 1) / 2;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, foodIid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Image(rs.getInt(1), rs.getString(2), rs.getInt(3));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public Image getImgbyFoodId3(String foodIid) {
+        String sql = "select top(1) *\n"
+                + "from dbo.image\n"
+                + "where food_id = ?\n"
+                + "order by image_id desc";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, foodIid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Image(rs.getInt(1), rs.getString(2), rs.getInt(3));
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

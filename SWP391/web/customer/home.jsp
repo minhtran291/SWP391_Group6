@@ -15,6 +15,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/dd760d7b93.js" crossorigin="anonymous"></script>
+       
         <title>Trang chủ</title>
         <style>
             .navbar-nav {
@@ -46,6 +47,7 @@
                 line-height: 20px;
                 text-align: center;
             }
+            
 
         </style>
     </head>
@@ -91,6 +93,11 @@
                                             Đăng xuất
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                            Xem lại bình luận
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             
@@ -122,7 +129,7 @@
                 </div>
             </div>
         </nav>
-
+ 
         <c:set var="n" value="${currentPage}"/>
 
         <div class="flex-grow-1" >
@@ -150,7 +157,7 @@
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center">
                     <c:forEach var="f" items="${foodOnCurrentPage}">
                         <li class="m-3 border rounded-1 border-dark text-center">
-                            <a class="text-decoration-none" href="detail?foodId=${f.foodId}">
+                            <a class="text-decoration-none" href="detail?action=detail&foodId=${f.foodId}">
                                 <img src="${f.image}" class="img-fluid" 
                                      style="width: 250px; height: 210px" alt="${f.foodName}"/>
                                 <p class="text-muted fw-bold fs-5">${f.foodName}</p>
@@ -167,10 +174,13 @@
                                         type="button">Hết hàng</button>
                             </c:if>
                             <c:if test="${f.stock > 0}">
-                                <a class="btn btn-primary"
+                                <a class="btn btn-primary" 
                                    href="add-to-cart?id=${f.foodId}&page=${page}">
                                     Thêm vào giỏ hàng
+                                    
                                 </a>
+                                    
+                                    
                             </c:if>
                         </li>
                     </c:forEach>
@@ -197,28 +207,7 @@
             </c:forEach>
         </ul>
 
-        <footer>
-            <div class="bg-dark">
-                <div class="container text-white">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Liên hệ</h4>
-                            <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
-                            <p>Email: minh291@gmail.com</p>
-                            <p>Số điện thoại: 0123456789</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Liên kết</h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Trang chủ</a></li>
-                                <li><a href="#">Giới thiệu</a></li>
-                                <li><a href="#">Sản phẩm</a></li>
-                                <li><a href="#">Liên hệ</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        
+        <jsp:include page="../footer.jsp"></jsp:include>
     </body>
 </html>

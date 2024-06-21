@@ -5,6 +5,7 @@
 package controller;
 
 import dal.CategoryDAO;
+import dal.CommentDAO;
 import dal.FoodDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +18,9 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.Category;
+import model.Comment;
 import model.Food;
+import model.User;
 
 /**
  *
@@ -27,6 +30,7 @@ public class ActionCustomer extends HttpServlet {
 
     CategoryDAO cd = new CategoryDAO();
     FoodDAO fd = new FoodDAO();
+    CommentDAO cmtd = new CommentDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,6 +84,7 @@ public class ActionCustomer extends HttpServlet {
             case "cart":
                 goToCart(request, response);
                 break;
+            
         }
 
     }
@@ -247,5 +252,5 @@ public class ActionCustomer extends HttpServlet {
         request.setAttribute("cid", categoryId);
         pagingForFood(request, response, numberPerPage, listFoodByCategory);
     }
-
+ 
 }

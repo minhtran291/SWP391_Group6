@@ -41,7 +41,7 @@ public class FoodDAO extends DBContext {
         }
         return listFood;
     }
-    
+
     public ArrayList<Food> getFoodByCategory(String categoryId) {
         ArrayList<Food> listFood = new ArrayList<>();
         String sql = "select * from food "
@@ -249,56 +249,56 @@ public class FoodDAO extends DBContext {
         }
         return true;
     }
-    
-    public Food getFoodByID(String foodIid) {
-        String sql = "select * from dbo.food f join dbo.image i on f.food_id=i.food_id where f.food_id=?";
-        //chay lenhj truy van
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, foodIid);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                return new Food(rs.getInt(1), 
-                        rs.getString(2), 
-                        rs.getDouble(3), 
-                        rs.getInt(4), 
-                        rs.getDate(5), 
-                        rs.getString(6), 
-                        rs.getInt(7), 
-                        cd.getCategoryById(rs.getInt("category_id")), 
-                        rs.getString(9));
 
+    public Food getFoodByID(String foodId) {
+        String sql = "select * from food "
+                + "where food_id =? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, foodId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Food(rs.getInt("food_id"),
+                        rs.getString("food_name"),
+                        rs.getFloat("price"),
+                        rs.getInt("stock"),
+                        rs.getDate("create_date"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        cd.getCategoryById(rs.getInt("category_id")),
+                        rs.getString("image"));
             }
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (Exception e) {
         }
         return null;
     }
-      public List<Food> getsameFood(String id) {
+
+    public List<Food> getsameFood(String id) {
         List<Food> list = new ArrayList<>();
-        String sql = "  SELECT top(4) * \n"
-                + "FROM food \n"
-                + "WHERE food_id<> ? and category_id IN (\n"
-                + "    SELECT category_id \n"
-                + "    FROM food \n"
-                + "    WHERE food_id = ? \n"
-                + ");\n"
-                + "";
-        //chay lenhj truy van
+        String sql = "SELECT *\n"
+                + "FROM [SWP391].[dbo].[food]\n"
+                + "WHERE [category_id] = (\n"
+                + "        SELECT [category_id]\n"
+                + "        FROM [SWP391].[dbo].[food]\n"
+                + "        WHERE [food_id] = ?\n"
+                + "      )\n"
+                + "  AND [food_id] <> ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, id);
             st.setString(2, id);
+
+            //   st.setString(2, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Food s = new Food(rs.getInt(1), 
-                        rs.getString(2), 
-                        rs.getDouble(3), 
-                        rs.getInt(4), 
-                        rs.getDate(5), 
-                        rs.getString(6), 
-                        rs.getInt(7), 
-                        cd.getCategoryById(rs.getInt("category_id")), 
+                Food s = new Food(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getDate(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        cd.getCategoryById(rs.getInt("category_id")),
                         rs.getString(9));
                 list.add(s);
             }
@@ -307,5 +307,54 @@ public class FoodDAO extends DBContext {
         }
 
         return list;
+    }
+    public List<Food> getlistfoodbyId(String id) {
+        List<Food> list = new ArrayList<>();
+        String sql = "  select * from dbo.food where food_id=? ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+
+            //   st.setString(2, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Food s = new Food(rs.getInt("food_id"),
+                        rs.getString("food_name"),
+                        rs.getFloat("price"),
+                        rs.getInt("stock"),
+                        rs.getDate("create_date"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        cd.getCategoryById(rs.getInt("category_id")),
+                        rs.getString("image"));
+                list.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return list;
+    }
+     public Food getFoodByName(String foodName) {
+        String sql = "select * from food "
+                + "where food_name =? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, foodName);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Food(rs.getInt("food_id"),
+                        rs.getString("food_name"),
+                        rs.getFloat("price"),
+                        rs.getInt("stock"),
+                        rs.getDate("create_date"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        cd.getCategoryById(rs.getInt("category_id")),
+                        rs.getString("image"));
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

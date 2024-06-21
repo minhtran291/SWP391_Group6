@@ -101,4 +101,10 @@ public class User {
     public int getRoleid(){
         return roleid;
     }
+
+    @Override
+    public String toString() {
+        return username;
+    }
+    
 }

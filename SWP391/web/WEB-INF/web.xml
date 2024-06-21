@@ -116,6 +116,22 @@
         <servlet-name>EmployeeControl</servlet-name>
         <servlet-class>controller.EmployeeControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Reviews</servlet-name>
+        <servlet-class>controller.Reviews</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Comment</servlet-name>
+        <servlet-class>controller.CommentControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Mycomment</servlet-name>
+        <servlet-class>Mycomment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageComment</servlet-name>
+        <servlet-class>controller.ManageComment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>
         <url-pattern>/actioncustomer</url-pattern>
@@ -191,5 +207,9 @@
     <servlet-mapping>
         <servlet-name>EmployeeControl</servlet-name>
         <url-pattern>/employee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageComment</servlet-name>
+        <url-pattern>/managecomment</url-pattern>
     </servlet-mapping>
 </web-app>
