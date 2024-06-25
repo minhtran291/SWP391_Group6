@@ -13,15 +13,6 @@
             <file>file:/D:/PRJ_SWP391/SWP391/web/customer/cart.jsp</file>
             <file>file:/D:/PRJ_SWP391/SWP391/web/detail.jsp</file>
         </group>
-        <group>
-            <file>file:/D:/SWP391/Code/SWP391_Group6/SWP391/src/java/model/Food.java</file>
-            <file>file:/D:/SWP391/Code/SWP391_Group6/SWP391/web/detail.jsp</file>
-            <file>file:/D:/SWP391/Code/SWP391_Group6/SWP391/src/java/controller/ManageComment.java</file>
-            <file>file:/D:/SWP391/Code/SWP391_Group6/SWP391/src/java/dal/CommentDAO.java</file>
-            <file>file:/D:/SWP391/Code/SWP391_Group6/SWP391/web/managecomment.jsp</file>
-            <file>file:/D:/SWP391/Code/SWP391_Group6/SWP391/web/customer/home.jsp</file>
-            <file>file:/D:/SWP391/Code/SWP391_Group6/SWP391/src/java/model/Comment.java</file>
-            <file>file:/D:/SWP391/Code/SWP391_Group6/SWP391/web/footer.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

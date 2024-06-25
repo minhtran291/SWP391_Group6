@@ -59,7 +59,7 @@
                     <!--                    có sự khác nhau trong narbar-nav tự css và sử dụng các class
                                         được định nghĩa sẵn trong bootstrap 5 như d-flex và flex-row-->
                     <li class="nav-item">
-                        <a class="nav-link" href="actioncustomer?action=getListFood">
+                        <a class="nav-link" href="home">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -84,6 +84,11 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Lịch sử
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="profile">
                                             Hồ sơ
                                         </a>
@@ -103,7 +108,7 @@
                             
 
                             <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                                <div class="cart-count">${countfood}</div>
+                                <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -121,7 +126,7 @@
                                 <i class="fa fa-user text-body"></i>
                             </a>
                            <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                                <div class="cart-count">${countfood}</div>
+                                <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -173,14 +178,12 @@
                                 <button class="btn btn-danger" 
                                         type="button">Hết hàng</button>
                             </c:if>
-                            <c:if test="${f.stock > 0}">
-                                <a class="btn btn-primary" 
-                                   href="add-to-cart?id=${f.foodId}&page=${page}">
+                           <c:if test="${f.stock > 0}">
+                                <a class="btn btn-primary"
+                                   onclick="addCart('${f.foodId}','${page}', '${acc.userid}')"
+                                   href="#">
                                     Thêm vào giỏ hàng
-                                    
                                 </a>
-                                    
-                                    
                             </c:if>
                         </li>
                     </c:forEach>
@@ -210,4 +213,17 @@
         
         <jsp:include page="../footer.jsp"></jsp:include>
     </body>
+    <script>
+        function addCart(id,page,user){
+            console.log("id",id)
+            console.log("user",page)
+            
+            if(user == ""){
+                window.location = "login";
+            }
+            else{
+                window.location = "add-to-cart?id="+id+"&page="+page
+            }
+        }
+    </script>
 </html>

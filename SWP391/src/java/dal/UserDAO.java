@@ -331,5 +331,29 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
+               public User getUserByName(String name) {
+        String sql = "SELECT * FROM users WHERE user_name = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setUserid(rs.getInt("user_id"));
+                user.setUsername(rs.getString("user_name"));
+                user.setPassword(rs.getString("password"));
+                user.setGender(rs.getInt("gender"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone_number"));
+
+                user.setRoleid(rs.getInt("role_id"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
   
 }

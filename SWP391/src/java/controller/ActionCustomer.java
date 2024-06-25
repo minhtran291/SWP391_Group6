@@ -7,6 +7,7 @@ package controller;
 import dal.CategoryDAO;
 import dal.CommentDAO;
 import dal.FoodDAO;
+import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,6 +22,8 @@ import model.Category;
 import model.Comment;
 import model.Food;
 import model.User;
+import model.Cart;
+import model.Order;
 
 /**
  *
@@ -70,6 +73,20 @@ public class ActionCustomer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+
+        User u = (User) session.getAttribute("acc");
+        if (u != null) {
+            List<Food> list = (List<Food>) session.getAttribute("cart");
+            if (list != null) {
+                session.setAttribute("count_cart", list.size());
+            } else {
+                session.setAttribute("count_cart", 0);
+            }
+        } else {
+            session.setAttribute("count_cart", 0);
+        }
         String action = request.getParameter("action");
         switch (action) {
             case "getListFood":
@@ -84,7 +101,14 @@ public class ActionCustomer extends HttpServlet {
             case "cart":
                 goToCart(request, response);
                 break;
-            
+             case "history":
+                goToHistory(request, response);
+                break;
+            case "history_detail":
+                history_detail(request, response);
+                break;
+            case "remove-order":
+                removeOrder(request, response);
         }
 
     }
@@ -114,54 +138,132 @@ public class ActionCustomer extends HttpServlet {
     }// </editor-fold>
     
     
-    private void goToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        
+    private void removeOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
         HttpSession session = request.getSession();
-        
-        Cookie c[] = request.getCookies();
-        Cookie cart = null;
-        for(Cookie e: c){
-            if(e.getName().compareTo("cart") == 0){
-                cart = e;
+        User u = (User) session.getAttribute("acc");
+        if (u != null) {
+            OrderDAO od = new OrderDAO();
+            List<Order> list = od.getOrder(u.getUsername());
+            Order o = od.getOrderById(Integer.parseInt(id));
+            if (o.getStatus() == 0) {
+                od.delete(id);
+                response.sendRedirect("actioncustomer?action=history");
+            } else {
+                request.setAttribute("err", "Đơn hàng đã được giao, không thể hủy");
+                request.setAttribute("list", list);
+                request.getRequestDispatcher("/customer/history.jsp").forward(request, response);
             }
+        } else {
+            response.sendRedirect("login");
         }
-        
+    }
+
+    private void goToHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+        if (u != null) {
+            OrderDAO od = new OrderDAO();
+            List<Order> list = od.getOrder(u.getUsername());
+            
+            if (list.size() == 0) {
+                request.setAttribute("list", null);
+            } else {
+                for (Order o : list) {
+                    o.setAddress(od.getaddress(o.getId()));
+                    o.setDate(od.getDate(o.getId()));
+                    switch (o.getStatus()) {
+                        case 0:
+                            o.setStatus_text("Đơn hàng đã được order");
+                            break;
+                        case 1:
+                            o.setStatus_text("Đơn hàng đang được giao");
+                            break;
+                        case 2:
+                            o.setStatus_text("Giao hàng thành công");
+                            break;
+                        default:
+                            throw new AssertionError();
+                    }
+                }
+                request.setAttribute("list", list);
+            }
+
+            request.getRequestDispatcher("/customer/history.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("login");
+        }
+    }
+
+    private void history_detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+        if (u != null) {
+            String id = request.getParameter("id");
+            OrderDAO od = new OrderDAO();
+            List<Food> list = od.GetOrderDetail(Integer.parseInt(id));
+            Order o = od.getOrderById(Integer.parseInt(id));
+            o.setDate(od.getDate(o.getId()));
+            String address = od.getaddress(o.getId());
+            switch (o.getStatus()) {
+                case 0:
+                    o.setStatus_text("Đơn hàng đã được order");
+                    break;
+                case 1:
+                    o.setStatus_text("Đơn hàng đang được giao");
+                    break;
+                case 2:
+                    o.setStatus_text("Giao hàng thành công");
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+            request.setAttribute("address", address);
+            request.setAttribute("user", u);
+            request.setAttribute("list", list);
+            request.setAttribute("order", o);
+            request.getRequestDispatcher("/customer/historyDetail.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("login");
+        }
+    }
+
+    private void goToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
         double total = 0;
-        
-        
-        if(cart != null && !cart.getValue().isEmpty()){
-            FoodDAO fd = new FoodDAO();
-            List<Food> list = new ArrayList<>();   // 2:1_3:1  =>  [2:1, 3:1];   2:1 => [2,1]
-            
-            String product[] = cart.getValue().split("_");
-            
-            for(String p : product){
-                String arr[] = p.split(":");
-                Food f = fd.getFoodByID(arr[0]);
-                f.setQuantity(Integer.parseInt(arr[1]));
-                list.add(f);
-                total += f.getPrice() * f.getQuantity();
+        User u = (User) session.getAttribute("acc");
+        if (u != null) {
+            List<Food> list = (List<Food>) session.getAttribute("cart");
+            if (list != null) {
+                System.out.println(list.size());
+                if (list.size() == 0) {
+                    request.setAttribute("cart", null);
+                    System.out.println("co");
+                } else {
+                    request.setAttribute("cart", list);
+                    for (Food f : list) {
+                        total += f.getPrice();
+                    }
+                }
+
+            } else {
+                request.setAttribute("cart", null);
             }
-            
-            request.setAttribute("total",total);
-            request.setAttribute("count", list.size());
-            request.setAttribute("cart", list);
-            session.setAttribute("cart_s", list);
-            
-        }
-        else{
-            
+
+        } else {
             request.setAttribute("cart", null);
         }
-        
-       request.getRequestDispatcher("/customer/cart.jsp").forward(request, response);
+
+        session.setAttribute("total_s", total);
+        request.getRequestDispatcher("/customer/cart.jsp").forward(request, response);
     }
 
     private void getAllFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        ArrayList<Food> fList = (ArrayList)session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList)session.getAttribute("fList");
-        ArrayList<Category> cList = (ArrayList)session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList)session.getAttribute("cList");
+         ArrayList<Food> fList = (ArrayList) session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList) session.getAttribute("fList");
+        ArrayList<Category> cList = (ArrayList) session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList) session.getAttribute("cList");
         // ko phan phai lan dau tien chay ko can get all nua chi goi du lieu ve
         session.setAttribute("fList", fList);
         session.setAttribute("cList", cList);
@@ -206,35 +308,33 @@ public class ActionCustomer extends HttpServlet {
         
         
          */
-        
+
         Cookie c[] = request.getCookies();
         Cookie cart = null;
         int count = 0;
-        
-        for(Cookie e: c){
-            if(e.getName().compareTo("cart") == 0){
+
+        for (Cookie e : c) {
+            if (e.getName().compareTo("cart") == 0) {
                 cart = e;
             }
         }
-        
-        if(cart != null){
+
+        if (cart != null) {
             String s[] = cart.getValue().split("_");
-            for(String f : s){
-                if(!f.isBlank()){
+            for (String f : s) {
+                if (!f.isBlank()) {
                     count++;
                 }
             }
         }
-        
-        
-        
+
         session.setAttribute("countfood", count);
         session.setAttribute("currentPage", currentPage);
         session.setAttribute("totalPages", totalPages);
         session.setAttribute("foodOnCurrentPage", foodOnCurrentPage);
         request.setAttribute("page", currentPage);
         request.getRequestDispatcher("/customer/home.jsp").forward(request, response);
-        
+
     }
 
     private void getFoodBySearch(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {

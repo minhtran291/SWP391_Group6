@@ -12,6 +12,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 
@@ -22,6 +24,7 @@ import model.Category;
 public class CategoryServlet extends HttpServlet {
 
     private CategoryDAO categoryDAO;
+    
 
     @Override
     public void init() {
@@ -43,8 +46,8 @@ public class CategoryServlet extends HttpServlet {
             case "edit":
                 showEditForm(request, response);
                 break;
-            case "delete":
-                deleteCategory(request, response);
+            case "updateStatus":
+                updateCategoryStatus(request, response);
                 break;
             case "list":
             default:
@@ -76,7 +79,7 @@ public class CategoryServlet extends HttpServlet {
 
     private void listCategory(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Category> listCategory = categoryDAO.getAllCategory();
+        List<Category> listCategory = categoryDAO.getCategoryManagerment();
         request.setAttribute("categoryList", listCategory);
         request.getRequestDispatcher("shop/manageCategory.jsp").forward(request, response);
     }
@@ -109,10 +112,14 @@ public class CategoryServlet extends HttpServlet {
         response.sendRedirect("CategoryServlet?action=manageCategory");
     }
 
-    private void deleteCategory(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    private void updateCategoryStatus(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        HttpSession session = request.getSession();
         int id = Integer.parseInt(request.getParameter("id"));
-        categoryDAO.deleteCategory(id);
-        response.sendRedirect("CategoryServlet?action=manageCategory");
+        int status = Integer.parseInt(request.getParameter("status"));
+        categoryDAO.updateCategoryStatus(id,status);
+        ArrayList<Category> cList =(ArrayList) categoryDAO.getAllCategory();
+        session.setAttribute("cList", cList);
+        request.getRequestDispatcher("CategoryServlet?action=manageCategory").forward(request, response);
     }
 }

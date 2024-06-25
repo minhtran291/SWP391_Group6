@@ -150,6 +150,7 @@
                         <th>Mã thể loại</th>
                         <th>Tên thể loại</th>
                         <th>Tùy chọn</th>
+
                     </tr>
                     <!-- Iterate through categories -->
                     <c:forEach var="c" items="${categoryList}">
@@ -183,9 +184,17 @@
                                     </div>
                                 </div>
 
-                                <a class="btn btn-lg" href="CategoryServlet?action=delete&id=${c.category_id}" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại ${c.category_name} không?')">
-                                    <i class="fa fa-trash-can"></i>
-                                </a>
+                                
+                                <c:if test="${c.status==1}">
+                                    <a class="btn btn-danger" href="CategoryServlet?action=updateStatus&id=${c.category_id}&status=0" >
+                                        Ẩn
+                                    </a>
+                                </c:if>
+                                <c:if test="${c.status==0}">
+                                    <a class="btn btn-danger" href="CategoryServlet?action=updateStatus&id=${c.category_id}&status=1" >
+                                        Hiện
+                                    </a>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
@@ -203,20 +212,20 @@
                           href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                     <p><a class="btn text-white btn-primary">Quản lí đơn hàng</a></p>
                     <p><a href="employee?action=manageEmp"
-                            class="btn text-white btn-primary">Quản lí nhân viên</a></p>
+                          class="btn text-white btn-primary">Quản lí nhân viên</a></p>
                     <p><a class="btn text-white btn-primary">Phân đơn hàng</a></p>
                 </div>
             </div>
 
             <!-- Pagination -->
-<!--            <ul class="pagination justify-content-center">
-                 Pagination logic here 
-                <c:forEach var="p" begin="${1}" end="${totalPages}">
-                    <li class="page-item ${p == currentPage ? 'active' : ''}">
-                        <a class="page-link" href="CategoryServlet?action=list&page=${p}">${p}</a>
-                    </li>
-                </c:forEach>
-            </ul>-->
+            <!--            <ul class="pagination justify-content-center">
+                             Pagination logic here 
+            <c:forEach var="p" begin="${1}" end="${totalPages}">
+                <li class="page-item ${p == currentPage ? 'active' : ''}">
+                    <a class="page-link" href="CategoryServlet?action=list&page=${p}">${p}</a>
+                </li>
+            </c:forEach>
+        </ul>-->
 
             <footer>
                 <!-- Footer content here -->

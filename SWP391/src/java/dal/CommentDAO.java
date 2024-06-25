@@ -59,7 +59,7 @@ public class CommentDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 return new Comment(rs.getInt("comment_id"),
-                        fdao.getFoodByID(rs.getString("food_id")),
+                        fdao.getFoodDetailByID(rs.getString("food_id")),
                         udao.getUser(rs.getString("user_name")),
                         rs.getString("comment_text"),
                         rs.getDate("create_date"));
@@ -78,7 +78,7 @@ public class CommentDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Comment(rs.getInt("comment_id"),
-                        fdao.getFoodByID(rs.getString("food_id")),
+                        fdao.getFoodDetailByID(rs.getString("food_id")),
                         udao.getUser(rs.getString("user_name")),
                         rs.getString("comment_text"),
                         rs.getDate("create_date")));

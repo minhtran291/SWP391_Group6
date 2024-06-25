@@ -128,9 +128,21 @@ public class Food {
         this.image = image;
     }
 
-    @Override
+    
+   @Override
     public String toString() {
-        return String.valueOf(foodId);
-    }
-
+    return "Food{" +
+            "foodId=" + foodId +
+            ", foodName='" + foodName + '\'' +
+            ", price=" + price +
+            ", stock=" + stock +
+            ", createDate=" + createDate +
+            ", description='" + description + '\'' +
+            ", sold=" + sold +
+            ", categoryId=" + categoryId +
+            ", image='" + image + '\'' +
+            ", quantity=" + quantity +
+            '}';
+}
+    
 }

@@ -208,8 +208,49 @@
         <servlet-name>EmployeeControl</servlet-name>
         <url-pattern>/employee</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>orderDetail</servlet-name>
+        <servlet-class>controller.orderDetail</servlet-class>
+    </servlet>
+      <servlet>
+        <servlet-name>ContactServlet</servlet-name>
+        <servlet-class>controller.ContactServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewFoodServlet</servlet-name>
+        <servlet-class>controller.NewFoodServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BestSellersServlet</servlet-name>
+        <servlet-class>controller.BestSellersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>homePage</servlet-name>
+        <servlet-class>controller.homePage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homePage</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>ManageComment</servlet-name>
         <url-pattern>/managecomment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactServlet</servlet-name>
+        <url-pattern>/ContactServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewFoodServlet</servlet-name>
+        <url-pattern>/NewFoodServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BestSellersServlet</servlet-name>
+        <url-pattern>/BestSellersServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>homePage</servlet-name>
+        <url-pattern>/homePage</url-pattern>
     </servlet-mapping>
 </web-app>

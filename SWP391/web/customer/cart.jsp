@@ -79,6 +79,11 @@
                                     <i class="fa fa-user text-body"></i>
                                 </button>
                                 <ul class="dropdown-menu">
+                                     <li>
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Lịch sử
+                                        </a>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="profile">
                                             Hồ sơ
@@ -94,7 +99,7 @@
 
 
                             <a class="btn btn-square bg-white rounded-circle cart" href="">
-                                <div class="cart-count">${countfood}</div>
+                                <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -112,7 +117,7 @@
                                 <i class="fa fa-user text-body"></i>
                             </a>
                             <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                                <div class="cart-count">${countfood}</div>
+                                <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -137,13 +142,18 @@
                                         <div class="d-flex justify-content-between align-items-center mb-4">
                                             <div>
                                                 <p class="mb-1">Giỏ hàng của bạn</p>
-                                                <p class="mb-0">Bạn có ${countfood} sản phẩm trong giỏ hàng</p>
+                                                <p class="mb-0">Bạn có ${count_cart} sản phẩm trong giỏ hàng</p>
                                             </div>
 
                                         </div>
 
 
                                         <c:if test="${cart == null}">
+
+                                            <div class="alert alert-warning">Bạn không có bất kì sản phẩm nào trong giỏ hàng</div>
+                                        </c:if>
+                                            
+                                        <c:if test="${cart.size() == 0}">
 
                                             <div class="alert alert-warning">Bạn không có bất kì sản phẩm nào trong giỏ hàng</div>
                                         </c:if>
@@ -177,9 +187,9 @@
                                                             </div>
                                                             <div class="d-flex flex-row gap-4 align-items-center justify-content-between" style="width: 40%">
                                                                 <div class="quantity gap-3 d-flex flex-row align-items-center" style="width: 50px;">
-                                                                    <div><a href="add-to-cart?id=${p.foodId}&plus=1"><i class="fa-solid fa-plus"></i></a></div>
+                                                                    <div><a href="add-to-cart?id=${p.foodId}&minus=1"><i class="fa-solid fa-minus"></i></a></div>
                                                                     <h5 class="fw-normal mb-0">${p.quantity}</h5>
-                                                                    <div><a href="add-to-cart?id=${p.foodId}&minus=1"><i class="fa-solid fa-minus"></a></i></div>
+                                                                    <div><a href="add-to-cart?id=${p.foodId}&plus=1"><i class="fa-solid fa-plus"></a></i></div>
                                                                 </div>
                                                                 <div style="width: 80px;">
                                                                     <h5 class="mb-0">${p.price} VND</h5>
@@ -210,28 +220,17 @@
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                                     <h5 class="mb-0">Thanh Toán</h5>
-                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                                                         class="img-fluid rounded-3" style="width: 45px;" alt="Avatar">
+                                                   
                                                 </div>
 
 
 
-                                                <form class="mt-4">
-                                                    <div data-mdb-input-init class="form-outline form-white mb-4">
-                                                        <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                                                               placeholder="Địa chỉ" />
-                                                        <label class="form-label" for="typeName">Địa chỉ</label>
-                                                    </div>
-
-                                                    <div data-mdb-input-init class="form-outline form-white mb-4">
-                                                        <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
-                                                               placeholder="Số điện thoại" minlength="19" maxlength="19" />
-                                                        <label class="form-label" for="typeText">Số điện thoại</label>
-                                                    </div>
+                                                <form class="mt-4" action="order">
+                                                   
 
 
 
-                                                </form>
+                                               
 
                                                 <hr class="my-4">
 
@@ -239,18 +238,21 @@
 
                                                 <div class="d-flex justify-content-between mb-4">
                                                     <p class="mb-2">Tổng thanh toán</p>
-                                                    <p class="mb-2">${total} VND</p>
+                                                    <p class="mb-2">${total_s} VND</p>
                                                 </div>
 
                                                 <c:if test="${cart != null}">
-                                                    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
-                                                        <a href="order"><div class="d-flex justify-content-between">
-
-                                                                <span>Thanh toán <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
-                                                            </div></a>
+                                                    <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
+                                                       Tiếp tục
                                                     </button>
                                                 </c:if>
-
+                                                
+                                                <c:if test="${cart.size() == 0}">
+                                                    <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
+                                                       Tiếp tục
+                                                    </button>
+                                                </c:if>
+                                             </form>
                                             </div>
                                         </div>
 

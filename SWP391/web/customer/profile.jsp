@@ -76,6 +76,11 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Lịch sử
+                                        </a>
+                                    </li>
+                                <li>
                                     <a class="dropdown-item" href="profile">
                                         Hồ sơ
                                     </a>
@@ -90,7 +95,7 @@
 
 
                         <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                            <div class="cart-count">${countfood}</div>
+                             <div class="cart-count">${count_cart}}</div>
                             <i class="fa fa-shopping-bag text-body"></i>
                         </a>
                     </form>

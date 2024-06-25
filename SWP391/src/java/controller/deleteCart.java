@@ -4,6 +4,8 @@
  */
 package controller;
 
+
+import dal.FoodDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Cart;
+import model.Food;
+import model.User;
 
 /**
  *
@@ -36,7 +42,7 @@ public class deleteCart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet deleteCart</title>");            
+            out.println("<title>Servlet deleteCart</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet deleteCart at " + request.getContextPath() + "</h1>");
@@ -57,47 +63,37 @@ public class deleteCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String id = request.getParameter("id");
-        StringBuilder new_cart = new StringBuilder();
-        Cookie c[] = request.getCookies();
-        boolean check =false;
-        Cookie cart = null;
-        for(Cookie e: c){
-            if(e.getName().compareTo("cart") == 0){
-                cart = e;
-            }
-        }
-        
-        int count = 0;
-        
-        if(cart != null){
-            String f[] = cart.getValue().split("_");
-            for(String s: f){
-                System.out.println(s);
-                String arr[] = s.split(":");
-                if(arr[0].compareTo(id) != 0){
-                    count++;
-                    String product = arr[0]+":"+arr[1];
-                    new_cart.append(product).append("_");
-                }
-            }
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("countfood", count);
-            
-            cart.setValue(new_cart.toString());
-            response.addCookie(cart);
-            
-            
-            
-        }
-        
        
-        
-        response.sendRedirect("actioncustomer?action=cart");
-        
-        
-        
+
+        HttpSession s = request.getSession();
+
+        User u = (User) s.getAttribute("acc");
+        if (u != null) { 
+                List<Food> list =( List<Food>) s.getAttribute("cart");
+                if (list != null) {
+                    FoodDAO fd = new FoodDAO();
+                    Food f = fd.getFoodByID(id);
+                    
+                    for(int i=0 ; i< list.size(); i++){
+                        if(list.get(i).getFoodId() == f.getFoodId()){
+                            list.remove(i);
+                            break;
+                        }
+                    }
+                    
+                    s.setAttribute("cart", list);
+                    s.setAttribute("count_cart", list.size());
+                    response.sendRedirect("actioncustomer?action=cart");
+                } else {
+                    response.sendRedirect("actioncustomer?action=cart");
+                }
+           
+        } else {
+            response.sendRedirect("login");
+        }
+
     }
 
     /**

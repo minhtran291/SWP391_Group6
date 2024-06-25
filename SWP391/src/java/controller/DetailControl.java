@@ -19,11 +19,12 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import model.Food;
+import model.FoodDetail;
 import model.Image;
 import model.Review;
 import model.User;
 import model.Comment;
+import model.Food;
 
 /**
  *
@@ -68,16 +69,18 @@ public class DetailControl extends HttpServlet {
      protected void doGet_Detail(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
         String foodId = request.getParameter("foodId");
 
         FoodDAO dao = new FoodDAO();
         ImageDAO imgdao = new ImageDAO();
         CommentDAO cdao = new CommentDAO();
-        Food f = dao.getFoodByID(foodId);
+        FoodDetail fd = dao.getFoodDetailByID(foodId);
         Image img1 = imgdao.getImgbyFoodId1(foodId);
         Image img2 = imgdao.getImgbyFoodId2(foodId);
         Image img3 = imgdao.getImgbyFoodId3(foodId);
         List<Food> sameF = dao.getsameFood(foodId);
+        
         Comment cmt1 = cdao.getCommentbyFoodID(foodId,1);
         Comment cmt2 = cdao.getCommentbyFoodID(foodId,2);
         Comment cmt3 = cdao.getCommentbyFoodID(foodId,3);
@@ -104,7 +107,7 @@ public class DetailControl extends HttpServlet {
         request.setAttribute("img2", img2);
         request.setAttribute("img3", img3);
         request.setAttribute("sameF", sameF);
-        request.setAttribute("detail", f);
+        request.setAttribute("detail", fd);
         request.getRequestDispatcher("detail.jsp").forward(request, response);
     
      }

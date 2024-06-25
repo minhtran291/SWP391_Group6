@@ -57,6 +57,7 @@ public class Logout extends HttpServlet {
 //        processRequest(request, response);
         HttpSession session =request.getSession();
         session.removeAttribute("acc");
+        session.removeAttribute("cart");
         response.sendRedirect("actioncustomer?action=getListFood");
     } 
 

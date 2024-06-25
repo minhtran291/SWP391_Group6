@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Comment {
     private int commentId;
-    private Food foodId;
+    private FoodDetail foodId;
     private User userName;
     private String commentText;
     private Date createDate;
@@ -22,7 +22,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(int commentId, Food foodId, User userName, String commentText, Date createDate) {
+    public Comment(int commentId, FoodDetail foodId, User userName, String commentText, Date createDate) {
         this.commentId = commentId;
         this.foodId = foodId;
         this.userName = userName;
@@ -30,7 +30,7 @@ public class Comment {
         this.createDate = createDate;
     }
 
-    public Comment(int commentId, Food foodId, User userName, String commentText, Date createDate, Food foodName) {
+    public Comment(int commentId, FoodDetail foodId, User userName, String commentText, Date createDate, Food foodName) {
         this.commentId = commentId;
         this.foodId = foodId;
         this.userName = userName;
@@ -47,11 +47,11 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public Food getFoodId() {
+    public FoodDetail getFoodId() {
         return foodId;
     }
 
-    public void setFoodId(Food foodId) {
+    public void setFoodId(FoodDetail foodId) {
         this.foodId = foodId;
     }
 

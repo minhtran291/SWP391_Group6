@@ -6,11 +6,16 @@ package dal;
 
 import java.util.ArrayList;
 import model.Food;
+import model.FoodDetail;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import java.sql.Date;
+import model.Category;
+import java.sql.Connection;
+import java.sql.DriverManager;
 /**
  *
  * @author Dell
@@ -273,32 +278,31 @@ public class FoodDAO extends DBContext {
         return null;
     }
 
-    public List<Food> getsameFood(String id) {
+     public List<Food> getsameFood(String id) {
         List<Food> list = new ArrayList<>();
-        String sql = "SELECT *\n"
-                + "FROM [SWP391].[dbo].[food]\n"
-                + "WHERE [category_id] = (\n"
-                + "        SELECT [category_id]\n"
-                + "        FROM [SWP391].[dbo].[food]\n"
-                + "        WHERE [food_id] = ?\n"
-                + "      )\n"
-                + "  AND [food_id] <> ?";
+        String sql = "  SELECT * \n"
+                + "FROM food \n"
+                + "WHERE food_id<> ? and category_id IN (\n"
+                + "    SELECT category_id \n"
+                + "    FROM food \n"
+                + "    WHERE food_id = ? \n"
+                + ");\n"
+                + "";
+        //chay lenhj truy van
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, id);
             st.setString(2, id);
-
-            //   st.setString(2, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Food s = new Food(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(3),
-                        rs.getInt(4),
-                        rs.getDate(5),
-                        rs.getString(6),
-                        rs.getInt(7),
-                        cd.getCategoryById(rs.getInt("category_id")),
+                Food s = new Food(rs.getInt(1), 
+                        rs.getString(2), 
+                        rs.getDouble(3), 
+                        rs.getInt(4), 
+                        rs.getDate(5), 
+                        rs.getString(6), 
+                        rs.getInt(7), 
+                        cd.getCategoryById(rs.getInt("category_id")), 
                         rs.getString(9));
                 list.add(s);
             }
@@ -308,8 +312,8 @@ public class FoodDAO extends DBContext {
 
         return list;
     }
-    public List<Food> getlistfoodbyId(String id) {
-        List<Food> list = new ArrayList<>();
+    public List<FoodDetail> getlistfoodbyId(String id) {
+        List<FoodDetail> list = new ArrayList<>();
         String sql = "  select * from dbo.food where food_id=? ";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -318,7 +322,7 @@ public class FoodDAO extends DBContext {
             //   st.setString(2, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Food s = new Food(rs.getInt("food_id"),
+                FoodDetail s = new FoodDetail(rs.getInt("food_id"),
                         rs.getString("food_name"),
                         rs.getFloat("price"),
                         rs.getInt("stock"),
@@ -335,7 +339,7 @@ public class FoodDAO extends DBContext {
 
         return list;
     }
-     public Food getFoodByName(String foodName) {
+     public FoodDetail getFoodByName(String foodName) {
         String sql = "select * from food "
                 + "where food_name =? ";
         try {
@@ -343,7 +347,7 @@ public class FoodDAO extends DBContext {
             ps.setString(1, foodName);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new Food(rs.getInt("food_id"),
+                return new FoodDetail(rs.getInt("food_id"),
                         rs.getString("food_name"),
                         rs.getFloat("price"),
                         rs.getInt("stock"),
@@ -357,4 +361,130 @@ public class FoodDAO extends DBContext {
         }
         return null;
     }
+     
+//    public List<Food> selectAllBestSellers() {
+//        List<Food> bestSellers = new ArrayList<>();
+//        String query = "  select top 4 * \n"
+//                + "  from food\n"
+//                + "  order by sold DESC";
+//
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                int foodId = rs.getInt("foodId");
+//                String foodName = rs.getString("foodName");
+//                double price = rs.getDouble("price");
+//                int stock = rs.getInt("stock");
+//                Date createDate = rs.getDate("createDate");
+//                String description = rs.getString("description");
+//                String image = rs.getString("image");
+//                int categoryId = rs.getInt("categoryId");
+//                String categoryName = rs.getString("categoryName");
+//
+//                Category category = new Category(categoryId, categoryName);
+//                Food food = new Food(foodId, foodName, price, stock, createDate, description, stock, category, image);
+//                bestSellers.add(food);
+//            }
+//        } catch (SQLException ex) {
+//
+//        }
+//
+//        return bestSellers;
+//    }
+
+    public List<Food> selectAllBestSellers() {
+        
+        List<Food> listBestSellers = new ArrayList<>();
+        String sql = "SELECT TOP 4 * "
+                + "FROM food "
+                + "ORDER BY sold DESC;";
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Food s = new Food(
+                        rs.getInt("food_id"),
+                        rs.getString("food_name"),
+                        rs.getFloat("price"),
+                        rs.getInt("stock"),
+                        rs.getDate("create_date"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        cd.getCategoryById(rs.getInt("category_id")),
+                        rs.getString("image")
+                );
+                listBestSellers.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listBestSellers;
+    }
+    public List<Food> selectNewFoods() {
+        
+        List<Food> listNewFoods = new ArrayList<>();
+        String sql = "SELECT TOP 4 * "
+                + "FROM food "
+                + " ORDER BY create_date DESC;";
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Food s = new Food(
+                        rs.getInt("food_id"),
+                        rs.getString("food_name"),
+                        rs.getFloat("price"),
+                        rs.getInt("stock"),
+                        rs.getDate("create_date"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        cd.getCategoryById(rs.getInt("category_id")),
+                        rs.getString("image")
+                );
+                listNewFoods.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listNewFoods;
+    }
+    public static void main(String[] args) throws ClassNotFoundException {
+        try {
+            String username = "sa";
+            String password = "1";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP391";
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            FoodDAO fd = new FoodDAO();
+            List<Food> listFood = fd.selectAllBestSellers();
+            for (Food food : listFood) {
+                System.out.println(food);
+            }
+//            String s = null;
+//            od.updateStatusConfirm(7, s);
+//            double d = od.getTotalByMonth(6);
+//            System.out.println(d);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public FoodDetail getFoodDetailByID(String foodId) {
+        String sql = "select * from food "
+                + "where food_id =? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, foodId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new FoodDetail(rs.getInt("food_id"),
+                        rs.getString("food_name"),
+                        rs.getFloat("price"),
+                        rs.getInt("stock"),
+                        rs.getDate("create_date"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        cd.getCategoryById(rs.getInt("category_id")),
+                        rs.getString("image"));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+   
 }

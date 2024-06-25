@@ -21,11 +21,11 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/animate_detail/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel_detail/assets/owl.carousel.min.css" rel="stylesheet">
 
         <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/style_detail.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/dd760d7b93.js" crossorigin="anonymous"></script>
     </head>
@@ -178,7 +178,8 @@
 
 
 
-                            <a class="btn btn-square bg-white rounded-circle" href="">
+                            <a class="btn btn-square bg-white rounded-circle" href="actioncustomer?action=cart">
+                                 <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -196,7 +197,7 @@
                                 <i class="fa fa-user text-body"></i>
                             </a>
                             <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                                <div class="cart-count">${countfood}</div>
+                                <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -270,11 +271,10 @@
                          </div>-->
                         <h3 class="font-weight-semi-bold mb-4"> <p> <span class="text-danger fw-bold">
                                     <fmt:formatNumber type="currency" 
-                                                      value="${detail.price}"
-                                                      currencyCode="VND"
+                                                       currencyCode="VND"
                                                       maxFractionDigits="0"
-                                                      >
-                                    </fmt:formatNumber>
+                                                      value="${detail.price}"></fmt:formatNumber>
+                                    <!--<h4> <span>Giá bán: ${detail.price}">-->
                                 </span></p></h3>
                         <p class="mb-2">Số lượng: ${detail.stock}</p>
                         <p class="mb-2">Đã bán: ${detail.sold}</p>
@@ -571,8 +571,8 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/easing_detail/easing.min.js"></script>
+    <script src="lib/owlcarousel_detail/owl.carousel.min.js"></script>
 
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>

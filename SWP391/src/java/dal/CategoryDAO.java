@@ -33,13 +33,29 @@ public class CategoryDAO extends DBContext{
     
     public ArrayList<Category> getAllCategory(){
         ArrayList<Category> listCategory = new ArrayList<>();
+        String sql = "select * from category where status = 1";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                listCategory.add(new Category(rs.getInt("category_id"), 
+                        rs.getString("category_name"),
+                        rs.getInt("status")));
+            }
+        } catch (Exception e) {
+        }
+        return listCategory;
+    }
+        public ArrayList<Category> getCategoryManagerment(){
+        ArrayList<Category> listCategory = new ArrayList<>();
         String sql = "select * from category";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 listCategory.add(new Category(rs.getInt("category_id"), 
-                        rs.getString("category_name")));
+                        rs.getString("category_name"),
+                        rs.getInt("status")));
             }
         } catch (Exception e) {
         }
@@ -68,15 +84,26 @@ public class CategoryDAO extends DBContext{
         } catch (Exception e) {
         }
     }
-
-    public void deleteCategory(int categoryId) {
-        String sql = "delete from category where category_id = ?";
+    
+        public void updateCategoryStatus(int categoryId, int status) {
+        String sql = "Update category set [status] = ? Where [category_id] = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, categoryId);
+            ps.setInt(1, status);
+            ps.setInt(2, categoryId);
             ps.executeUpdate();
 
         } catch (Exception e) {
         }
     }
+//    public void deleteCategory(int categoryId) {
+//        String sql = "delete from category where category_id = ?";
+//        try {
+//            PreparedStatement ps = connection.prepareStatement(sql);
+//            ps.setInt(1, categoryId);
+//            ps.executeUpdate();
+//
+//        } catch (Exception e) {
+//        }
+//    }
 }

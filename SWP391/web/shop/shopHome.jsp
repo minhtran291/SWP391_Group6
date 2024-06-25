@@ -45,7 +45,7 @@
                     <!--                    có sự khác nhau trong narbar-nav tự css và sử dụng các class
                                         được định nghĩa sẵn trong bootstrap 5 như d-flex và flex-row-->
                     <li class="nav-item">
-                        <a class="nav-link" href="actionshop?action=homeFood">
+                        <a class="nav-link" href="home">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -171,6 +171,7 @@
                         Quản lí sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" href="CategoryServlet?action=manageCategory">
                         Quản lí thể loại sản phẩm</a></p>
+                         <p><a class="btn text-white btn-primary" href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary">Quản lí đơn hàng</a></p>
                 <p><a href="employee?action=manageEmp"
                         class="btn text-white btn-primary">Quản lí nhân viên</a></p>
