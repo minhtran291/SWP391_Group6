@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.UserDetail;
 
 /**
  *
@@ -112,7 +113,7 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
-    
+
     public User getUser(String username) {
         User user = null;
         String sql = "SELECT * FROM users WHERE user_name = ?";
@@ -173,7 +174,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public ArrayList<User> getEmployee() {
         ArrayList<User> listemp = new ArrayList<>();
         String sql = "select * from dbo.users where role_id=3";
@@ -247,7 +248,8 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
-     public boolean checkEmpName(String username) {
+
+    public boolean checkEmpName(String username) {
         String sql = "select * from [users] where [user_name] = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -260,7 +262,8 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
-        public boolean checkEmpNameUpdate(String username, String idemp) {
+
+    public boolean checkEmpNameUpdate(String username, String idemp) {
         String sql = "select * from [users] where [user_name] = ? AND [user_id] != ?";
         int id = Integer.parseInt(idemp);
         try {
@@ -275,7 +278,8 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
-          public boolean checkEmail(String email) {
+
+    public boolean checkEmail(String email) {
         String sql = "select * from [users] where [email] = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -288,7 +292,8 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
-            public boolean checkPhone(String phone) {
+
+    public boolean checkPhone(String phone) {
         String sql = "select * from [users] where [phone_number] = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -301,7 +306,8 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
-             public boolean checkEmpEmailUpdate(String email, String idemp) {
+
+    public boolean checkEmpEmailUpdate(String email, String idemp) {
         String sql = "select * from [users] where [email] = ? AND [user_id] != ?";
         int id = Integer.parseInt(idemp);
         try {
@@ -316,7 +322,8 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
-              public boolean checkEmpPhoneUpdate(String phone, String idemp) {
+
+    public boolean checkEmpPhoneUpdate(String phone, String idemp) {
         String sql = "select * from [users] where [phone_number] = ? AND [user_id] != ?";
         int id = Integer.parseInt(idemp);
         try {
@@ -331,7 +338,8 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
-               public User getUserByName(String name) {
+
+    public User getUserByName(String name) {
         String sql = "SELECT * FROM users WHERE user_name = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -354,6 +362,42 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
+
+    public int getNumberCustomer() {
+        String sql = "select count(*) from users where role_id = 1";
+        int numberCustomer = 0;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                numberCustomer = rs.getInt(1);
+            }
+            return numberCustomer;
+        } catch (Exception e) {
+        }
+        return 0;
+    }
     
-  
+    public UserDetail getUserDetail(String username) {
+        UserDetail user = null;
+        String sql = "SELECT * FROM users WHERE user_name = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = new UserDetail();
+                user.setUserid(resultSet.getInt("user_id"));
+                user.setUsername(resultSet.getString("user_name"));
+                user.setPassword(resultSet.getString("password"));
+                user.setGender(resultSet.getInt("gender"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone_number"));
+                user.setRoleid(resultSet.getInt("role_id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

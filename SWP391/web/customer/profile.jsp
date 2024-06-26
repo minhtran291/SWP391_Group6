@@ -76,15 +76,20 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Lịch sử
-                                        </a>
-                                    </li>
-                                <li>
                                     <a class="dropdown-item" href="profile">
                                         Hồ sơ
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                        Đơn hàng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                        Xem lại bình luận
+                                    </a>
+                                </li>                                    
                                 <li>
                                     <a class="dropdown-item" href="logout">
                                         Đăng xuất
@@ -95,7 +100,7 @@
 
 
                         <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                             <div class="cart-count">${count_cart}}</div>
+                            <div class="cart-count">${count_cart}}</div>
                             <i class="fa fa-shopping-bag text-body"></i>
                         </a>
                     </form>
@@ -171,15 +176,15 @@
                 </form>
             </div>
 
-<!--            <div class="container mt-5">
-                <form action="UploadServlet" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <input type="file" class="form-control w-25" id="file" name="file" accept="image/*" required
-                               value="">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Tải lên</button>
-                </form>
-            </div>-->
+            <!--            <div class="container mt-5">
+                            <form action="UploadServlet" method="post" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <input type="file" class="form-control w-25" id="file" name="file" accept="image/*" required
+                                           value="">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Tải lên</button>
+                            </form>
+                        </div>-->
 
         </div>
 

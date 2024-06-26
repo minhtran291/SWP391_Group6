@@ -167,7 +167,7 @@
             <c:choose>
                 <c:when  test="${not empty listBestSellers}">
                     <c:forEach var="product" items="${listBestSellers}" varStatus="status">
-                        <c:if test="${status.index < 4}">
+                        <c:if test="${status.index < 6}">
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="bg-white text-center h-100 p-4 p-xl-5">
                                     <img class="img-fluid mb-4" src="${product.image}" alt="">
@@ -223,7 +223,7 @@
             <c:choose>
                 <c:when  test="${not empty listNewFoods}">
                     <c:forEach var="product" items="${listNewFoods}" varStatus="status">
-                        <c:if test="${status.index < 4}">
+                        <c:if test="${status.index < 6}">
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="bg-white text-center h-100 p-4 p-xl-5">
                                     <img class="img-fluid mb-4" src="${product.image}" alt="">

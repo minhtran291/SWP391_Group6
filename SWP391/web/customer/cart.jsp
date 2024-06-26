@@ -79,14 +79,19 @@
                                     <i class="fa fa-user text-body"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                     <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Lịch sử
-                                        </a>
-                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="profile">
                                             Hồ sơ
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Đơn hàng
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                            Xem lại bình luận
                                         </a>
                                     </li>
                                     <li>
@@ -152,7 +157,7 @@
 
                                             <div class="alert alert-warning">Bạn không có bất kì sản phẩm nào trong giỏ hàng</div>
                                         </c:if>
-                                            
+
                                         <c:if test="${cart.size() == 0}">
 
                                             <div class="alert alert-warning">Bạn không có bất kì sản phẩm nào trong giỏ hàng</div>
@@ -162,7 +167,7 @@
 
                                             <div class="alert alert-danger">${err}</div>
                                         </c:if>
-                                            <c:if test="${success != null}">
+                                        <c:if test="${success != null}">
 
                                             <div class="alert alert-success">${success}</div>
                                         </c:if>
@@ -220,39 +225,39 @@
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                                     <h5 class="mb-0">Thanh Toán</h5>
-                                                   
+
                                                 </div>
 
 
 
                                                 <form class="mt-4" action="order">
-                                                   
 
 
 
-                                               
-
-                                                <hr class="my-4">
 
 
 
-                                                <div class="d-flex justify-content-between mb-4">
-                                                    <p class="mb-2">Tổng thanh toán</p>
-                                                    <p class="mb-2">${total_s} VND</p>
-                                                </div>
+                                                    <hr class="my-4">
 
-                                                <c:if test="${cart != null}">
-                                                    <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
-                                                       Tiếp tục
-                                                    </button>
-                                                </c:if>
-                                                
-                                                <c:if test="${cart.size() == 0}">
-                                                    <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
-                                                       Tiếp tục
-                                                    </button>
-                                                </c:if>
-                                             </form>
+
+
+                                                    <div class="d-flex justify-content-between mb-4">
+                                                        <p class="mb-2">Tổng thanh toán</p>
+                                                        <p class="mb-2">${total_s} VND</p>
+                                                    </div>
+
+                                                    <c:if test="${cart != null}">
+                                                        <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
+                                                            Tiếp tục
+                                                        </button>
+                                                    </c:if>
+
+                                                    <c:if test="${cart.size() == 0}">
+                                                        <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
+                                                            Tiếp tục
+                                                        </button>
+                                                    </c:if>
+                                                </form>
                                             </div>
                                         </div>
 

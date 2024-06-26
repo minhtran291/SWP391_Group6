@@ -55,7 +55,7 @@
                     <!--                    có sự khác nhau trong narbar-nav tự css và sử dụng các class
                                         được định nghĩa sẵn trong bootstrap 5 như d-flex và flex-row-->
                     <li class="nav-item">
-                        <a class="nav-link" href="actioncustomer?action=getListFood">
+                        <a class="nav-link" href="#">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -78,15 +78,20 @@
                                         data-bs-toggle="dropdown">
                                     <i class="fa fa-user text-body"></i>
                                 </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Lịch sử
-                                        </a>
-                                    </li>
+                                <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
                                         <a class="dropdown-item" href="profile">
                                             Hồ sơ
+                                        </a>
+                                    </li>
+<!--                                    <li>
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Đơn hàng
+                                        </a>
+                                    </li>-->
+                                    <li>
+                                        <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                            Xem lại bình luận
                                         </a>
                                     </li>
                                     <li>
@@ -96,12 +101,10 @@
                                     </li>
                                 </ul>
                             </div>
-
-
-                            <a class="btn btn-square bg-white rounded-circle cart" href="">
+<!--                            <a class="btn btn-square bg-white rounded-circle cart" href="">
                                 <div class="cart-count">0</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
-                            </a>
+                            </a>-->
                         </form>
                     </c:if>
                     <!-- chua dang nhap -->    

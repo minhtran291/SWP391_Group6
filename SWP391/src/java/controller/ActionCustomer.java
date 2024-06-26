@@ -73,7 +73,7 @@ public class ActionCustomer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
 
         User u = (User) session.getAttribute("acc");
@@ -101,7 +101,7 @@ public class ActionCustomer extends HttpServlet {
             case "cart":
                 goToCart(request, response);
                 break;
-             case "history":
+            case "history":
                 goToHistory(request, response);
                 break;
             case "history_detail":
@@ -136,8 +136,7 @@ public class ActionCustomer extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    
+
     private void removeOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         HttpSession session = request.getSession();
@@ -165,7 +164,7 @@ public class ActionCustomer extends HttpServlet {
         if (u != null) {
             OrderDAO od = new OrderDAO();
             List<Order> list = od.getOrder(u.getUsername());
-            
+
             if (list.size() == 0) {
                 request.setAttribute("list", null);
             } else {
@@ -173,17 +172,23 @@ public class ActionCustomer extends HttpServlet {
                     o.setAddress(od.getaddress(o.getId()));
                     o.setDate(od.getDate(o.getId()));
                     switch (o.getStatus()) {
-                        case 0:
-                            o.setStatus_text("Đơn hàng đã được order");
-                            break;
                         case 1:
-                            o.setStatus_text("Đơn hàng đang được giao");
+                            o.setStatus_text("Chưa xử lý");
                             break;
                         case 2:
-                            o.setStatus_text("Giao hàng thành công");
+                            o.setStatus_text("Đang xử lý");
                             break;
-                        default:
-                            throw new AssertionError();
+                        case 3:
+                            o.setStatus_text("Đang giao");
+                            break;
+                        case 4:
+                            o.setStatus_text("Đã giao");
+                            break;
+                        case 5:
+                            o.setStatus_text("Đã hủy");
+                            break;
+//                        default:
+//                            throw new AssertionError();
                     }
                 }
                 request.setAttribute("list", list);
@@ -206,17 +211,23 @@ public class ActionCustomer extends HttpServlet {
             o.setDate(od.getDate(o.getId()));
             String address = od.getaddress(o.getId());
             switch (o.getStatus()) {
-                case 0:
-                    o.setStatus_text("Đơn hàng đã được order");
-                    break;
                 case 1:
-                    o.setStatus_text("Đơn hàng đang được giao");
+                    o.setStatus_text("Chưa xử lý");
                     break;
                 case 2:
+                    o.setStatus_text("Đơn hàng đã được order");
+                    break;
+                case 3:
+                    o.setStatus_text("Đơn hàng đang được giao");
+                    break;
+                case 4:
                     o.setStatus_text("Giao hàng thành công");
                     break;
-                default:
-                    throw new AssertionError();
+                case 5:
+                    o.setStatus_text("Đã hủy đơn hàng");
+                    break;
+//                default:
+//                    throw new AssertionError();
             }
             request.setAttribute("address", address);
             request.setAttribute("user", u);
@@ -262,7 +273,7 @@ public class ActionCustomer extends HttpServlet {
     private void getAllFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-         ArrayList<Food> fList = (ArrayList) session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList) session.getAttribute("fList");
+        ArrayList<Food> fList = (ArrayList) session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList) session.getAttribute("fList");
         ArrayList<Category> cList = (ArrayList) session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList) session.getAttribute("cList");
         // ko phan phai lan dau tien chay ko can get all nua chi goi du lieu ve
         session.setAttribute("fList", fList);
@@ -352,5 +363,5 @@ public class ActionCustomer extends HttpServlet {
         request.setAttribute("cid", categoryId);
         pagingForFood(request, response, numberPerPage, listFoodByCategory);
     }
- 
+
 }

@@ -3,7 +3,7 @@
     Created on : Jun 16, 2024, 5:05:09 AM
     Author     : admin
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +139,7 @@
             <c:choose>
                 <c:when  test="${not empty listNewFoods}">
                     <c:forEach var="product" items="${listNewFoods}" varStatus="status">
-                        <c:if test="${status.index < 4}">
+                        <c:if test="${status.index < 6}">
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="bg-white text-center h-100 p-4 p-xl-5">
                                     <img class="img-fluid mb-4" src="${product.image}" alt="">

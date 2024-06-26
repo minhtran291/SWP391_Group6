@@ -50,7 +50,7 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="actionshop?action=homeFood">
+                        <a class="nav-link" href="#">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -71,24 +71,34 @@
                                     data-bs-toggle="dropdown">
                                 <i class="fa fa-user text-body"></i>
                             </button>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end">
                                 <li >
                                     <a class="dropdown-item" href="#">
-                                        Profile
+                                        Hồ sơ
+                                    </a>
+                                </li>
+<!--                                <li>
+                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                        Đơn hàng
+                                    </a>
+                                </li>-->
+                                <li>
+                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                        Xem lại bình luận
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">
-                                        Logout
+                                        Đăng xuất
                                     </a>
                                 </li>
                             </ul>
                         </div>
 
 
-                        <a class="btn btn-square bg-white rounded-circle" href="">
+<!--                        <a class="btn btn-square bg-white rounded-circle" href="">
                             <i class="fa fa-shopping-bag text-body"></i>
-                        </a>
+                        </a>-->
                     </form>
                 </div>
             </div>
@@ -184,7 +194,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <c:if test="${c.status==1}">
                                     <a class="btn btn-danger" href="CategoryServlet?action=updateStatus&id=${c.category_id}&status=0" >
                                         Ẩn
@@ -206,15 +216,19 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <p><a class="btn text-white btn-primary" 
-                          href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
-                    <p><a class="btn text-white btn-primary" 
-                          href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
-                    <p><a class="btn text-white btn-primary">Quản lí đơn hàng</a></p>
-                    <p><a href="employee?action=manageEmp"
-                          class="btn text-white btn-primary">Quản lí nhân viên</a></p>
-                    <p><a class="btn text-white btn-primary">Phân đơn hàng</a></p>
-                </div>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
+            </div>
             </div>
 
             <!-- Pagination -->

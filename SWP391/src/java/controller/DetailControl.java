@@ -71,7 +71,8 @@ public class DetailControl extends HttpServlet {
         
         
         String foodId = request.getParameter("foodId");
-
+        int fId = Integer.parseInt(foodId);
+        
         FoodDAO dao = new FoodDAO();
         ImageDAO imgdao = new ImageDAO();
         CommentDAO cdao = new CommentDAO();
@@ -79,7 +80,7 @@ public class DetailControl extends HttpServlet {
         Image img1 = imgdao.getImgbyFoodId1(foodId);
         Image img2 = imgdao.getImgbyFoodId2(foodId);
         Image img3 = imgdao.getImgbyFoodId3(foodId);
-        List<Food> sameF = dao.getsameFood(foodId);
+        List<Food> sameF = dao.getsameFood(fId);
         
         Comment cmt1 = cdao.getCommentbyFoodID(foodId,1);
         Comment cmt2 = cdao.getCommentbyFoodID(foodId,2);

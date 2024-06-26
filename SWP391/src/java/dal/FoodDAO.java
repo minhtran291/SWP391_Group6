@@ -16,6 +16,7 @@ import java.sql.Date;
 import model.Category;
 import java.sql.Connection;
 import java.sql.DriverManager;
+
 /**
  *
  * @author Dell
@@ -278,11 +279,11 @@ public class FoodDAO extends DBContext {
         return null;
     }
 
-     public List<Food> getsameFood(String id) {
+    public List<Food> getsameFood(int id) {
         List<Food> list = new ArrayList<>();
         String sql = "  SELECT * \n"
                 + "FROM food \n"
-                + "WHERE food_id<> ? and category_id IN (\n"
+                + "WHERE food_id <> ? and category_id IN (\n"
                 + "    SELECT category_id \n"
                 + "    FROM food \n"
                 + "    WHERE food_id = ? \n"
@@ -291,19 +292,19 @@ public class FoodDAO extends DBContext {
         //chay lenhj truy van
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, id);
-            st.setString(2, id);
+            st.setInt(1, id);
+            st.setInt(2, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Food s = new Food(rs.getInt(1), 
-                        rs.getString(2), 
-                        rs.getDouble(3), 
-                        rs.getInt(4), 
-                        rs.getDate(5), 
-                        rs.getString(6), 
-                        rs.getInt(7), 
-                        cd.getCategoryById(rs.getInt("category_id")), 
-                        rs.getString(9));
+                Food s = new Food(rs.getInt("food_id"),
+                        rs.getString("food_name"),
+                        rs.getDouble("price"),
+                        rs.getInt("stock"),
+                        rs.getDate("create_date"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        cd.getCategoryById(rs.getInt("category_id")),
+                        rs.getString("image"));
                 list.add(s);
             }
         } catch (SQLException e) {
@@ -312,6 +313,7 @@ public class FoodDAO extends DBContext {
 
         return list;
     }
+
     public List<FoodDetail> getlistfoodbyId(String id) {
         List<FoodDetail> list = new ArrayList<>();
         String sql = "  select * from dbo.food where food_id=? ";
@@ -339,7 +341,8 @@ public class FoodDAO extends DBContext {
 
         return list;
     }
-     public FoodDetail getFoodByName(String foodName) {
+
+    public FoodDetail getFoodByName(String foodName) {
         String sql = "select * from food "
                 + "where food_name =? ";
         try {
@@ -361,7 +364,7 @@ public class FoodDAO extends DBContext {
         }
         return null;
     }
-     
+
 //    public List<Food> selectAllBestSellers() {
 //        List<Food> bestSellers = new ArrayList<>();
 //        String query = "  select top 4 * \n"
@@ -391,11 +394,10 @@ public class FoodDAO extends DBContext {
 //
 //        return bestSellers;
 //    }
-
     public List<Food> selectAllBestSellers() {
-        
+
         List<Food> listBestSellers = new ArrayList<>();
-        String sql = "SELECT TOP 4 * "
+        String sql = "SELECT TOP 6 * "
                 + "FROM food "
                 + "ORDER BY sold DESC;";
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
@@ -418,10 +420,11 @@ public class FoodDAO extends DBContext {
         }
         return listBestSellers;
     }
+
     public List<Food> selectNewFoods() {
-        
+
         List<Food> listNewFoods = new ArrayList<>();
-        String sql = "SELECT TOP 4 * "
+        String sql = "SELECT TOP 6 * "
                 + "FROM food "
                 + " ORDER BY create_date DESC;";
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
@@ -444,26 +447,24 @@ public class FoodDAO extends DBContext {
         }
         return listNewFoods;
     }
+
     public static void main(String[] args) throws ClassNotFoundException {
         try {
             String username = "sa";
-            String password = "1";
+            String password = "123";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP391";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(url, username, password);
             FoodDAO fd = new FoodDAO();
-            List<Food> listFood = fd.selectAllBestSellers();
-            for (Food food : listFood) {
+            List<Food> lSame = fd.getsameFood(2);
+            for (Food food : lSame) {
                 System.out.println(food);
             }
-//            String s = null;
-//            od.updateStatusConfirm(7, s);
-//            double d = od.getTotalByMonth(6);
-//            System.out.println(d);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public FoodDetail getFoodDetailByID(String foodId) {
         String sql = "select * from food "
                 + "where food_id =? ";
@@ -486,5 +487,108 @@ public class FoodDAO extends DBContext {
         }
         return null;
     }
-   
+
+    public Food getFoodByID(int foodId) {
+        String sql = "select * from food where food_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, foodId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Food f = new Food(rs.getString("food_name"),
+                        rs.getString("image"));
+                return f;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public ArrayList<Food> sort(String sort) {
+        String sortBy = "";
+        switch (sort) {
+            case "1":
+                sortBy = "order by food_name asc ";
+                break;
+            case "2":
+                sortBy = "order by food_name desc ";
+                break;
+            case "3":
+                sortBy = "order by price asc ";
+                break;
+            case "4":
+                sortBy = "order by price desc ";
+                break;
+            case "5":
+                sortBy = "order by create_date desc ";
+                break;
+            case "6":
+                sortBy = "order by create_date asc ";
+                break;
+            case "7":
+                sortBy = "order by sold desc ";
+                break;
+            case "8":
+                sortBy = "order by sold asc ";
+                break;
+            case "9":
+                sortBy = "order by stock desc ";
+                break;
+            case "10":
+                sortBy = "order by stock asc ";
+                break;
+        }
+
+        ArrayList<Food> listFood = new ArrayList<>();
+        String sql = "select * from [food] "
+                + sortBy;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listFood.add(new Food(rs.getInt("food_id"),
+                        rs.getString("food_name"),
+                        rs.getFloat("price"),
+                        rs.getInt("stock"),
+                        rs.getDate("create_date"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        cd.getCategoryById(rs.getInt("category_id")),
+                        rs.getString("image")));
+            }
+        } catch (Exception e) {
+        }
+        return listFood;
+    }
+
+    public ArrayList<Food> foodOutOfStock() {
+        ArrayList<Food> list = new ArrayList<>();
+        String sql = "select top 5 * from food where stock < 10";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Food f = new Food(rs.getString("food_name"), rs.getInt("stock"));
+                list.add(f);
+            }
+            if (!list.isEmpty()) {
+                return list;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public int getNumberFood() {
+        String sql = "select count(*) from food";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
 }

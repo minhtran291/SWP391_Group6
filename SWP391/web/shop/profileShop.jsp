@@ -34,10 +34,15 @@
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <div style="margin-left: 20px;">
+                <button class="btn btn-dark btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
             <div class="container">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="actionshop?action=homeFood">
+                        <a class="nav-link" href="#">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -58,10 +63,20 @@
                                     data-bs-toggle="dropdown">
                                 <i class="fa fa-user text-body"></i>
                             </button>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="actionshop?action=profile">
                                         Hồ sơ
+                                    </a>
+                                </li>
+                                <!--                                <li>
+                                                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                        Đơn hàng
+                                                                    </a>
+                                                                </li>-->
+                                <li>
+                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                        Xem lại bình luận
                                     </a>
                                 </li>
                                 <li>
@@ -71,11 +86,9 @@
                                 </li>
                             </ul>
                         </div>
-
-
-                        <a class="btn btn-square bg-white rounded-circle" href="">
-                            <i class="fa fa-shopping-bag text-body"></i>
-                        </a>
+                        <!--                        <a class="btn btn-square bg-white rounded-circle" href="">
+                                                    <i class="fa fa-shopping-bag text-body"></i>
+                                                </a>-->
                     </form>
                 </div>
             </div>
@@ -149,16 +162,37 @@
                 </form>
             </div>
 
-<!--            <div class="container mt-5">
-                <form action="UploadServlet" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <input type="file" class="form-control w-25" id="file" name="file" accept="image/*" required
-                               value="">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Tải lên</button>
-                </form>
-            </div>-->
+            <!--            <div class="container mt-5">
+                            <form action="UploadServlet" method="post" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <input type="file" class="form-control w-25" id="file" name="file" accept="image/*" required
+                                           value="">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Tải lên</button>
+                            </form>
+                        </div>-->
 
+        </div>
+
+        <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
+            <div class="offcanvas-header">
+                <h1 class="offcanvas-title">Quản lí cửa hàng</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
+            </div>
         </div>
 
         <footer>

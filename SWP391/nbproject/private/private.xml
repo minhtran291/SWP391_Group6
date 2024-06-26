@@ -13,6 +13,11 @@
             <file>file:/D:/PRJ_SWP391/SWP391/web/customer/cart.jsp</file>
             <file>file:/D:/PRJ_SWP391/SWP391/web/detail.jsp</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/D:/iter2/SWP391_Group6/SWP391/web/WEB-INF/web.xml</file>
+            <file>file:/D:/iter2/SWP391_Group6/SWP391/web/detail.jsp</file>
+            <file>file:/D:/iter2/SWP391_Group6/SWP391/src/java/controller/ActionCustomer.java</file>
+            <file>file:/D:/iter2/SWP391_Group6/SWP391/src/java/controller/ActionShop.java</file>
+        </group>
     </open-files>
 </project-private>

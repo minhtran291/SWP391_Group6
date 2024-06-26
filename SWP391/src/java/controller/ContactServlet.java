@@ -86,7 +86,7 @@ public class ContactServlet extends HttpServlet {
         final String user = "cuonganh2k3@gmail.com";
         final String password = "jkmg vttq aaxt arbs";
 
-        String to = "tannahe170122@fpt.edu.vn";
+        String to = "minhtran2912003@gmail.com";
 
 
         Properties props = new Properties();

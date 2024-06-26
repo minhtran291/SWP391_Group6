@@ -133,6 +133,20 @@ public class FoodDetail {
         return String.valueOf(foodId);
     }
 
-    
-   
+//    @Override
+//    public String toString() {
+//        return "FoodDetail{"
+//                + "foodId=" + foodId
+//                + ", foodName='" + foodName + '\''
+//                + ", price=" + price
+//                + ", stock=" + stock
+//                + ", createDate=" + createDate
+//                + ", description='" + description + '\''
+//                + ", sold=" + sold
+//                + ", categoryId=" + categoryId
+//                + ", image='" + image + '\''
+//                + ", quantity=" + quantity
+//                + '}';
+//    }
+
 }

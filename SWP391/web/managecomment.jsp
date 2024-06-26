@@ -51,7 +51,7 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item">
-                       <c:if test="${sessionScope.acc.roleid==1}">
+                        <c:if test="${sessionScope.acc.roleid==1}">
                             <a class="nav-link" href="actioncustomer?action=getListFood">
                                 <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                     F<span style="color: #ff6633">oo</span>dy
@@ -82,21 +82,26 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li >
-                                      <c:if test="${sessionScope.acc.roleid==1}">
-                                            <a class="dropdown-item" href="profile">
-                                                Hồ sơ
-                                            </a>
-                                        </c:if>
-                                        <c:if test="${sessionScope.acc.roleid==2}">
-                                            <a class="dropdown-item" href="actionshop?action=profile">
-                                                Hồ sơ
-                                            </a>
-                                        </c:if>
+                                    <c:if test="${sessionScope.acc.roleid==1}">
+                                        <a class="dropdown-item" href="profile">
+                                            Hồ sơ
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc.roleid==2}">
+                                        <a class="dropdown-item" href="actionshop?action=profile">
+                                            Hồ sơ
+                                        </a>
+                                    </c:if>
 
                                 </li>
                                 <li>
+                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                        Xem lại bình luận
+                                    </a>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="logout">
-                                        Logout
+                                        Đăng xuất
                                     </a>
                                 </li>
                             </ul>
@@ -123,7 +128,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
                         </li>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -134,18 +139,18 @@
 
             <table class="table text-center">
                 <tr>
-                    
+
                     <th>Bình luận</th>
                     <th>Thời gian</th>
                     <th></th>
                 </tr>
                 <c:forEach var="f" items="${cmtOnCurrentPage}">
                     <tr style="vertical-align: middle">
-                                            
+
                         <td>${f.commentText}</td>
                         <td>${f.createDate}</td>             
                         <td><a href="detail?action=detail&foodId=${f.foodId}">Chi tiết</a></td> 
-                        
+
                         <td>
                             <button class="border-0 btn btn-lg" data-bs-toggle="modal" data-bs-target="#updateEmployee${f.commentId}">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -161,7 +166,7 @@
                                             <form action="managecomment" method="post">
                                                 <input type="hidden" name="action" value="updateCmt">
                                                 <input type="hidden" name="page" value="${n}">
-                                                
+
 
                                                 <b>ID:</b>
                                                 <input type="text"
@@ -177,7 +182,7 @@
                                                        required=""
                                                        name="comment"
                                                        >
-                                                
+
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
@@ -190,7 +195,7 @@
                             </div>
                             <a class="btn btn-lg" 
                                href="managecomment?action=deleteCmt&&deleteId=${f.commentId}&&page=${n}"
-                               onclick="return confirm('Bạn có chắc chắn muốn xóa không tài khoản ${f.commentId} ?')">
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa không ?')">
                                 <i class="fa-solid fa-trash-can"></i>
                             </a>
                         </td>

@@ -56,7 +56,7 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="actionshop?action=homeFood">
+                        <a class="nav-link" href="#">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -64,7 +64,7 @@
                 </ul>
 
                 <div style="margin-right: 20px">
-                    <form class="d-flex" action="actionshop?action=homeFood" method="get">
+                    <form class="d-flex" action="actionshop" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
                         <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                style="width: 300px">
@@ -77,24 +77,32 @@
                                     data-bs-toggle="dropdown">
                                 <i class="fa fa-user text-body"></i>
                             </button>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end">
                                 <li >
-                                    <a class="dropdown-item" href="#">
-                                        Profile
+                                    <a class="dropdown-item" href="actionshop?action=profile">
+                                        Hồ sơ
+                                    </a>
+                                </li>
+                                <!--                                <li>
+                                                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                        Đơn hàng
+                                                                    </a>
+                                                                </li>-->
+                                <li>
+                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                        Xem lại bình luận
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        Logout
+                                    <a class="dropdown-item" href="logout">
+                                        Đăng xuất
                                     </a>
                                 </li>
                             </ul>
                         </div>
-
-
-                        <a class="btn btn-square bg-white rounded-circle" href="">
-                            <i class="fa fa-shopping-bag text-body"></i>
-                        </a>
+                        <!--                        <a class="btn btn-square bg-white rounded-circle" href="">
+                                                    <i class="fa fa-shopping-bag text-body"></i>
+                                                </a>-->
                     </form>
                 </div>
             </div>
@@ -106,98 +114,118 @@
 
         <div class="flex-grow-1">
 
-            <div class="d-flex bg-light mb-5">
-                <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
-                                Thể loại</button>
-                            <ul class="dropdown-menu">
-                                <c:forEach var="c" items="${cList}">
-                                    <li><a class="dropdown-item" 
-                                           href="actionshop?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
-                                    </c:forEach>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <!--            <div class="d-flex bg-light mb-5">
+                            <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
+                                            Thể loại</button>
+                                        <ul class="dropdown-menu">
+            <c:forEach var="c" items="${cList}">
+                <li><a class="dropdown-item" 
+                       href="actionshop?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
+            </c:forEach>
+    </ul>
+</li>
+</ul>
+</div>
+</div>-->
 
             <h1 class="text-center m-3">Quản lý món ăn</h1>
 
+            <div class="d-flex mb-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFood"
+                        style="margin-left: 20px">
+                    Thêm món ăn
+                </button>
+                <div class="modal fade" id="addFood">
+                    <div class="modal-dialog modal-dialog-scrollable">    
+                        <div class="modal-content">  
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFood"
-                    style="margin-left: 20px">
-                Thêm món ăn
-            </button>
-            <div class="modal fade" id="addFood">
-                <div class="modal-dialog modal-dialog-scrollable">    
-                    <div class="modal-content">  
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm sản món ăn mới</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
 
-                        <div class="modal-header">
-                            <h4 class="modal-title">Thêm sản món ăn mới</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <form action="actionshop" method="post">
-                            <input type="hidden" name="action" value="addFood">
-                            <input type="hidden" name="page" value="${n}">
-                            <div class="modal-body">
-                                <b>Tên món ăn:</b>
-                                <input type="text"
-                                       class="form-control"
-                                       required=""
-                                       name="name"
-                                       >
-                                <h5 class="text-danger">${requestScope.errorName}</h5>
-                                <b>Giá:</b>
-                                <input type="number"
-                                       class="form-control"
-                                       step="1000"
-                                       required=""
-                                       name="price"
-                                       >
-                                <h5 class="text-danger">${requestScope.errorPrice}</h5>
-                                <b>Số lượng tồn kho:</b>
-                                <input type="number"
-                                       class="form-control"
-                                       required=""
-                                       name="stock"
-                                       >
-                                <h5 class="text-danger">${requestScope.errorStock}</h5>
-                                <b>Thể loại:</b>
-                                <div>
-                                    <select class="form-select" name="cid">
-                                        <c:forEach var="c" items="${sessionScope.cList}">
-                                            <option value="${c.category_id}">${c.category_name}</option>
-                                        </c:forEach>
-                                    </select>
+                            <form action="actionshop" method="post">
+                                <input type="hidden" name="action" value="addFood">
+                                <input type="hidden" name="page" value="${n}">
+                                <div class="modal-body">
+                                    <b>Tên món ăn:</b>
+                                    <input type="text"
+                                           class="form-control"
+                                           required=""
+                                           name="name"
+                                           >
+                                    <h5 class="text-danger">${requestScope.errorName}</h5>
+                                    <b>Giá:</b>
+                                    <input type="number"
+                                           class="form-control"
+                                           step="1000"
+                                           required=""
+                                           name="price"
+                                           >
+                                    <h5 class="text-danger">${requestScope.errorPrice}</h5>
+                                    <b>Số lượng tồn kho:</b>
+                                    <input type="number"
+                                           class="form-control"
+                                           required=""
+                                           name="stock"
+                                           >
+                                    <h5 class="text-danger">${requestScope.errorStock}</h5>
+                                    <b>Thể loại:</b>
+                                    <div>
+                                        <select class="form-select" name="cid">
+                                            <c:forEach var="c" items="${sessionScope.cList}">
+                                                <option value="${c.category_id}">${c.category_name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <b>Miêu tả:</b>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="description"
+                                           >
+                                    <b>Hình ảnh:</b>
+                                    <input type="text"
+                                           class="form-control"
+                                           required=""
+                                           name="image"
+                                           >
                                 </div>
-                                <b>Miêu tả:</b>
-                                <input type="text"
-                                       class="form-control"
-                                       name="description"
-                                       >
-                                <b>Hình ảnh:</b>
-                                <input type="text"
-                                       class="form-control"
-                                       required=""
-                                       name="image"
-                                       >
-                            </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-                                <button type="submit" class="btn btn-success">Lưu</button>
-                            </div>
-                        </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-success">Lưu</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <div class="dropdown ms-auto">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                            style="margin-right: 20px;">
+                        Thể loại</button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item"
+                               href="actionshop?action=manageGetFoodByCategory&&cid=all">
+                                Tất cả
+                            </a>
+                        </li>
+                        <c:forEach var="c" items="${cList}">
+                            <li>
+                                <a class="dropdown-item" 
+                                   href="actionshop?action=manageGetFoodByCategory&&cid=${c.category_id}">${c.category_name}
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
             </div>
-
 
             <table class="table text-center">
                 <tr>
@@ -337,12 +365,17 @@
             </div>
             <div class="offcanvas-body">
                 <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
-                 <p><a class="btn text-white btn-primary" 
-                          href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
-                <p><a class="btn text-white btn-primary">Quản lí đơn hàng</a></p>
-                <p><a href="employee?action=manageEmp" class="btn text-white btn-primary">Quản lí nhân viên</a></p>
-                <p><a class="btn text-white btn-primary">Phân đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
             </div>
         </div>
 
@@ -350,8 +383,18 @@
         <ul class="pagination justify-content-center">
             <c:forEach var="p" begin="${1}" end="${totalPages}">
                 <li class="page-item">
-                    <a class="page-link ${p==n?"active":""}"  
-                       href="actionshop?action=manageFood&&page=${p}">${p}</a>
+                    <c:if test="${listSearch != null}">
+                        <a class="page-link ${p==n?"active":""}"  
+                           href="actionshop?action=manageGetFoodBySearch&&page=${p}&&search=${search}">${p}</a>
+                    </c:if>
+                    <c:if test="${listFoodByCategory != null}">
+                        <a class="page-link ${p==n?"active":""}"  
+                           href="actionshop?action=manageGetFoodByCategory&&page=${p}&&cid=${cid}">${p}</a>
+                    </c:if>
+                    <c:if test="${listFoodByCategory == null && listSearch == null}">
+                        <a class="page-link ${p==n?"active":""}"  
+                           href="actionshop?action=manageFood&&page=${p}">${p}</a>
+                    </c:if>
                 </li>
             </c:forEach>
         </ul>

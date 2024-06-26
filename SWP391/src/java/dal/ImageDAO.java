@@ -4,6 +4,8 @@
  */
 package dal;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -77,5 +79,25 @@ public class ImageDAO extends DBContext {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        try {
+            String username = "sa";
+            String password = "123";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP391";
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            ImageDAO id = new ImageDAO();
+            String foodId = "1";
+            Image img1 = id.getImgbyFoodId1(foodId);
+            Image img2 = id.getImgbyFoodId2(foodId);
+            Image img3 = id.getImgbyFoodId3(foodId);
+            System.out.println(img1);
+            System.out.println(img2);
+            System.out.println(img3);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

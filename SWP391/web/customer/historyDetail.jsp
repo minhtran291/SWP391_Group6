@@ -80,13 +80,18 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Lịch sử
+                                        <a class="dropdown-item" href="profile">
+                                            Hồ sơ
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="profile">
-                                            Hồ sơ
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Đơn hàng
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                            Xem lại bình luận
                                         </a>
                                     </li>
                                     <li>

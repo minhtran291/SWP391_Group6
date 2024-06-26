@@ -80,13 +80,18 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Lịch sử
+                                        <a class="dropdown-item" href="profile">
+                                            Hồ sơ
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="profile">
-                                            Hồ sơ
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Đơn hàng
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                            Xem lại bình luận
                                         </a>
                                     </li>
                                     <li>
@@ -127,8 +132,8 @@
         </nav>
         <div class="container mt-5">
             <c:if test="${err != null}">
-                    <div class="alert alert-danger">${err}</div>
-                </c:if>
+                <div class="alert alert-danger">${err}</div>
+            </c:if>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -156,15 +161,15 @@
                         </c:forEach>
                     </c:if>
 
-                  
+
 
 
 
                 </tbody>
             </table>
             <c:if test="${list == null}">
-                    <div class="alert alert-warning">Bạn chưa có đơn hàng nào</div>
-                </c:if>
+                <div class="alert alert-warning">Bạn chưa có đơn hàng nào</div>
+            </c:if>
         </div>
 
     </body>

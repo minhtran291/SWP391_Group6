@@ -148,6 +148,7 @@
                                     <i class="fa fa-user text-body"></i>
                                 </button>
                                 <ul class="dropdown-menu">
+
                                     <li>
                                         <c:if test="${sessionScope.acc.roleid==1}">
                                             <a class="dropdown-item" href="profile">
@@ -159,13 +160,10 @@
                                                 Hồ sơ
                                             </a>
                                         </c:if>
-
-
-
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="logout">
-                                            Đăng xuất
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Đơn hàng
                                         </a>
                                     </li>
                                     <li>
@@ -173,13 +171,19 @@
                                             Xem lại bình luận
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" href="logout">
+                                            Đăng xuất
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </div>
 
 
 
                             <a class="btn btn-square bg-white rounded-circle" href="actioncustomer?action=cart">
-                                 <div class="cart-count">${count_cart}</div>
+                                <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
                         </form>
@@ -271,7 +275,7 @@
                          </div>-->
                         <h3 class="font-weight-semi-bold mb-4"> <p> <span class="text-danger fw-bold">
                                     <fmt:formatNumber type="currency" 
-                                                       currencyCode="VND"
+                                                      currencyCode="VND"
                                                       maxFractionDigits="0"
                                                       value="${detail.price}"></fmt:formatNumber>
                                     <!--<h4> <span>Giá bán: ${detail.price}">-->
@@ -283,7 +287,7 @@
                         <div class="d-flex align-items-center mb-4 pt-2">
 
                             <a class="btn btn-primary"
-                               href="add-to-cart?id=${f.foodId}&page=${page}">
+                               href="add-to-cart?id=${detail.foodId}"> <!--&page=${page}-->
                                 Thêm vào giỏ hàng
                             </a>
 
@@ -312,139 +316,139 @@
                                         <div class="media mb-4">
 
                                             <div class="media-body">
-                                                
-                                                    <h6>${cmt1.userName}<small> - <i>${cmt1.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt1.commentText}</p>
+
+                                                <h6>${cmt1.userName}<small> - <i>${cmt1.createDate}</i></small></h6>
+
+                                                <p>${cmt1.commentText}</p>
                                             </div>
 
                                         </div>
-                                             <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt2.userName}<small> - <i>${cmt2.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt2.commentText}</p>
+                                                <h6>${cmt2.userName}<small> - <i>${cmt2.createDate}</i></small></h6>
+
+                                                <p>${cmt2.commentText}</p>
                                             </div>
 
                                         </div>
-                                             <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt3.userName}<small> - <i>${cmt3.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt3.commentText}</p>
+                                                <h6>${cmt3.userName}<small> - <i>${cmt3.createDate}</i></small></h6>
+
+                                                <p>${cmt3.commentText}</p>
                                             </div>
 
                                         </div>
-                                             <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt4.userName}<small> - <i>${cmt4.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt4.commentText}</p>
+                                                <h6>${cmt4.userName}<small> - <i>${cmt4.createDate}</i></small></h6>
+
+                                                <p>${cmt4.commentText}</p>
                                             </div>
 
                                         </div>
-                                             <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt5.userName}<small> - <i>${cmt5.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt5.commentText}</p>
+                                                <h6>${cmt5.userName}<small> - <i>${cmt5.createDate}</i></small></h6>
+
+                                                <p>${cmt5.commentText}</p>
                                             </div>
 
                                         </div>
-                                             <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt6.userName}<small> - <i>${cmt6.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt6.commentText}</p>
+                                                <h6>${cmt6.userName}<small> - <i>${cmt6.createDate}</i></small></h6>
+
+                                                <p>${cmt6.commentText}</p>
                                             </div>
 
                                         </div>
-                                             <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt7.userName}<small> - <i>${cmt7.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt7.commentText}</p>
+                                                <h6>${cmt7.userName}<small> - <i>${cmt7.createDate}</i></small></h6>
+
+                                                <p>${cmt7.commentText}</p>
                                             </div>
 
                                         </div>
-                                             <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt8.userName}<small> - <i>${cmt8.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt8.commentText}</p>
+                                                <h6>${cmt8.userName}<small> - <i>${cmt8.createDate}</i></small></h6>
+
+                                                <p>${cmt8.commentText}</p>
                                             </div>
 
                                         </div>
-                                             <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt9.userName}<small> - <i>${cmt9.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt9.commentText}</p>
+                                                <h6>${cmt9.userName}<small> - <i>${cmt9.createDate}</i></small></h6>
+
+                                                <p>${cmt9.commentText}</p>
                                             </div>
 
                                         </div>
-                                            <div class="media mb-4">
+                                        <div class="media mb-4">
 
                                             <div class="media-body">
-                                                    <h6>${cmt10.userName}<small> - <i>${cmt10.createDate}</i></small></h6>
-                                                    
-                                                    <p>${cmt10.commentText}</p>
+                                                <h6>${cmt10.userName}<small> - <i>${cmt10.createDate}</i></small></h6>
+
+                                                <p>${cmt10.commentText}</p>
                                             </div>
 
                                         </div>
                                     </div>
 
-                                
 
-                                <div class="col-md-5">
-                                    <h4 class="mb-4">Đánh giá của bạn</h4>
-                                    <c:if test="${sessionScope.acc==null}">
-                                        <a class="btn btn-primary"
-                                           href="login">
-                                            Bạn cần đăng nhập trước
-                                        </a>
-                                    </c:if>
-                                    <c:if test="${sessionScope.acc!=null}">
-                                        <form action="detail?action=send&foodId=${detail.foodId}" method="post">
-                                            <!--  <div class="d-flex my-0">
-                                                  <p class="mb-5 mr-0">Đánh giá:</p>                                           
-                                                  <div class="star-rating">
-                                                      <input type="radio" id="5-stars" name="rating" value="5" />
-                                                      <label for="5-stars" class="star">&#9733;</label>
-                                                      <input type="radio" id="4-stars" name="rating" value="4" />
-                                                      <label for="4-stars" class="star">&#9733;</label>
-                                                      <input type="radio" id="3-stars" name="rating" value="3" />
-                                                      <label for="3-stars" class="star">&#9733;</label>
-                                                      <input type="radio" id="2-stars" name="rating" value="2" />
-                                                      <label for="2-stars" class="star">&#9733;</label>
-                                                      <input type="radio" id="1-star" name="rating" value="1" />
-                                                      <label for="1-star" class="star">&#9733;</label>
-                                                  </div>
 
-                                              </div>-->
+                                    <div class="col-md-5">
+                                        <h4 class="mb-4">Đánh giá của bạn</h4>
+                                        <c:if test="${sessionScope.acc==null}">
+                                            <a class="btn btn-primary"
+                                               href="login">
+                                                Bạn cần đăng nhập trước
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${sessionScope.acc!=null}">
+                                            <form action="detail?action=send&foodId=${detail.foodId}" method="post">
+                                                <!--  <div class="d-flex my-0">
+                                                      <p class="mb-5 mr-0">Đánh giá:</p>                                           
+                                                      <div class="star-rating">
+                                                          <input type="radio" id="5-stars" name="rating" value="5" />
+                                                          <label for="5-stars" class="star">&#9733;</label>
+                                                          <input type="radio" id="4-stars" name="rating" value="4" />
+                                                          <label for="4-stars" class="star">&#9733;</label>
+                                                          <input type="radio" id="3-stars" name="rating" value="3" />
+                                                          <label for="3-stars" class="star">&#9733;</label>
+                                                          <input type="radio" id="2-stars" name="rating" value="2" />
+                                                          <label for="2-stars" class="star">&#9733;</label>
+                                                          <input type="radio" id="1-star" name="rating" value="1" />
+                                                          <label for="1-star" class="star">&#9733;</label>
+                                                      </div>
+    
+                                                  </div>-->
 
-                                            <div class="form-group">
-                                                <label for="name">Bình luận: </label>
-                                                <h3 name="username"></h3>
-                                                <textarea name="content" rows="5" cols="60" onclick="moveCursorToStart()"></textarea>
+                                                <div class="form-group">
+                                                    <label for="name">Bình luận: </label>
+                                                    <h3 name="username"></h3>
+                                                    <textarea name="content" rows="5" cols="60" onclick="moveCursorToStart()"></textarea>
 
-                                                <div class="form-group mb-0">
-                                                    <input type="submit" value="Gửi đánh giá">
-                                                    <input type="hidden" name="foodId" value="${detail.foodId}"> 
+                                                    <div class="form-group mb-0">
+                                                        <input type="submit" value="Gửi đánh giá">
+                                                        <input type="hidden" name="foodId" value="${detail.foodId}"> 
+                                                    </div>
+
                                                 </div>
-
-                                            </div>
-                                        </form>   
-                                    </c:if>
-                                </div>
+                                            </form>   
+                                        </c:if>
+                                    </div>
                                 </div>       
                             </div>
                         </div>
@@ -464,7 +468,9 @@
 
             <div class="col">
                 <div class="owl-carousel related-carousel">
-                    <c:forEach items="${sameF}" var="s">
+
+                    <c:forEach var="s" items="${sameF}">
+
                         <div class="product-item bg-light">
                             <div class="product-img position-relative overflow-hidden">
                                 <div class="imagesame">
@@ -497,14 +503,14 @@
                             </div>
                         </div>
 
-
-
                     </c:forEach>   
                 </div>
             </div>
 
         </div>
     </div>
+
+
     <!-- Products End -->
     <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
         <div class="row px-xl-5 pt-5">
@@ -579,7 +585,7 @@
     <script src="mail/contact.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="js/main.detail.js"></script>
     <script>
 
 

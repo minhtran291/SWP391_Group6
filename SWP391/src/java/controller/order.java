@@ -143,7 +143,7 @@ public class order extends HttpServlet {
                                 for (Food f : list) {
                                     od.insert_detail(id, f);
                                 }
-                                od.insertDelivery(id, address, acc.getUsername());
+                                od.insertDelivery(id, address);
                                 session.removeAttribute("cart");
                                 request.setAttribute("success", "Đơn hàng đã được order");
                             }

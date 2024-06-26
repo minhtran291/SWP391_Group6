@@ -8,37 +8,21 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>Filter.LoginFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>ShipperFilter</filter-name>
+        <filter-class>Filter.ShipperFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ShipperFilter</filter-name>
+        <url-pattern></url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>ShopFilter</filter-name>
         <url-pattern>/actionshop</url-pattern>
-        <url-pattern>/AddFoodServlet</url-pattern>
-        <url-pattern>/DeleteFoodServlet</url-pattern>
-        <url-pattern>/EditFoodServlet</url-pattern>
-        <url-pattern>/shop/addCategory.jsp</url-pattern>
-        <url-pattern>/shop/changepass.jsp</url-pattern>
-        <url-pattern>/shop/editCategory.jsp</url-pattern>
-        <url-pattern>/shop/manageCategory.jsp</url-pattern>
-        <url-pattern>/shop/manageFood.jsp</url-pattern>
-        <url-pattern>/shop/profileShop.jsp</url-pattern>
-        <url-pattern>/shop/shopHome.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/actionshop</url-pattern>
-        <url-pattern>/AddFoodServlet</url-pattern>
-        <url-pattern>/DeleteFoodServlet</url-pattern>
-        <url-pattern>/EditFoodServlet</url-pattern>
-        <url-pattern>/shop/addCategory.jsp</url-pattern>
-        <url-pattern>/shop/changepass.jsp</url-pattern>
-        <url-pattern>/shop/editCategory.jsp</url-pattern>
-        <url-pattern>/shop/manageCategory.jsp</url-pattern>
-        <url-pattern>/shop/manageFood.jsp</url-pattern>
-        <url-pattern>/shop/profileShop.jsp</url-pattern>
-        <url-pattern>/shop/shopHome.jsp</url-pattern>
-        <url-pattern>/profile</url-pattern>
-        <url-pattern>/changepass</url-pattern>
-        <url-pattern>/customer/changepass.jsp</url-pattern>
-        <url-pattern>/customer/profile.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>ActionCustomer</servlet-name>
@@ -132,6 +116,10 @@
         <servlet-name>ManageComment</servlet-name>
         <servlet-class>controller.ManageComment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActionShipper</servlet-name>
+        <servlet-class>controller.ActionShipper</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>
         <url-pattern>/actioncustomer</url-pattern>
@@ -212,7 +200,7 @@
         <servlet-name>orderDetail</servlet-name>
         <servlet-class>controller.orderDetail</servlet-class>
     </servlet>
-      <servlet>
+    <servlet>
         <servlet-name>ContactServlet</servlet-name>
         <servlet-class>controller.ContactServlet</servlet-class>
     </servlet>
@@ -232,7 +220,6 @@
         <servlet-name>homePage</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ManageComment</servlet-name>
         <url-pattern>/managecomment</url-pattern>
@@ -252,5 +239,9 @@
     <servlet-mapping>
         <servlet-name>homePage</servlet-name>
         <url-pattern>/homePage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActionShipper</servlet-name>
+        <url-pattern>/actionshipper</url-pattern>
     </servlet-mapping>
 </web-app>

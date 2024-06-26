@@ -27,6 +27,16 @@ public class Food {
     public Food() {
     }
 
+    public Food(String foodName, int stock) {
+        this.foodName = foodName;
+        this.stock = stock;
+    }
+    
+    public Food(String foodName, String image) {
+        this.foodName = foodName;
+        this.image = image;
+    }
+    
     public Food(String foodName, double price, int stock, Category categoryId, String description, String image) {
         this.foodName = foodName;
         this.price = price;

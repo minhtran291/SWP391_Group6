@@ -5,7 +5,9 @@
 package controller;
 
 import dal.CategoryDAO;
+import dal.DeliveryDAO;
 import dal.FoodDAO;
+import dal.OrderDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,6 +21,9 @@ import java.util.List;
 import model.Category;
 import model.Food;
 import java.sql.Date;
+import model.Delivery;
+import model.Order;
+import model.OrderDetail;
 import model.User;
 
 /**
@@ -30,6 +35,8 @@ public class ActionShop extends HttpServlet {
     CategoryDAO cd = new CategoryDAO();
     FoodDAO fd = new FoodDAO();
     UserDAO ud = new UserDAO();
+    DeliveryDAO dd = new DeliveryDAO();
+    OrderDAO od = new OrderDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -96,7 +103,44 @@ public class ActionShop extends HttpServlet {
                 break;
             case "changepass":
                 changePassJSP(request, response);
-                
+                break;
+            case "manageGetFoodByCategory":
+                getFoodByCategory(request, response, 5);
+                request.getRequestDispatcher("shop/manageFood.jsp").forward(request, response);
+                break;
+            case "manageGetFoodBySearch":
+                getFoodBySearch(request, response, 5);
+                request.getRequestDispatcher("shop/manageFood.jsp").forward(request, response);
+                break;
+            case "homeSort":
+                getFoodBySort(request, response, 5);
+                request.getRequestDispatcher("shop/shopHome.jsp").forward(request, response);
+                break;
+            case "manageSort":
+                getFoodBySort(request, response, 5);
+                request.getRequestDispatcher("shop/manageFood.jsp").forward(request, response);
+                break;
+            case "orderDivision":
+                getOrderDivision(request, response, 5);
+                request.getRequestDispatcher("shop/orderDivision.jsp").forward(request, response);
+                break;
+            case "dashBoard":
+                getDashBoard(request, response);
+                break;
+            case "updateStatusConfirm":
+                updateStatusConfirm(request, response);
+                break;
+            case "od":
+                od(request, response);
+                break;
+            case "all-order":
+                getAllOrder(request, response);
+                break;
+            case "order-detail":
+                getOrderDetail(request, response);
+                break;
+            case "update-status":
+                updateStatus(request, response);
         }
 
     }
@@ -122,6 +166,9 @@ public class ActionShop extends HttpServlet {
                 break;
             case "changepass":
                 changePass(request, response);
+                break;
+            case "chooseEmployee":
+                chooseEmployee(request, response);
                 break;
         }
     }
@@ -304,7 +351,12 @@ public class ActionShop extends HttpServlet {
 
     private void getFoodByCategory(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         String categoryId = request.getParameter("cid");
-        ArrayList<Food> listFoodByCategory = fd.getFoodByCategory(categoryId);
+        ArrayList<Food> listFoodByCategory = new ArrayList<>();
+        if(categoryId.equalsIgnoreCase("all")){
+            listFoodByCategory = fd.getAllFood();
+        }else{
+            listFoodByCategory = fd.getFoodByCategory(categoryId);
+        }
         request.setAttribute("listFoodByCategory", listFoodByCategory);
         request.setAttribute("cid", categoryId);
         pagingForFood(request, response, numberPerPage, listFoodByCategory);
@@ -312,7 +364,7 @@ public class ActionShop extends HttpServlet {
 
     private void getProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User u = (User)session.getAttribute("acc");
+        User u = (User) session.getAttribute("acc");
         session.setAttribute("acc", u);
         request.getRequestDispatcher("shop/profileShop.jsp").forward(request, response);
     }
@@ -345,5 +397,176 @@ public class ActionShop extends HttpServlet {
             request.getRequestDispatcher("/shop/profileShop.jsp").forward(request, response);
 
         }
+    }
+
+    private void getFoodBySort(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String type = request.getParameter("type");
+        ArrayList<Food> listSort = fd.sort(type);
+        request.setAttribute("listSort", listSort);
+        request.setAttribute("type", type);
+        pagingForFood(request, response, numberPerPage, listSort);
+    }
+
+    private void getOrderDivision(HttpServletRequest request, HttpServletResponse response, int i) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        ArrayList<Delivery> listDelivery = dd.getAllDelivery();
+        ArrayList<User> listEmployee = dd.getOrderNumber();
+        session.setAttribute("listEmployee", listEmployee);
+        if (listDelivery.isEmpty()) {
+            request.setAttribute("mess", "Không có dữ liệu!");
+        }
+        pagingForOrderDivision(request, response, i, listDelivery);
+        //request.setAttribute("listDelivery", listDelivery);
+    }
+
+    private void pagingForOrderDivision(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, ArrayList<Delivery> listDelivery) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<Delivery> deliveryOnCurrentPage = new ArrayList<>(listDelivery.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listDelivery.size())));
+
+        int totalPages = (int) Math.ceil((double) listDelivery.size() / numberPerPage);
+
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("deliveryOnCurrentPage", deliveryOnCurrentPage);
+    }
+
+    private void chooseEmployee(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("employee");
+        String deliveryIdS = request.getParameter("deliveryID");
+        String orderIdS = request.getParameter("orderId");
+        int orderId = Integer.parseInt(orderIdS);
+        int deliveryID = Integer.parseInt(deliveryIdS);
+        dd.addEmployeeToDelivery(name, deliveryID);
+        od.updateStatus(3, orderId);
+        getOrderDivision(request, response, 6);
+        request.getRequestDispatcher("shop/orderDivision.jsp").forward(request, response);
+    }
+
+    private void getDashBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<Order> listOrderConfirm = od.getOrderConfirm();
+        ArrayList<Food> foodOutOfStock = fd.foodOutOfStock();
+        int numberOrder = od.getNumberOrder();
+        int numberFood = fd.getNumberFood();
+        int numberUser = ud.getNumberCustomer();
+        double profit = od.getTotalProfit();
+        double month6 = od.getTotalByMonth(6);
+        request.setAttribute("foodOutOfStock", foodOutOfStock);
+        request.setAttribute("month6", month6);
+        request.setAttribute("numberOrder", numberOrder);
+        request.setAttribute("numberFood", numberFood);
+        request.setAttribute("numberUser", numberUser);
+        request.setAttribute("profit", profit);
+        request.setAttribute("listOrderConfirm", listOrderConfirm);
+        request.getRequestDispatcher("shop/dashBoard.jsp").forward(request, response);
+    }
+
+    private void updateStatusConfirm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        //String statusS = request.getParameter("status");
+        String orderIdS = request.getParameter("orderId");
+        String shipperNotesS = request.getParameter("shopNotes");
+
+        int orderId = Integer.parseInt(orderIdS);
+        od.updateStatusConfirm(orderId, shipperNotesS);
+        getDashBoard(request, response);
+    }
+
+    private void od(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String orderIdS = request.getParameter("orderId");
+        int orderId = Integer.parseInt(orderIdS);
+        ArrayList<OrderDetail> orderDetail = od.getOD(orderId);
+        pagingForOD(request, response, 5, orderDetail);
+        Order order = od.getOrderByID(orderId);
+        Delivery d = dd.getDeliveryByOrderId(orderId);
+//            request.setAttribute("orderId", orderId);
+        request.setAttribute("order", order);
+        request.setAttribute("d", d);
+        request.setAttribute("orderDetail", orderDetail);
+        request.getRequestDispatcher("shop/od.jsp").forward(request, response);
+    }
+
+    private void pagingForOD(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, ArrayList<OrderDetail> listOD) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<OrderDetail> odOnCurrentPage = new ArrayList<>(listOD.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listOD.size())));
+
+        int totalPages = (int) Math.ceil((double) listOD.size() / numberPerPage);
+
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("odOnCurrentPage", odOnCurrentPage);
+    }
+
+    public void updateStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        String status = request.getParameter("status");
+        OrderDAO od = new OrderDAO();
+        od.updateStatus(Integer.parseInt(status), id);
+        response.sendRedirect("actionshop?action=order-detail&id=" + id);
+    }
+
+    private void getOrderDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String id = request.getParameter("id");
+        UserDAO ud = new UserDAO();
+
+        OrderDAO od = new OrderDAO();
+
+        Order o = od.getOrderById(Integer.parseInt(id));
+        User u = ud.getUserByName(o.getName());
+        String address = od.getaddress(o.getId());
+
+        switch (o.getStatus()) {
+            case 0:
+                o.setStatus_text("Đơn hàng đã được order");
+                break;
+            case 1:
+                o.setStatus_text("Đơn hàng đang được giao");
+                break;
+            case 2:
+                o.setStatus_text("Giao hàng thành công");
+                break;
+//            default:
+//                throw new AssertionError();
+        }
+
+        List<Food> list = od.GetOrderDetail(Integer.parseInt(id));
+        request.setAttribute("address", address);
+        request.setAttribute("list", list);
+        request.setAttribute("order", o);
+        request.setAttribute("phone", u.getPhone());
+        request.getRequestDispatcher("/shop/order_detail.jsp").forward(request, response);
+    }
+
+    private void getAllOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        OrderDAO od = new OrderDAO();
+        List<Order> list = od.getOrderAll();
+        if (list.size() > 0) {
+            for (Order o : list) {
+                o.setAddress(od.getaddress(o.getId()));
+                o.setDate(od.getDate(o.getId()));
+            }
+            request.setAttribute("list", list);
+        } else {
+            request.setAttribute("list", null);
+        }
+
+        request.getRequestDispatcher("/shop/order_manager.jsp").forward(request, response);
     }
 }

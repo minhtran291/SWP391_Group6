@@ -9,6 +9,7 @@ package model;
  * @author Dell
  */
 public class Image {
+
     private int image_id;
     private String image;
     private int food_id;
@@ -45,5 +46,13 @@ public class Image {
     public void setFood_id(int food_id) {
         this.food_id = food_id;
     }
-   
+
+    @Override
+    public String toString() {
+        return "Image{"
+                + "image_id=" + image_id
+                + ", image='" + image + '\''
+                + ", food_id=" + food_id
+                + '}';
+    }
 }

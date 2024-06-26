@@ -15,7 +15,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/dd760d7b93.js" crossorigin="anonymous"></script>
-       
+
         <title>Trang chủ</title>
         <style>
             .navbar-nav {
@@ -47,7 +47,7 @@
                 line-height: 20px;
                 text-align: center;
             }
-            
+
 
         </style>
     </head>
@@ -77,25 +77,20 @@
                                 <i class="fa fa-search text-body"></i>
                             </button>
 
-                            <div class="dropdown">
+                            <div class="dropdown ">
                                 <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
                                         data-bs-toggle="dropdown">
                                     <i class="fa fa-user text-body"></i>
                                 </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Lịch sử
-                                        </a>
-                                    </li>
+                                <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
                                         <a class="dropdown-item" href="profile">
                                             Hồ sơ
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="logout">
-                                            Đăng xuất
+                                        <a class="dropdown-item" href="actioncustomer?action=history">
+                                            Đơn hàng
                                         </a>
                                     </li>
                                     <li>
@@ -103,9 +98,15 @@
                                             Xem lại bình luận
                                         </a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" href="logout">
+                                            Đăng xuất
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </div>
-                            
+
 
                             <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
                                 <div class="cart-count">${count_cart}</div>
@@ -125,7 +126,7 @@
                             <a class="btn btn-square bg-white rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>
-                           <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
+                            <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
                                 <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
@@ -134,7 +135,7 @@
                 </div>
             </div>
         </nav>
- 
+
         <c:set var="n" value="${currentPage}"/>
 
         <div class="flex-grow-1" >
@@ -178,9 +179,9 @@
                                 <button class="btn btn-danger" 
                                         type="button">Hết hàng</button>
                             </c:if>
-                           <c:if test="${f.stock > 0}">
-                                <a class="btn btn-primary"
-                                   onclick="addCart('${f.foodId}','${page}', '${acc.userid}')"
+                            <c:if test="${f.stock > 0}">
+                                <a class="btn btn-success"
+                                   onclick="addCart('${f.foodId}', '${page}', '${acc.userid}')"
                                    href="#">
                                     Thêm vào giỏ hàng
                                 </a>
@@ -210,19 +211,18 @@
             </c:forEach>
         </ul>
 
-        
+
         <jsp:include page="../footer.jsp"></jsp:include>
     </body>
     <script>
-        function addCart(id,page,user){
-            console.log("id",id)
-            console.log("user",page)
-            
-            if(user == ""){
+        function addCart(id, page, user) {
+            console.log("id", id)
+            console.log("user", page)
+
+            if (user == "") {
                 window.location = "login";
-            }
-            else{
-                window.location = "add-to-cart?id="+id+"&page="+page
+            } else {
+                window.location = "add-to-cart?id=" + id + "&page=" + page
             }
         }
     </script>
