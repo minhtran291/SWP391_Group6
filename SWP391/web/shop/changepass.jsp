@@ -25,15 +25,15 @@
         <form action="actionshop?action=changepass" method="post">
             <div class="form-group">
                 <label for="currentPassword">Mật khẩu cũ</label>
-                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required minlength="6">
             </div>
             <div class="form-group">
                 <label for="newPassword">Mật khẩu mới</label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                <input type="password" class="form-control" id="newPassword" name="newPassword" required minlength="6">
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Xác nhận mật khẩu</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="6">
             </div>
             <button type="submit" class="btn btn-danger">Cập Nhật</button>
         </form>

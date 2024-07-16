@@ -72,13 +72,13 @@
                     <label for="password">
                         <img src="https://icons.iconarchive.com/icons/webalys/kameleon.pics/48/Key-icon.png" alt="Key Icon">
                     </label>
-                    <input type="password" id="password" name="password" placeholder="New Password" required>
+                    <input type="password" id="password" name="password" placeholder="New Password" required minlength="6">
                 </div>
                 <div class="input-group">
                     <label for="confirmPassword">
                         <img src="https://icons.iconarchive.com/icons/webalys/kameleon.pics/48/Key-icon.png" alt="Key Icon">
                     </label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm New Password" required>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm New Password" required minlength="6">
                 </div>
                 <button type="submit">Đặt lại</button>
             </form>

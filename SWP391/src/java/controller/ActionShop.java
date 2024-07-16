@@ -352,9 +352,9 @@ public class ActionShop extends HttpServlet {
     private void getFoodByCategory(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         String categoryId = request.getParameter("cid");
         ArrayList<Food> listFoodByCategory = new ArrayList<>();
-        if(categoryId.equalsIgnoreCase("all")){
+        if (categoryId.equalsIgnoreCase("all")) {
             listFoodByCategory = fd.getAllFood();
-        }else{
+        } else {
             listFoodByCategory = fd.getFoodByCategory(categoryId);
         }
         request.setAttribute("listFoodByCategory", listFoodByCategory);
@@ -518,7 +518,7 @@ public class ActionShop extends HttpServlet {
         String status = request.getParameter("status");
         OrderDAO od = new OrderDAO();
         od.updateStatus(Integer.parseInt(status), id);
-        response.sendRedirect("actionshop?action=order-detail&id=" + id);
+        response.sendRedirect("actionshop?action=order-detail&id=" + id + "&ostatus=" + status);
     }
 
     private void getOrderDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -533,14 +533,20 @@ public class ActionShop extends HttpServlet {
         String address = od.getaddress(o.getId());
 
         switch (o.getStatus()) {
-            case 0:
-                o.setStatus_text("Đơn hàng đã được order");
-                break;
             case 1:
-                o.setStatus_text("Đơn hàng đang được giao");
+                o.setStatus_text("Chưa xử lý");
                 break;
             case 2:
-                o.setStatus_text("Giao hàng thành công");
+                o.setStatus_text("Đang xử lý");
+                break;
+            case 3:
+                o.setStatus_text("Đang giao");
+                break;
+            case 4:
+                o.setStatus_text("Đã giao");
+                break;
+            case 5:
+                o.setStatus_text("Đã hủy");
                 break;
 //            default:
 //                throw new AssertionError();

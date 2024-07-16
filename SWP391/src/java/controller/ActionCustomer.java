@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import model.Category;
@@ -145,13 +147,18 @@ public class ActionCustomer extends HttpServlet {
             OrderDAO od = new OrderDAO();
             List<Order> list = od.getOrder(u.getUsername());
             Order o = od.getOrderById(Integer.parseInt(id));
-            if (o.getStatus() == 0) {
-                od.delete(id);
+            if(o == null) {
+                String errorMessage = "Đơn hàng không được tìm thấy";
+                String encodedMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
+                response.sendRedirect("actioncustomer?action=history&err=" + encodedMessage);
+            } else 
+            if (o.getStatus() == 1) {
+                od.updateStatus(5, o.getId());
                 response.sendRedirect("actioncustomer?action=history");
             } else {
-                request.setAttribute("err", "Đơn hàng đã được giao, không thể hủy");
-                request.setAttribute("list", list);
-                request.getRequestDispatcher("/customer/history.jsp").forward(request, response);
+                String errorMessage = "Đơn hàng đã được giao, không thể hủy";
+                String encodedMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
+                response.sendRedirect("actioncustomer?action=history&err=" + encodedMessage);
             }
         } else {
             response.sendRedirect("login");
@@ -164,7 +171,6 @@ public class ActionCustomer extends HttpServlet {
         if (u != null) {
             OrderDAO od = new OrderDAO();
             List<Order> list = od.getOrder(u.getUsername());
-
             if (list.size() == 0) {
                 request.setAttribute("list", null);
             } else {
@@ -193,7 +199,6 @@ public class ActionCustomer extends HttpServlet {
                 }
                 request.setAttribute("list", list);
             }
-
             request.getRequestDispatcher("/customer/history.jsp").forward(request, response);
         } else {
             response.sendRedirect("login");

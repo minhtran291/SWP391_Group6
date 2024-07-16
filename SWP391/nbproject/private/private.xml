@@ -2,22 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="PRJ301">
-            <file>file:/D:/PRJ_SWP391/SWP391/web/customer/profile.jsp</file>
-            <file>file:/D:/PRJ_SWP391/SWP391/src/java/controller/addToCart.java</file>
-            <file>file:/D:/PRJ_SWP391/SWP391/src/java/controller/order.java</file>
-            <file>file:/D:/PRJ_SWP391/SWP391/src/java/controller/ActionCustomer.java</file>
-            <file>file:/D:/PRJ_SWP391/SWP391/src/java/controller/deleteCart.java</file>
-            <file>file:/D:/PRJ_SWP391/SWP391/web/customer/home.jsp</file>
-            <file>file:/D:/PRJ_SWP391/SWP391/src/java/controller/ActionShop.java</file>
-            <file>file:/D:/PRJ_SWP391/SWP391/web/customer/cart.jsp</file>
-            <file>file:/D:/PRJ_SWP391/SWP391/web/detail.jsp</file>
-        </group>
-        <group>
-            <file>file:/D:/iter2/SWP391_Group6/SWP391/web/WEB-INF/web.xml</file>
-            <file>file:/D:/iter2/SWP391_Group6/SWP391/web/detail.jsp</file>
-            <file>file:/D:/iter2/SWP391_Group6/SWP391/src/java/controller/ActionCustomer.java</file>
-            <file>file:/D:/iter2/SWP391_Group6/SWP391/src/java/controller/ActionShop.java</file>
-        </group>
+        <group/>
+        <group name="PRJ301"/>
     </open-files>
 </project-private>

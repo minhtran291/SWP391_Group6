@@ -170,9 +170,11 @@
                 <input type="hidden" name="action" value="update-status">
                 <input type="hidden" value="${order.id}" name="id">
                 <select class="form-select" name="status" aria-label="Default select example">
-                    <option selected value="0">Đã nhận được đơn hàng</option>
-                    <option value="1">Đơn hàng đang được giao</option>
-                    <option value="2">Giao hành thành công</option>
+                    <option value="1" ${param.ostatus != null && param.ostatus == '1' ? "selected" : ""}>Chưa xử lý</option>
+                    <option value="2" ${param.ostatus != null && param.ostatus == '2' ? "selected" : ""}>Đang xử lý</option>
+                    <option value="3" ${param.ostatus != null && param.ostatus == '3' ? "selected" : ""}>Đang giao</option>
+                    <option value="4" ${param.ostatus != null && param.ostatus == '4' ? "selected" : ""}>Đã giao</option>
+                    <option value="5" ${param.ostatus != null && param.ostatus == '5' ? "selected" : ""}>Hủy đơn hàng</option>
                 </select>
                 <button class="btn btn-primary mt-3" type="submit">Cập nhật</button>
             </form>

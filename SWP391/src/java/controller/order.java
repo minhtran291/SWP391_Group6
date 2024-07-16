@@ -72,10 +72,8 @@ public class order extends HttpServlet {
         User acc = (User) session.getAttribute("acc");
 
         if (acc == null) {
-
             response.sendRedirect("login");
         } else {
-
             double total = (double) session.getAttribute("total_s");
 
             if (total != 0) {
@@ -107,13 +105,14 @@ public class order extends HttpServlet {
 
         HttpSession session = request.getSession();
         User acc = (User) session.getAttribute("acc");
+        List<Food> list = (List<Food>) session.getAttribute("cart");
         if (acc != null) {
-
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
-
+            String district = request.getParameter("district");
+            address = (district + ", " + address);
             if (name == "") {
                 request.setAttribute("err", "Vui lòng nhập tên khách hàng");
             } else if (email == "") {
@@ -125,38 +124,48 @@ public class order extends HttpServlet {
             } else {
                 if (phone.length() != 10) {
                     request.setAttribute("err", "Số điện thoại không hợp lệ");
-
                 } else {
                     try {
-                        int phone_i = Integer.parseInt(phone);
-
-                        List<Food> list = (List<Food>) session.getAttribute("cart");
                         if (list == null) {
                             request.setAttribute("err", "Bạn ko có sản phẩm đẻ thanh toán");
                             request.getRequestDispatcher("customer/cart.jsp").forward(request, response);
                         } else {
-                            double total = (double) session.getAttribute("total_s");
-                            OrderDAO od = new OrderDAO();
-                            boolean check = od.insert(total, acc.getUsername());
-                            if (check) {
-                                int id = od.getLast();
-                                for (Food f : list) {
-                                    od.insert_detail(id, f);
+                            String req = request.getParameter("payment");
+                            if (req != null) {
+                                if (req.equals("0")) {
+                                    double total = (double) session.getAttribute("total_s");
+                                    OrderDAO od = new OrderDAO();
+                                    boolean check = od.insert(total, acc.getUsername());
+                                    if (check) {
+                                        int id = od.getLast();
+                                        for (Food f : list) {
+                                            od.insert_detail(id, f);
+                                        }
+                                        request.setAttribute("count_cart", 0);
+                                        od.insertDelivery(id, address);
+                                        session.removeAttribute("cart");
+                                        request.setAttribute("success", "Đơn hàng đã được order");
+                                    }
+                                } else {
+                                    session.setAttribute("address", address);
+                                    Long total = total = (long) Double.parseDouble(session.getAttribute("total_s").toString());
+                                    response.sendRedirect("vnpay?amount=" + total);
+                                    return;
                                 }
-                                od.insertDelivery(id, address);
-                                session.removeAttribute("cart");
-                                request.setAttribute("success", "Đơn hàng đã được order");
+                            } else {
+                                request.setAttribute("err", "Hãy chọn phương thức thanh toán.");
+                                request.getRequestDispatcher("customer/cart.jsp").forward(request, response);
                             }
                         }
-
                     } catch (Exception e) {
+                        System.out.println("Add : " + e);
                         request.setAttribute("err", "Số điện thoại không hợp lệ");
                     }
                 }
             }
-            List<Food> list = (List<Food>) session.getAttribute("cart");
             request.setAttribute("list", list);
             request.setAttribute("user", acc);
+            request.setAttribute("address", address);
             request.getRequestDispatcher("customer/order.jsp").forward(request, response);
         } else {
             response.sendRedirect("login");

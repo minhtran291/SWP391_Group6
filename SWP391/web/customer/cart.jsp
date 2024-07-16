@@ -172,10 +172,10 @@
                                             <div class="alert alert-success">${success}</div>
                                         </c:if>
 
-
+                                        <c:set var="totalCart" value="0"/>
                                         <c:if test="${cart != null}">
-
                                             <c:forEach items="${cart}" var="p">
+                                                <c:set var="totalCart" value="${totalCart + (p.quantity * p.price)}"/>
                                                 <div class="card mb-3">
                                                     <div class="card-body">
                                                         <div class="d-flex justify-content-between">
@@ -207,17 +207,6 @@
 
                                             </c:forEach>
                                         </c:if>
-
-
-
-
-
-
-
-
-
-
-
                                     </div>
                                     <div class="col-lg-5">
 
@@ -227,31 +216,17 @@
                                                     <h5 class="mb-0">Thanh Toán</h5>
 
                                                 </div>
-
-
-
                                                 <form class="mt-4" action="order">
-
-
-
-
-
-
                                                     <hr class="my-4">
-
-
-
                                                     <div class="d-flex justify-content-between mb-4">
                                                         <p class="mb-2">Tổng thanh toán</p>
-                                                        <p class="mb-2">${total_s} VND</p>
+                                                        <p class="mb-2">${totalCart} VND</p>
                                                     </div>
-
                                                     <c:if test="${cart != null}">
                                                         <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
                                                             Tiếp tục
                                                         </button>
                                                     </c:if>
-
                                                     <c:if test="${cart.size() == 0}">
                                                         <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
                                                             Tiếp tục
@@ -260,17 +235,13 @@
                                                 </form>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
     </body>
 </html>

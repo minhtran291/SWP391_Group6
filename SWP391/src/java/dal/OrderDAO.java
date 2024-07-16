@@ -38,6 +38,20 @@ public class OrderDAO extends DBContext {
         return false;
     }
 
+    public boolean insertOnline(double total, String name) {
+        String sql = "INSERT INTO orders (user_name, total, status, orderDate, orderTime, paymentID) VALUES (?, ?, 1, GETDATE(), CONVERT(TIME, GETDATE()), 1)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setDouble(2, total);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
     public int getLast() {
         String sql = "  select top 1 order_id from orders order by order_id desc";
         try {
@@ -81,11 +95,11 @@ public class OrderDAO extends DBContext {
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Order o = new Order(rs.getInt(1), 
-                        rs.getString(2), 
-                        rs.getString(5), 
-                        rs.getInt(4), 
-                        rs.getDouble("total"), 
+                Order o = new Order(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(5),
+                        rs.getInt(4),
+                        rs.getDouble("total"),
                         rs.getString(6));
                 list.add(o);
             }
@@ -156,7 +170,7 @@ public class OrderDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
     public void updateStatus(int status, int id) {
         String sql = "update orders set status = ? where order_id = ?";
         try {
@@ -170,16 +184,23 @@ public class OrderDAO extends DBContext {
     }
 
     public void delete(String id) {
-        String sql = "delete from orderDetail where order_id = ?\n"
-                + "delete from delivery where order_id = ?"
-                + "delete from orders where order_id = ?";
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, id);
-            ps.setString(2, id);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
+            String sqlOrderDetail = "delete from orderDetail where order_id = ?";
+            PreparedStatement psOrderDetail = connection.prepareStatement(sqlOrderDetail);
+            psOrderDetail.setString(1, id);
+            psOrderDetail.executeUpdate();
+
+            String sqlDelivery = "delete from delivery where order_id = ?";
+            PreparedStatement psDelivery = connection.prepareStatement(sqlDelivery);
+            psDelivery.setString(1, id);
+            psDelivery.executeUpdate();
+
+            String sqlOrders = "delete from orders where order_id = ?";
+            PreparedStatement psOrders = connection.prepareStatement(sqlOrders);
+            psOrders.setString(1, id);
+            psOrders.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("e: " + e);
         }
     }
 

@@ -179,7 +179,6 @@
                         </c:if>
                     </c:forEach>
                 </c:when>
-                
             </c:choose>
         </div>
     </div>

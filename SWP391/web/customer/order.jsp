@@ -141,9 +141,6 @@
 
                             </div>
 
-
-
-
                             <c:if test="${err != null}">
                                 <div class="row mt-3 mx-4">
                                     <div class="alert alert-danger">${err}</div>
@@ -188,22 +185,61 @@
                                     </div>
                                 </div>
                             </div>
+                            <c:if test="${address == null}">
 
+
+                                <div class="row mt-3 mx-4">
+                                    <div class="col-12">
+                                        <label class="order-form-label">Quận/Huyện</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <select name="district" id="form6" class="form-control order-form-input">
+                                                <option value="Ba Đình">Ba Đình</option>
+                                                <option value="Hoàn Kiếm">Hoàn Kiếm</option>
+                                                <option value="Tây Hồ">Tây Hồ</option>
+                                                <option value="Long Biên">Long Biên</option>
+                                                <option value="Cầu Giấy">Cầu Giấy</option>
+                                                <option value="Đống Đa">Đống Đa</option>
+                                                <option value="Hai Bà Trưng">Hai Bà Trưng</option>
+                                                <option value="Hoàng Mai">Hoàng Mai</option>
+                                                <option value="Thanh Xuân">Thanh Xuân</option>
+                                                <option value="Sóc Sơn">Sóc Sơn</option>
+                                                <option value="Đông Anh">Đông Anh</option>
+                                                <option value="Gia Lâm">Gia Lâm</option>
+                                                <option value="Nam Từ Liêm">Nam Từ Liêm</option>
+                                                <option value="Thanh Trì">Thanh Trì</option>
+                                                <option value="Bắc Từ Liêm">Bắc Từ Liêm</option>
+                                                <option value="Mê Linh">Mê Linh</option>
+                                                <option value="Hà Đông">Hà Đông</option>
+                                                <option value="Sơn Tây">Sơn Tây</option>
+                                                <option value="Ba Vì">Ba Vì</option>
+                                                <option value="Phúc Thọ">Phúc Thọ</option>
+                                                <option value="Đan Phượng">Đan Phượng</option>
+                                                <option value="Hoài Đức">Hoài Đức</option>
+                                                <option value="Quốc Oai">Quốc Oai</option>
+                                                <option value="Thạch Thất">Thạch Thất</option>
+                                                <option value="Chương Mỹ">Chương Mỹ</option>
+                                                <option value="Thanh Oai">Thanh Oai</option>
+                                                <option value="Thường Tín">Thường Tín</option>
+                                                <option value="Phú Xuyên">Phú Xuyên</option>
+                                                <option value="Ứng Hòa">Ứng Hòa</option>
+                                                <option value="Mỹ Đức">Mỹ Đức</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
                             <div class="row mt-3 mx-4">
                                 <div class="col-12">
                                     <label class="order-form-label">Địa chỉ</label>
                                 </div>
                                 <div class="col-12">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input name="address" type="text" id="form5" class="form-control order-form-input" />
-
+                                        <input value="${address}" name="address" type="text" id="form5" class="form-control order-form-input" />
                                     </div>
                                 </div>
-
                             </div>
-
-
-
                             <div class="row mt-3 mx-4">
                                 <div class="col-12">
                                     <label class="order-form-label">Chi tiết sản phẩm</label>
@@ -213,12 +249,10 @@
                                         <table class="table table-bordered mt-3">
                                             <thead>
                                                 <tr>
-
                                                     <th scope="col">Tên sản phẩm</th>
                                                     <th scope="col">Ảnh sản phẩm</th>
                                                     <th scope="col">Số lượng</th>
                                                     <th scope="col">Giá sản phẩm</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -233,22 +267,12 @@
                                                         </tr>
                                                     </c:forEach>
                                                 </c:if>
-
-
-
-
-
                                             </tbody>
                                         </table>
 
                                     </div>
                                 </div>
-
                             </div>
-
-
-
-
                             <c:if test="${success != null}">
                                 <div class="row mt-3">
                                     <div class="col-12">
@@ -259,13 +283,28 @@
                                 </div>
                             </c:if>
                             <c:if test="${success == null}">
+                                <div class="d-flex justify-content-between mb-4">
+                                    <p class="mb-2">Tổng thanh toán</p>
+                                    <p class="mb-2">${total_s} VND</p>
+                                </div>
+                                <hr class="my-4">
                                 <div class="row mt-3">
+                                    <div class="row mt-3 mx-4">
+                                        <div class="col-12">
+                                            <label class="order-form-label">Phương thức thanh toán</label>
+                                        </div>
+                                        <div class="col-12">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input checked name="payment" type="radio" value="0"/> Tiền mặt <br>
+                                                <input name="payment" type="radio" value="1"/> Chuyển khoản
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <button  type="submit" data-mdb-button-init id="btnSubmit" data-mdb-ripple-init class="btn btn-primary d-block mx-auto btn-submit">Thanh toán</button>
                                     </div>
                                 </div>
                             </c:if>
-
                         </div>
                     </form>
                 </div>

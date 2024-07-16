@@ -7,6 +7,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<c:set var="currentHour" value="<%= java.time.LocalTime.now().getHour() %>"/>
+<c:set var="isOpen" value="${currentHour ge 6 && currentHour lt 10}"/>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -164,28 +166,30 @@
                     <c:forEach var="f" items="${foodOnCurrentPage}">
                         <li class="m-3 border rounded-1 border-dark text-center">
                             <a class="text-decoration-none" href="detail?action=detail&foodId=${f.foodId}">
-                                <img src="${f.image}" class="img-fluid" 
-                                     style="width: 250px; height: 210px" alt="${f.foodName}"/>
+                                <img src="${f.image}" class="img-fluid" style="width: 250px; height: 210px" alt="${f.foodName}" />
                                 <p class="text-muted fw-bold fs-5">${f.foodName}</p>
                                 <p>Giá: <span class="text-danger fw-bold">
-                                        <fmt:formatNumber type="currency" 
-                                                          currencyCode="VND"
-                                                          maxFractionDigits="0"
-                                                          value="${f.price}">
+                                        <fmt:formatNumber type="currency" currencyCode="VND" maxFractionDigits="0" value="${f.price}">
                                         </fmt:formatNumber>
                                     </span></p>
                             </a>
-                            <c:if test="${f.stock == 0}">
-                                <button class="btn btn-danger" 
-                                        type="button">Hết hàng</button>
-                            </c:if>
-                            <c:if test="${f.stock > 0}">
-                                <a class="btn btn-success"
-                                   onclick="addCart('${f.foodId}', '${page}', '${acc.userid}')"
-                                   href="#">
-                                    Thêm vào giỏ hàng
-                                </a>
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${isOpen == true}">
+                                    <c:if test="${f.stock == 0}">
+                                        <button class="btn btn-danger" type="button">Hết hàng</button>
+                                    </c:if>
+                                    <c:if test="${f.stock > 0}">
+                                        <a class="btn btn-success"
+                                           onclick="addCart('${f.foodId}', '${page}', '${acc.userid}')"
+                                           href="#">
+                                            Thêm vào giỏ hàng
+                                        </a>
+                                    </c:if>
+                                </c:when>
+                                <c:otherwise>
+                                    <button class="btn btn-danger" type="button" disabled>Đã đóng cửa</button>
+                                </c:otherwise>
+                            </c:choose>
                         </li>
                     </c:forEach>
                 </ul>

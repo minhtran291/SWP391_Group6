@@ -134,6 +134,9 @@
             <c:if test="${err != null}">
                 <div class="alert alert-danger">${err}</div>
             </c:if>
+            <c:if test="${param.err != null}">
+                <div class="alert alert-danger">${param.err}</div>
+            </c:if>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -147,9 +150,9 @@
                 </thead>
                 <tbody>
                     <c:if test="${list != null}">
-                        <c:forEach items="${list}" var="i"> 
+                        <c:forEach items="${list}" var="i" varStatus="index"> 
                             <tr>
-                                <th scope="row">${i.id}</th>
+                                <th scope="row">${index.index + 1}</th>
                                 <td>${i.name}</td>
                                 <td>${i.address}</td>
                                 <td>${i.date}</td>
@@ -160,11 +163,6 @@
                             </tr>
                         </c:forEach>
                     </c:if>
-
-
-
-
-
                 </tbody>
             </table>
             <c:if test="${list == null}">

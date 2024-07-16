@@ -69,6 +69,29 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
+    
+   public User getUserEmail(String email) {
+        User user = null;
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = new User();
+                user.setUserid(resultSet.getInt("user_id"));
+                user.setUsername(resultSet.getString("user_name"));
+                user.setPassword(resultSet.getString("password"));
+                user.setGender(resultSet.getInt("gender"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone_number"));
+                user.setRoleid(resultSet.getInt("role_id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 
     public boolean duplicateAccount(String account) {
         String sql = "select * from users where [user_name] = ?";
@@ -109,6 +132,20 @@ public class UserDAO extends DBContext {
             st.setString(4, u.getEmail());
             st.setString(5, u.getPhone());
 
+            st.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+    
+    public void addUserLoginGG(User u) {
+        String sql = "insert into [users] ([user_name], [password], [gender], [email], [role_id]) "
+                + "values(?,?,?,?,1)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, u.getUsername());
+            st.setString(2, u.getPassword());
+            st.setInt(3, u.getGender());
+            st.setString(4, u.getEmail());
             st.executeUpdate();
         } catch (SQLException e) {
         }
