@@ -27,8 +27,15 @@ public class FoodDAO extends DBContext {
 
     public ArrayList<Food> getAllFood() {
         ArrayList<Food> listFood = new ArrayList<>();
-        String sql = "select * from food "
-                + "order by food_id asc";
+        String sql = "SELECT "
+                + "f.food_id, f.food_name, f.price, f.stock, f.create_date, "
+                + "f.category_id, f.description, f.sold, f.image, "
+                + "d.discount_id, d.discount_rate, d.start_date, d.end_date "
+                + "FROM "
+                + "food f LEFT JOIN discount d ON f.food_id = d.food_id "
+                + "ORDER BY "
+                + "f.food_id";
+
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -41,7 +48,8 @@ public class FoodDAO extends DBContext {
                         rs.getString("description"),
                         rs.getInt("sold"),
                         cd.getCategoryById(rs.getInt("category_id")),
-                        rs.getString("image")));
+                        rs.getString("image"),
+                        rs.getInt("discount_rate")));
             }
         } catch (Exception e) {
         }
@@ -578,7 +586,7 @@ public class FoodDAO extends DBContext {
         }
         return null;
     }
-    
+
     public int getNumberFood() {
         String sql = "select count(*) from food";
         try {
@@ -590,5 +598,35 @@ public class FoodDAO extends DBContext {
         } catch (SQLException e) {
         }
         return 0;
+    }
+
+    public boolean checkFoodExists(int foodId) {
+        // Kiểm tra nếu mã món ăn tồn tại
+        String sql = "SELECT COUNT(*) FROM Foods WHERE food_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, foodId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean checkFoodId(int foodId) {
+        String sql = "select * from [food] where [food_id] = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, foodId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+        }
+        return true;
     }
 }

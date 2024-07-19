@@ -243,6 +243,10 @@
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
                 <p><a class="btn text-white btn-primary" 
+                      href="discount?action=list">Quản lí giảm giá</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="manageblog">Quản lí Blog</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
             </div>
         </div>

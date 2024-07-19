@@ -18,8 +18,20 @@ public class User {
     private String phone;
     private int roleid;
     private int orderNumber;
+    private String avatar;
 
     public User() {
+    }
+
+    public User(int userid,String username, String password, int gender, String email, String phone, int roleid, String avatar) {
+        this.userid = userid;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.roleid = roleid;
+        this.avatar = avatar;
     }
 
     public User(int userid, String username, String password, int gender, String email, String phone, int roleid) {
@@ -120,6 +132,14 @@ public class User {
 
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
 //    @Override

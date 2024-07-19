@@ -33,7 +33,8 @@ public class UserDAO extends DBContext {
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7));
+                        rs.getInt(7),
+                        rs.getString(8));
             }
 
         } catch (SQLException e) {
@@ -377,7 +378,7 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public UserDetail getUserDetail(String username) {
         UserDetail user = null;
         String sql = "SELECT * FROM users WHERE user_name = ?";
@@ -399,5 +400,56 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public void updateUserProfile(int gender, String email, String phone, String avatar, int userid ) {
+        String sql = "UPDATE [dbo].[users] "
+                + "   SET [gender] = ?, "
+                + "       [email] = ?, "
+                + "      [phone_number] = ?, "
+                + "      [avatar] = ? "
+                + " WHERE [user_id] = ? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, gender);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, avatar);
+            ps.setInt(5, userid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    
+    public boolean checkEmailUpdate(String email, String idemp) {
+        String sql = "  SELECT * FROM [users] WHERE [email] = ? and user_id <> ? ";
+        int id = Integer.parseInt(idemp);
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setInt(2, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+    
+    public boolean checkPhoneUpdate(String phone, String idemp) {
+        String sql = "  SELECT * FROM [users] WHERE [phone_number] = ? and user_id <> ? ";
+        int id = Integer.parseInt(idemp);
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, phone);
+            ps.setInt(2, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
     }
 }

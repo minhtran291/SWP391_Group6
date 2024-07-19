@@ -155,7 +155,8 @@
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">
-                                <button class="btn btn-primary w-25">Cập nhật</button>
+                                <!--<button class="btn btn-primary w-25">Cập nhật</button>-->
+                                <a class="btn btn-primary w-25" href="UpdateProfile.jsp">Cập Nhật</a>
                             </div>
                         </div>
                     </div>
@@ -190,6 +191,8 @@
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="discount?action=list">Quản lí giảm giá</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
             </div>

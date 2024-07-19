@@ -6,6 +6,7 @@ package controller;
 
 import dal.CategoryDAO;
 import dal.CommentDAO;
+import dal.DiscountDAO;
 import dal.FoodDAO;
 import dal.OrderDAO;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import model.Comment;
 import model.Food;
 import model.User;
 import model.Cart;
+import model.Discount;
 import model.Order;
 
 /**
@@ -34,6 +36,7 @@ public class ActionCustomer extends HttpServlet {
     CategoryDAO cd = new CategoryDAO();
     FoodDAO fd = new FoodDAO();
     CommentDAO cmtd = new CommentDAO();
+    DiscountDAO dd = new DiscountDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -272,7 +275,6 @@ public class ActionCustomer extends HttpServlet {
 
     private void getAllFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
-
         ArrayList<Food> fList = (ArrayList) session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList) session.getAttribute("fList");
         ArrayList<Category> cList = (ArrayList) session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList) session.getAttribute("cList");
         // ko phan phai lan dau tien chay ko can get all nua chi goi du lieu ve

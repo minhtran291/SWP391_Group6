@@ -21,6 +21,8 @@ public class Food {
     private int sold;
     private Category categoryId;
     private String image;
+    private int dicountRate;
+    
 
     private int quantity;
 
@@ -56,6 +58,18 @@ public class Food {
         this.sold = sold;
         this.categoryId = categoryId;
         this.image = image;
+    }
+    public Food(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image, int discountRate) {
+        this.foodId = foodId;
+        this.foodName = foodName;
+        this.price = price;
+        this.stock = stock;
+        this.createDate = createDate;
+        this.description = description;
+        this.sold = sold;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.dicountRate = discountRate;
     }
 
     public int getFoodId() {
@@ -137,6 +151,15 @@ public class Food {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public int getDicountRate() {
+        return dicountRate;
+    }
+
+    public void setDicountRate(int dicountRate) {
+        this.dicountRate = dicountRate;
+    }
+    
 
     
    @Override

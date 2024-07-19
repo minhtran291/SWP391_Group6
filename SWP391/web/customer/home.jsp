@@ -47,6 +47,9 @@
                 line-height: 20px;
                 text-align: center;
             }
+            .text-danger.strikethrough {
+                text-decoration: line-through;
+            }
 
 
         </style>
@@ -167,13 +170,34 @@
                                 <img src="${f.image}" class="img-fluid" 
                                      style="width: 250px; height: 210px" alt="${f.foodName}"/>
                                 <p class="text-muted fw-bold fs-5">${f.foodName}</p>
-                                <p>Giá: <span class="text-danger fw-bold">
-                                        <fmt:formatNumber type="currency" 
-                                                          currencyCode="VND"
-                                                          maxFractionDigits="0"
-                                                          value="${f.price}">
-                                        </fmt:formatNumber>
-                                    </span></p>
+                                <c:if test="${f.dicountRate == 0}">
+                                    <p>Giá: <span class="text-danger fw-bold">
+                                            <fmt:formatNumber type="currency" 
+                                                              currencyCode="VND"
+                                                              maxFractionDigits="0"
+                                                              value="${f.price}">
+                                            </fmt:formatNumber>
+                                        </span></p>
+                                    </c:if>
+                                    <c:if test="${f.dicountRate != 0}">
+                                    <p>Giảm giá: <span class="text-danger fw-bold">
+                                            <fmt:formatNumber type="currency" 
+                                                              currencyCode="VND"
+                                                              maxFractionDigits="0"
+                                                              value="${f.price - f.price * f.dicountRate/100}" >
+                                            </fmt:formatNumber>
+                                        </span></p>
+                                    <p>
+                                        Giá gốc:
+                                        
+                                        <span class="text-danger fw-bold strikethrough">
+                                            <fmt:formatNumber type="currency" 
+                                                              currencyCode="VND"
+                                                              maxFractionDigits="0"
+                                                              value="${f.price}" >
+                                            </fmt:formatNumber>
+                                        </span></p>
+                                    </c:if>
                             </a>
                             <c:if test="${f.stock == 0}">
                                 <button class="btn btn-danger" 

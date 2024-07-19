@@ -79,7 +79,7 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="blog.jsp" class="dropdown-item">Blog Grid</a>
+                                    <a href="blog" class="dropdown-item">Blog Grid</a>
                                     <a href="bestsellers.jsp" class="dropdown-item">Our Features</a>
                                     <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
                                     <a href="404.jsp" class="dropdown-item">404 Page</a>

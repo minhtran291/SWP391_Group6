@@ -4,12 +4,14 @@
     Author     : admin
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Foody - Organic Food Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -79,35 +81,78 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="blog.jsp" class="dropdown-item">Blog Grid</a>
+                                    <a href="blog" class="dropdown-item">Blog Grid</a>
                                     <a href="bestsellers.jsp" class="dropdown-item">Our Features</a>
                                     <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
                                     <a href="404.jsp" class="dropdown-item">404 Page</a>
                                     <a href="contact.jsp" class="dropdown-item">Liên Hệ</a>
                                 </div>
                             </div>
+                            <c:if test="${acc!=null}">
                             <form class="d-none d-lg-flex ms-2 align-items-center">
                                 <div class="input-group">
                                     <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
                                     <button class="btn btn-outline-success" type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
-                                
-                                
 
-                                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="login.jsp">
-                                    <small class="fa fa-user text-body"></small>
-                                </a>
-                                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="customer/cart.jsp">
-                                    <small class="fa fa-shopping-bag text-body"></small>
-                                </a>
-                            </div>
+
+
+                                    <div class="dropdown ">
+                                        <button type="button" class="btn-sm-square btn-transparent rounded-circle ms-3" 
+                                                data-bs-toggle="dropdown">
+                                            <i class="fa fa-user text-body "></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <a class="dropdown-item" href="profile">
+                                                    Hồ sơ
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="actioncustomer?action=history">
+                                                    Đơn hàng
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                                    Xem lại bình luận
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="logout">
+                                                    Đăng xuất
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <a class="btn-sm-square btn-transparent rounded-circle ms-3" href="customer/cart.jsp">
+                                        <small class="fa fa-shopping-bag text-body"></small>
+                                    </a>
+                                </div>
                             </form>
-                            
+                            </c:if>
+                            <!-- chua dang nhap -->    
+                    <c:if test="${acc==null}">
+                        <form class="d-none d-lg-flex ms-2 align-items-center">
+                                <div class="input-group">
+                            <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                                    <button class="btn btn-outline-success" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                            <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
+                                <i class="fa fa-user text-body"></i>
+                            </a>
+                            <a class="btn btn-square btn-transparent rounded-circle cart" href="actioncustomer?action=cart">
+                                <div class="cart-count">${count_cart}</div>
+                                <i class="fa fa-shopping-bag text-body"></i>
+                            </a>
+                        </form>
+                    </c:if>
                         </div>
                     </div>
             </nav>
-
         </div>
     <!-- Navbar End -->
 
@@ -126,109 +171,28 @@
         </div>
     </div>
     <!-- Page Header End -->
-
-
     <!-- Blog Start -->
-    <div class="container-xxl py-6">
+        <div class="container-fluid py-5">
         <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Latest Blog</h1>
-                <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid" src="img/blog-1.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+            <div class="row g-5">
+                <c:forEach var="blog" items="${blogs}">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="blog-item bg-light rounded overflow-hidden">
+                            <div class="blog-img position-relative overflow-hidden">
+                                <img class="img-fluid" src="img/blog-1.jpg" alt="">
+                                <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-4 py-2 px-4" href="">${blog.title}</a>
+                            </div>
+                            <div class="p-4">
+                                <div class="d-flex mb-3">
+                                    <small class="me-3"><i class="fa fa-user text-primary me-2"></i>${blog.author}</small>
+                                    <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>${blog.dateCreated}</small>
+                                </div>
+                                
+                                <a class="text-uppercase" href="blogDetail?blogId=${blog.id}">Read More <i class="bi bi-arrow-right"></i></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <img class="img-fluid" src="img/blog-2.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <img class="img-fluid" src="img/blog-3.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid" src="img/blog-2.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <img class="img-fluid" src="img/blog-3.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <img class="img-fluid" src="img/blog-1.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid" src="img/blog-3.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <img class="img-fluid" src="img/blog-1.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <img class="img-fluid" src="img/blog-2.jpg" alt="">
-                    <div class="bg-light p-4">
-                        <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own firm</a>
-                        <div class="text-muted border-top pt-4">
-                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="btn btn-primary rounded-pill py-3 px-5" href="">Load More</a>
-                </div>
+                </c:forEach>
             </div>
         </div>
     </div>
@@ -236,27 +200,27 @@
 
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark footer pt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <h1 class="fw-bold text-primary mb-4">F<span class="text-secondary">oo</span>dy</h1>
-                    <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita</p>
+                    <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
                     <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-outline-body me-0" href=""><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Address</h4>
+                    <h5 class="text-light mb-4">Address</h5>
                     <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
                     <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                     <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Quick Links</h4>
+                    <h5 class="text-light mb-4">Quick Links</h5>
                     <a class="btn btn-link" href="">About Us</a>
                     <a class="btn btn-link" href="">Contact Us</a>
                     <a class="btn btn-link" href="">Our Services</a>
@@ -264,25 +228,31 @@
                     <a class="btn btn-link" href="">Support</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Newsletter</h4>
+                    <h5 class="text-light mb-4">Newsletter</h5>
                     <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                     <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                         <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid copyright">
-            <div class="container">
+        <div class="container">
+            <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+
+                        <!-- This template is free as long as you keep the footer author’s credit link. -->
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        <div class="footer-menu">
+                            <a href="">Home</a>
+                            <a href="">Cookies</a>
+                            <a href="">Help</a>
+                            <a href="">FQAs</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -292,7 +262,7 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="fa fa-angle-double-up"></i></a>
 
 
     <!-- JavaScript Libraries -->

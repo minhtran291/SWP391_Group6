@@ -132,24 +132,46 @@
                                 <img src="${f.image}" class="img-fluid" 
                                      style="width: 250px; height: 210px" alt="${f.foodName}"/>
                                 <p class="text-muted fw-bold fs-5">${f.foodName}</p>
-                                <p>Giá: <span class="text-danger fw-bold">
-                                        <fmt:formatNumber type="currency" 
-                                                          currencyCode="VND"
-                                                          maxFractionDigits="0"
-                                                          value="${f.price}">
-                                        </fmt:formatNumber>
-                                    </span></p>
+                                <c:if test="${f.dicountRate == 0}">
+                                    <p>Giá: <span class="text-danger fw-bold">
+                                            <fmt:formatNumber type="currency" 
+                                                              currencyCode="VND"
+                                                              maxFractionDigits="0"
+                                                              value="${f.price}">
+                                            </fmt:formatNumber>
+                                        </span></p>
+                                    </c:if>
+                                    <c:if test="${f.dicountRate != 0}">
+                                    <p>Giảm giá: <span class="text-danger fw-bold">
+                                            <fmt:formatNumber type="currency" 
+                                                              currencyCode="VND"
+                                                              maxFractionDigits="0"
+                                                              value="${f.price - f.price * f.dicountRate/100}" >
+                                            </fmt:formatNumber>
+                                        </span></p>
+                                    <p>
+                                        Giá gốc:
+                                        
+                                        <span class="text-danger fw-bold strikethrough">
+                                            <fmt:formatNumber type="currency" 
+                                                              currencyCode="VND"
+                                                              maxFractionDigits="0"
+                                                              value="${f.price}" >
+                                            </fmt:formatNumber>
+                                        </span></p>
+                                    </c:if>
                             </a>
                             <c:if test="${f.stock == 0}">
                                 <button class="btn btn-danger" 
                                         type="button">Hết hàng</button>
                             </c:if>
                             <c:if test="${f.stock > 0}">
-                                <a class="btn btn-primary"
+                                <a class="btn btn-success"
+                                   onclick="addCart('${f.foodId}', '${page}', '${acc.userid}')"
                                    href="#">
                                     Thêm vào giỏ hàng
                                 </a>
-                            </c:if>    
+                            </c:if>
                         </li>
                     </c:forEach>
                 </ul>
@@ -164,21 +186,22 @@
             </div>
             <div class="offcanvas-body">
                 <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=dashBoard">
-                        Bảng diều khiển</a></p>
+                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
                 <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=manageFood">
-                        Quản lí sản phẩm</a></p>
+                      href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
-                      href="CategoryServlet?action=manageCategory">
-                        Quản lí thể loại sản phẩm</a></p>
+                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
                 <p><a class="btn text-white btn-primary" 
+                      href="discount?action=list">Quản lí giảm giá</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="manageblog">Quản lí Blog</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
-            </div>
+            </div
         </div>
 
 

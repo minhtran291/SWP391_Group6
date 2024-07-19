@@ -1,12 +1,17 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="java.util.List"%>
-<%@page import="model.Food"%>
+<%-- 
+    Document   : blog
+    Created on : Jun 16, 2024, 5:02:30 AM
+    Author     : admin
+--%>
+
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
     <head>
-        <meta charset="utf-8">
+       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Foody - Organic Food Website Template</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
@@ -41,7 +46,18 @@
             <div class="spinner-border text-primary" role="status"></div>
         </div>
         <!-- Spinner End -->
-
+        <style>
+            .about-img {
+                position: -webkit-sticky; /* For Safari */
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                background-color: white; /* Màu nền để tránh chồng hình ảnh lên nội dung khác */
+            }
+            .about-section {
+                padding-top: 20px;
+            }
+        </style>
 
         <!-- Navbar Start -->
         <div class="container-fluid-top-bar fixed-top px-0 bg-white ">
@@ -76,8 +92,8 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="blog" class="dropdown-item">Blog Grid</a>
-                                    <a href="bestsellers.jsp" class="dropdown-item">Best Seller</a>
+                                    <a href="blog" class="dropdown-item">Blog</a>
+                                    <a href="bestsellers.jsp" class="dropdown-item">Our Features</a>
                                     <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
                                     <a href="404.jsp" class="dropdown-item">404 Page</a>
                                     <a href="contact.jsp" class="dropdown-item">Liên Hệ</a>
@@ -145,11 +161,9 @@
                             </a>
                         </form>
                     </c:if>
-
                         </div>
                     </div>
             </nav>
-
         </div>
         <!-- Navbar End -->
 
@@ -157,97 +171,97 @@
         <!-- Page Header Start -->
         <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
             <div class="container">
-                <h1 class="display-3 mb-3 animated slideInDown">Best Seller</h1>
+                <h1 class="display-3 mb-3 animated slideInDown">Blog Detail</h1>
                 <nav aria-label="breadcrumb animated slideInDown">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
                         <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-dark active" aria-current="page">Best Seller</li>
+                        <li class="breadcrumb-item text-dark active" aria-current="page">Blog Grid</li>
                     </ol>
                 </nav>
             </div>
         </div>
         <!-- Page Header End -->
-
-
-        <!-- Feature Start -->
-        <div class="container-fluid bg-light bg-icon my-5 py-6">
-            <div class="container">
-                <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                    <h1 class="display-5 mb-3">Best Seller</h1>
+        <!-- Blog Start -->
+       
+            <!-- Blog End -->
+<div>
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeIn about-img" data-wow-delay="0.1s">
+                    <div class="position-relative overflow-hidden p-5 pe-0">
+                        <img class="img-fluid w-100" src="img/about-2.jpg" alt="About Us">
+                    </div>
                 </div>
-                <div class="row g-4">
-                    <c:choose>
-                        <c:when  test="${not empty listBestSellers}">
-                            <c:forEach var="product" items="${listBestSellers}" varStatus="status">
-                                <c:if test="${status.index < 6}">
-                                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                        <div class="bg-white text-center h-100 p-4 p-xl-5">
-                                            <img class="img-fluid mb-4" src="${product.image}" alt="">
-                                            <h4 class="mb-3">${product.foodName}</h4>
-                                            <p class="mb-4">${product.description}</p>
-                                            <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="product.jsp?id=${product.foodId}">Read More</a>
-                                        </div>
-                                    </div>
-                                </c:if>
-                            </c:forEach>
-                        </c:when>
+                <div class="col-lg-6 wow fadeIn about-section" data-wow-delay="0.5s">
+                    <h1 class="display-5 mb-4">${blogDetail.title}</h1>
+                    
 
-                    </c:choose>
+                    <h2 class="mb-3">Tác Giả: ${blogDetail.author}</h2>
+                    <p class="mb-4">${blogDetail.content}</p>
+
+                    
                 </div>
             </div>
         </div>
-        <!-- Feature End -->
+    </div>
+</div>
 
-
-        <!-- Footer Start -->
-        <div class="container-fluid bg-dark footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+            <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
                         <h1 class="fw-bold text-primary mb-4">F<span class="text-secondary">oo</span>dy</h1>
-                        <p>Chào Mừng bạn đã đến với Foody</p>
+                        <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
                         <div class="d-flex pt-2">
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-square btn-outline-body me-0" href=""><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-light mb-4">Địa chỉ</h4>
-                        <p><i class="fa fa-map-marker-alt me-3"></i>Thạch Hòa, Thạch Thất, Hà Nội</p>
+                        <h5 class="text-light mb-4">Address</h5>
+                        <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
                         <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <p><i class="fa fa-envelope me-3"></i>foody@gmail.com</p>
+                        <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-light mb-4">Liên Kết Nhanh</h4>
-                        <a class="btn btn-link" href="">Giới Thiệu</a>
-                        <a class="btn btn-link" href="">Liên Hệ</a>
+                        <h5 class="text-light mb-4">Quick Links</h5>
+                        <a class="btn btn-link" href="">About Us</a>
+                        <a class="btn btn-link" href="">Contact Us</a>
                         <a class="btn btn-link" href="">Our Services</a>
                         <a class="btn btn-link" href="">Terms & Condition</a>
                         <a class="btn btn-link" href="">Support</a>
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="text-light mb-4">Newsletter</h4>
+                        <h5 class="text-light mb-4">Newsletter</h5>
                         <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                         <div class="position-relative mx-auto" style="max-width: 400px;">
-                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                            <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                             <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container-fluid copyright">
-                <div class="container">
+            <div class="container">
+                <div class="copyright">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                            &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+
+                            <!-- This template is free as long as you keep the footer author’s credit link. -->
+                            Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
                         </div>
                         <div class="col-md-6 text-center text-md-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                            <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                            <div class="footer-menu">
+                                <a href="">Home</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -257,7 +271,7 @@
 
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="fa fa-angle-double-up"></i></a>
 
 
         <!-- JavaScript Libraries -->
