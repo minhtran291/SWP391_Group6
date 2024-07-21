@@ -203,7 +203,12 @@
                                                                     <div><a href="add-to-cart?id=${p.foodId}&plus=1"><i class="fa-solid fa-plus"></a></i></div>
                                                                 </div>
                                                                 <div style="width: 80px;">
-                                                                    <h5 class="mb-0">${p.dicountRate != 0 ? p.price - (p.price * p.dicountRate/100) : p.price} VND</h5>
+                                                                    <h5 class="mb-0">
+                                                                        <fmt:formatNumber type="currency" 
+                                                                                          currencyCode="VND"
+                                                                                          maxFractionDigits="0"
+                                                                                          value="${p.dicountRate != 0 ? p.price - (p.price * p.dicountRate/100) : p.price}"/>
+                                                                    </h5>
                                                                 </div>
                                                                 <a href="delete-cart?id=${p.foodId}" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
                                                             </div>
@@ -226,14 +231,14 @@
                                                     <hr class="my-4">
                                                     <div class="d-flex justify-content-between mb-4">
                                                         <p class="mb-2">Tổng thanh toán</p>
-                                                        <p class="mb-2">${totalCart} VND</p>
+                                                        <p class="mb-2">
+                                                            <fmt:formatNumber type="currency" 
+                                                                              currencyCode="VND"
+                                                                              maxFractionDigits="0"
+                                                                              value="${totalCart}"/>
+                                                        </p>
                                                     </div>
-                                                    <c:if test="${cart != null}">
-                                                        <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
-                                                            Tiếp tục
-                                                        </button>
-                                                    </c:if>
-                                                    <c:if test="${cart.size() == 0}">
+                                                    <c:if test="${cart != null && cart.size() != 0}">
                                                         <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block btn-lg">
                                                             Tiếp tục
                                                         </button>
@@ -249,5 +254,6 @@
                 </div>
             </div>
         </section>
+        <jsp:include page="../footer.jsp"></jsp:include>
     </body>
 </html>

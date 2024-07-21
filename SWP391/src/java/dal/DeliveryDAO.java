@@ -45,7 +45,7 @@ public class DeliveryDAO extends DBContext {
                 + "    CASE "
                 + "        WHEN o.status = 2 AND d.user_name IS NULL THEN 0 "
                 + "        WHEN o.status = 2 THEN 1 "
-                + "        WHEN o.status IN (3, 4) THEN 2 "
+                + "        WHEN o.status IN (3, 4, 5) THEN 2 "
                 + "        ELSE 3 "
                 + "    END, "
                 + "    CASE "
@@ -53,7 +53,7 @@ public class DeliveryDAO extends DBContext {
                 + "        ELSE NULL "
                 + "    END, "
                 + "    CASE "
-                + "        WHEN o.status IN (3, 4) THEN o.order_id "
+                + "        WHEN o.status IN (3, 4, 5) THEN o.order_id "
                 + "        ELSE NULL "
                 + "    END DESC;";
 

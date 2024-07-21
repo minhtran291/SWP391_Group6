@@ -106,6 +106,8 @@
             <p class="text-center">Mã đơn hàng: ${order.id}</p>
             <p class="text-center">Ngày đặt hàng:  <fmt:formatDate value="${order.orderDate}" pattern="dd-MM-yyyy"></fmt:formatDate></p>
             <p class="text-center">Thời gian đặt hàng: ${order.orderTime}</p>
+            <p class="text-center">Hình thức thanh toán: ${order.payment.paymentType}</p>
+            <p class="text-center">Trạng thái thanh toán: ${order.statusPaymentName}</p>
             <table class="table text-center border border-3">
                 <tr style="vertical-align: middle">
                     <th>Số thứ tự</th>

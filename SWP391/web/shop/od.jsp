@@ -81,11 +81,11 @@
                                             Hồ sơ
                                         </a>
                                     </li>
-<!--                                    <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Đơn hàng
-                                        </a>
-                                    </li>-->
+                                    <!--                                    <li>
+                                                                            <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                                Đơn hàng
+                                                                            </a>
+                                                                        </li>-->
                                     <li>
                                         <a class="dropdown-item" href="managecomment?action=viewcomment">
                                             Xem lại bình luận
@@ -99,9 +99,9 @@
                                 </ul>
                             </div>
 
-<!--                            <a class="btn btn-square bg-white rounded-circle" href="">
-                                <i class="fa fa-shopping-bag text-body"></i>
-                            </a>-->
+                            <!--                            <a class="btn btn-square bg-white rounded-circle" href="">
+                                                            <i class="fa fa-shopping-bag text-body"></i>
+                                                        </a>-->
                         </form>
 
                     </c:if>
@@ -167,7 +167,7 @@
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
-                 <p><a class="btn text-white btn-primary" 
+                <p><a class="btn text-white btn-primary" 
                       href="discount?action=list">Quản lí giảm giá</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
@@ -175,14 +175,54 @@
         </div>
 
         <c:set var="n" value="${currentPage}"/>
+        <!--        <ul class="pagination justify-content-center">
+        <c:forEach var="p" begin="${1}" end="${totalPages}">
+            <li class="page-item">
+                <a class="page-link ${p==n?"active":""}"  
+                   href="actionshop?action=od&&page=${p}&orderId=${order.id}">${p}</a>
+            </li>
+        </c:forEach>
+    </ul>    -->
         <ul class="pagination justify-content-center">
-            <c:forEach var="p" begin="${1}" end="${totalPages}">
+            <c:if test="${totalPages > 1}">
+                <!-- Trang đầu tiên -->
                 <li class="page-item">
-                    <a class="page-link ${p==n?"active":""}"  
-                       href="actionshop?action=od&&page=${p}&orderId=${order.id}">${p}</a>
+                    <a class="page-link ${1==n?'active':''}" 
+                       href="actionshop?action=od&&page=1&orderId=${order.id}">1</a>
                 </li>
-            </c:forEach>
-        </ul>    
+
+                <!-- Dấu ba chấm nếu cần -->
+                <c:if test="${n > 3}">
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                </c:if>
+
+                <!-- Các trang gần trang hiện tại -->
+                <c:forEach var="p" begin="${n-1}" end="${n+1}">
+                    <c:if test="${p > 1 && p < totalPages}">
+                        <li class="page-item">
+                            <a class="page-link ${p==n?'active':''}" 
+                               href="actionshop?action=od&&page=${p}&orderId=${order.id}">${p}</a>
+                        </li>
+                    </c:if>
+                </c:forEach>
+
+                <!-- Dấu ba chấm nếu cần -->
+                <c:if test="${n < totalPages - 2}">
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                </c:if>
+
+                <!-- Trang cuối cùng -->
+                <li class="page-item">
+                    <a class="page-link ${totalPages==n?'active':''}" 
+                       href="actionshop?action=od&&page=${totalPages}&orderId=${order.id}">${totalPages}</a>
+                </li>
+            </c:if>
+        </ul>
+
 
         <footer>
             <div class="bg-dark">

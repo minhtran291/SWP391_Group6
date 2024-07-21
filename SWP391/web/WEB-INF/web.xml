@@ -14,15 +14,59 @@
     </filter>
     <filter-mapping>
         <filter-name>ShipperFilter</filter-name>
+        <url-pattern>/actionshipper</url-pattern>
+        <url-pattern>/shipper/homeShipper.jsp</url-pattern>
         <url-pattern/>
     </filter-mapping>
     <filter-mapping>
         <filter-name>ShopFilter</filter-name>
         <url-pattern>/actionshop</url-pattern>
+        <url-pattern>/CategoryServlet</url-pattern>
+        <url-pattern>/AddFoodServlet</url-pattern>
+        <url-pattern>/DeleteFoodServlet</url-pattern>
+        <url-pattern>/EditFoodServlet</url-pattern>
+        <url-pattern>/employee</url-pattern>
+        <url-pattern>/manageblog</url-pattern>
+        <url-pattern>/discount</url-pattern>
+        <url-pattern>/shop/addCategory.jsp</url-pattern>
+        <url-pattern>/shop/changepass.jsp</url-pattern>
+        <url-pattern>/shop/editCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageFood.jsp</url-pattern>
+        <url-pattern>/shop/profileShop.jsp</url-pattern>
+        <url-pattern>/shop/shopHome.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/actionshop</url-pattern>
+        <url-pattern>/actionadmin</url-pattern>
+        <url-pattern>/actionshipper</url-pattern>
+        <url-pattern>/add-to-cart</url-pattern>
+        <url-pattern>/employee</url-pattern>
+        <url-pattern>/AddFoodServlet</url-pattern>
+        <url-pattern>/DeleteFoodServlet</url-pattern>
+        <url-pattern>/EditFoodServlet</url-pattern>
+        <url-pattern>/managefavorite</url-pattern>
+        <url-pattern>/managecomment</url-pattern>
+        <url-pattern>/manageblog</url-pattern>
+        <url-pattern>/discount</url-pattern>
+        <url-pattern>/shop/addCategory.jsp</url-pattern>
+        <url-pattern>/shop/changepass.jsp</url-pattern>
+        <url-pattern>/shop/editCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageFood.jsp</url-pattern>
+        <url-pattern>/shop/profileShop.jsp</url-pattern>
+        <url-pattern>/shop/shopHome.jsp</url-pattern>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/changepass</url-pattern>
+        <url-pattern>/customer/changepass.jsp</url-pattern>
+        <url-pattern>/customer/profile.jsp</url-pattern>
+        <url-pattern>/customer/history.jsp</url-pattern>
+        <url-pattern>/customer/historyDetail.jsp</url-pattern>
+        <url-pattern>/customer/order.jsp</url-pattern>
+        <url-pattern>/UpdateProfile.jsp</url-pattern>
+        <url-pattern>/managecomment.jsp</url-pattern>
+        <url-pattern>/myfavorite.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>ActionCustomer</servlet-name>

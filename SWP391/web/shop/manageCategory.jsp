@@ -107,7 +107,7 @@
 
         <div class="flex-grow-1">
 
-            <div class="d-flex bg-light mb-5">
+<!--            <div class="d-flex bg-light mb-5">
                 <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -125,7 +125,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div>-->
 
             <div class="flex-grow-1">
                 <h1 class="text-center m-3">Quản lý thể loại sản phẩm</h1>
@@ -216,23 +216,23 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
                 </div>
                 <div class="offcanvas-body">
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="discount?action=list">Quản lí giảm giá</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="manageblog">Quản lí Blog</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
-            </div
+                    <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="discount?action=list">Quản lí giảm giá</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="manageblog">Quản lí Blog</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
+                </div>
             </div>
 
             <!-- Pagination -->

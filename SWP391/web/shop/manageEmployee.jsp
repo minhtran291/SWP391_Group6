@@ -114,7 +114,7 @@
 
         <div class="flex-grow-1">
 
-            <div class="d-flex bg-light mb-5">
+<!--            <div class="d-flex bg-light mb-5">
                 <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -132,7 +132,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div>-->
 
             <h1 class="text-center m-3">Quản lý nhân viên</h1>
 
@@ -240,6 +240,7 @@
                     <th>Giới tính</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
+                    <th></th>
                 </tr>
                 <c:forEach var="f" items="${empOnCurrentPage}">
                     <tr style="vertical-align: middle">

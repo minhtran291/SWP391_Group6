@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="currentHour" value="<%= java.time.LocalTime.now().getHour() %>"/>
-<c:set var="isOpen" value="${currentHour ge 0 && currentHour lt 24}"/>
+<c:set var="isOpen" value="${currentHour ge 8 && currentHour lt 23}"/>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -161,6 +161,32 @@
                                     </c:forEach>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
+                                Sắp xếp</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item ${type eq "1"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=1">Theo tên (A -> Z)</a></li>
+                                <li><a class="dropdown-item ${type eq "2"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=2">Theo tên (Z -> A)</a></li>
+                                <li><a class="dropdown-item ${type eq "3"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=3">Giá tăng dần</a></li>
+                                <li><a class="dropdown-item ${type eq "4"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=4">Giá giảm đần</a></li>
+                                <li><a class="dropdown-item ${type eq "5"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=5">Ngày thêm vào mới nhất</a></li>
+                                <li><a class="dropdown-item ${type eq "6"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=6">Ngày thêm vào cũ nhất</a></li>
+                                <li><a class="dropdown-item ${type eq "7"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=7">Số lượng đã bán nhiều</a></li>
+                                <li><a class="dropdown-item ${type eq "8"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=8">Số lượng đã bán ít</a></li>
+                                <li><a class="dropdown-item ${type eq "9"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=9">Số lượng tồn kho nhiều</a></li>
+                                <li><a class="dropdown-item ${type eq "10"?"active":""}" 
+                                       href="actioncustomer?action=homeSort&&type=10">Số lượng tồn kho ít</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -226,24 +252,102 @@
             </div>                           
         </div>
 
+        <!--        <ul class="pagination justify-content-center">
+        <c:forEach var="p" begin="${1}" end="${totalPages}">
+            <li class="page-item">
+            <c:if test="${listSearch != null}">
+                <a class="page-link ${p==n?"active":""}"  
+                   href="actioncustomer?action=getFoodBySearch&&page=${p}&&search=${search}">${p}</a>
+            </c:if>
+            <c:if test="${listFoodByCategory != null}">
+                <a class="page-link ${p==n?"active":""}"  
+                   href="actioncustomer?action=getFoodByCategory&&page=${p}&&cid=${cid}">${p}</a>
+            </c:if>
+            <c:if test="${listFoodByCategory == null && listSearch == null && listSort == null}">
+                <a class="page-link ${p==n?"active":""}"  
+                   href="actioncustomer?action=getListFood&&page=${p}">${p}</a>
+            </c:if>
+            <c:if test="${listSort != null}">
+                <a class="page-link ${p==n?"active":""}"  
+                   href="actioncustomer?action=homeSort&&page=${p}&&type=${type}">${p}</a>
+            </c:if>
+        </li>
+        </c:forEach>
+    </ul>-->
+        <!-- phân trang moi-->
         <ul class="pagination justify-content-center">
-            <c:forEach var="p" begin="${1}" end="${totalPages}">
+            <c:if test="${totalPages > 1}">
                 <li class="page-item">
                     <c:if test="${listSearch != null}">
-                        <a class="page-link ${p==n?"active":""}"  
-                           href="actioncustomer?action=getFoodBySearch&&page=${p}&&search=${search}">${p}</a>
+                        <a class="page-link ${1==currentPage?'active':''}" 
+                           href="actioncustomer?action=getFoodBySearch&&page=1&&search=${search}">1</a>
                     </c:if>
                     <c:if test="${listFoodByCategory != null}">
-                        <a class="page-link ${p==n?"active":""}"  
-                           href="actioncustomer?action=getFoodByCategory&&page=${p}&&cid=${cid}">${p}</a>
+                        <a class="page-link ${1==currentPage?'active':''}" 
+                           href="actioncustomer?action=getFoodByCategory&&page=1&&cid=${cid}">1</a>
                     </c:if>
-                    <c:if test="${listFoodByCategory == null && listSearch == null}">
-                        <a class="page-link ${p==n?"active":""}"  
-                           href="actioncustomer?action=getListFood&&page=${p}">${p}</a>
+                    <c:if test="${listFoodByCategory == null && listSearch == null && listSort == null}">
+                        <a class="page-link ${1==currentPage?'active':''}" 
+                           href="actioncustomer?action=getListFood&&page=1">1</a>
+                    </c:if>
+                    <c:if test="${listSort != null}">
+                        <a class="page-link ${1==currentPage?'active':''}" 
+                           href="actioncustomer?action=homeSort&&page=1&&type=${type}">1</a>
                     </c:if>
                 </li>
-            </c:forEach>
+                <c:if test="${currentPage > 3}">
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                </c:if>
+                <c:forEach var="p" begin="${currentPage-1}" end="${currentPage+1}">
+                    <c:if test="${p > 1 && p < totalPages}">
+                        <li class="page-item">
+                            <c:if test="${listSearch != null}">
+                                <a class="page-link ${p==currentPage?'active':''}" 
+                                   href="actioncustomer?action=getFoodBySearch&&page=${p}&&search=${search}">${p}</a>
+                            </c:if>
+                            <c:if test="${listFoodByCategory != null}">
+                                <a class="page-link ${p==currentPage?'active':''}" 
+                                   href="actioncustomer?action=getFoodByCategory&&page=${p}&&cid=${cid}">${p}</a>
+                            </c:if>
+                            <c:if test="${listFoodByCategory == null && listSearch == null && listSort == null}">
+                                <a class="page-link ${p==currentPage?'active':''}" 
+                                   href="actioncustomer?action=getListFood&&page=${p}">${p}</a>
+                            </c:if>
+                            <c:if test="${listSort != null}">
+                                <a class="page-link ${p==currentPage?'active':''}" 
+                                   href="actioncustomer?action=homeSort&&page=${p}&&type=${type}">${p}</a>
+                            </c:if>
+                        </li>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${currentPage < totalPages - 2}">
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                </c:if>
+                <li class="page-item">
+                    <c:if test="${listSearch != null}">
+                        <a class="page-link ${totalPages==currentPage?'active':''}" 
+                           href="actioncustomer?action=getFoodBySearch&&page=${totalPages}&&search=${search}">${totalPages}</a>
+                    </c:if>
+                    <c:if test="${listFoodByCategory != null}">
+                        <a class="page-link ${totalPages==currentPage?'active':''}" 
+                           href="actioncustomer?action=getFoodByCategory&&page=${totalPages}&&cid=${cid}">${totalPages}</a>
+                    </c:if>
+                    <c:if test="${listFoodByCategory == null && listSearch == null && listSort == null}">
+                        <a class="page-link ${totalPages==currentPage?'active':''}" 
+                           href="actioncustomer?action=getListFood&&page=${totalPages}">${totalPages}</a>
+                    </c:if>
+                    <c:if test="${listSort != null}">
+                        <a class="page-link ${totalPages==currentPage?'active':''}" 
+                           href="actioncustomer?action=homeSort&&page=${totalPages}&&type=${type}">${totalPages}</a>
+                    </c:if>
+                </li>
+            </c:if>
         </ul>
+
 
 
         <jsp:include page="../footer.jsp"></jsp:include>

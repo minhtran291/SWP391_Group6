@@ -33,9 +33,7 @@ public class UserDAO extends DBContext {
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
-                        rs.getString(8));
-
+                        rs.getInt(7));
             }
 
         } catch (SQLException e) {

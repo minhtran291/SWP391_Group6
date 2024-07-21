@@ -138,11 +138,10 @@
             <c:if test="${param.err != null}">
                 <div class="alert alert-danger">${param.err}</div>
             </c:if>
-            <table class="table table-bordered">
+            <table class="table table-bordered text-center">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Khách hàng</th>
+                        <th scope="col">Đơn hàng</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Thời gian</th>
                         <th scope="col">Trạng thái</th>
@@ -150,18 +149,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:if test="${list != null}">
-                        <c:forEach items="${list}" var="i" varStatus="index"> 
+                    <c:if test="${hitoryOnCurrentPage != null}">
+                        <c:forEach items="${hitoryOnCurrentPage}" var="i" varStatus="index"> 
                             <tr>
-                                <th scope="row">${index.index + 1}</th>
-                                <td>${i.name}</td>
+                                <td>${i.id}</td>
                                 <td>${i.address}</td>
-                                <td>${i.date}</td>
+                                <td><fmt:formatDate value="${i.orderDate}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
                                 <td>${i.status_text}</td>
                                 <td>
                                     <button class="btn btn-primary"><a href="actioncustomer?action=history_detail&id=${i.id}" style="color: white; text-decoration: none">Xem chi tiết</a></button>
-                                    <c:if test="${i.status == 1}">
-                                        <button class="btn btn-danger"><a href="actioncustomer?action=remove-order&id=${i.id}" style="color: white; text-decoration: none">Hủy đơn</a></button>
+                                    <c:if test="${i.status == 1 || i.status == 2}">
+                                        <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#myModal${i.id}">Hủy đơn</button>
+                                        <div class="modal fade" id="myModal${i.id}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Nhập lí do</h4>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <form action="actioncustomer" method="get">
+                                                            <input type="hidden" name="action" value="remove-order"/>
+                                                            <input type="hidden" name="id" value="${i.id}"/>
+                                                            <input class="form-control" type="text" required="" name="customerNotes" placeholder="Nhập lí do">
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                                                <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Gửi</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </c:if>
 
                                 </td>
@@ -175,5 +196,16 @@
             </c:if>
         </div>
 
+        <c:set var="n" value="${currentPage}"/>
+        <ul class="pagination justify-content-center">
+            <c:forEach var="p" begin="${1}" end="${totalPages}">
+                <li class="page-item">
+                    <a class="page-link ${p == n?"active":""}" 
+                       href="actioncustomer?action=history&&page=${p}">${p}</a>
+                </li>
+            </c:forEach>
+        </ul>
+
+        <jsp:include page="../footer.jsp"></jsp:include>
     </body>
 </html>

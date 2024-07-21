@@ -19,13 +19,13 @@ import model.OrderDetail;
  * @author hieua
  */
 public class OrderDAO extends DBContext {
-
+    
     UserDAO ud = new UserDAO();
     PaymentDAO pd = new PaymentDAO();
     FoodDAO fd = new FoodDAO();
-
+    
     public boolean insert(double total, String name) {
-        String sql = "INSERT INTO orders (user_name, total, status, orderDate, orderTime, statusPayment, paymentID) VALUES (?, ?, 1, GETDATE(), CONVERT(TIME, GETDATE()), 2, 2)";
+        String sql = "INSERT INTO orders (user_name, total, status, orderDate, orderTime, statusPayment, paymentID) VALUES (?, ?, 1, GETDATE(), CONVERT(TIME, GETDATE()), 1, 2)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
@@ -37,9 +37,9 @@ public class OrderDAO extends DBContext {
         }
         return false;
     }
-
+    
     public boolean insertOnline(double total, String name) {
-        String sql = "INSERT INTO orders (user_name, total, status, orderDate, orderTime, paymentID, statusPayment) VALUES (?, ?, 1, GETDATE(), CONVERT(TIME, GETDATE()), 1, 1)";
+        String sql = "INSERT INTO orders (user_name, total, status, orderDate, orderTime, paymentID, statusPayment) VALUES (?, ?, 1, GETDATE(), CONVERT(TIME, GETDATE()), 1, 2)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
@@ -51,7 +51,7 @@ public class OrderDAO extends DBContext {
         }
         return false;
     }
-
+    
     public int getLast() {
         String sql = "  select top 1 order_id from orders order by order_id desc";
         try {
@@ -65,7 +65,7 @@ public class OrderDAO extends DBContext {
         }
         return -1;
     }
-
+    
     public void insert_detail(int id, Food f) {
         String sql = "insert into orderDetail (order_id,food_id,order_date,order_time,price,quantity) values (?,?,?,?,?,?)";
         LocalDateTime now = LocalDateTime.now();
@@ -86,7 +86,7 @@ public class OrderDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
+    
     public List<Order> getOrder(String name) {
         List<Order> list = new ArrayList<>();
         String sql = "select * from orders where user_name=?";
@@ -95,62 +95,76 @@ public class OrderDAO extends DBContext {
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Order o = new Order(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(5),
-                        rs.getInt(4),
+                Order o = new Order(rs.getInt("order_id"),
+                        rs.getString("user_name"),
+                        rs.getInt("status"),
                         rs.getDouble("total"),
-                        rs.getString(6));
+                        rs.getDate("orderDate"));
                 list.add(o);
             }
         } catch (Exception e) {
         }
         return list;
     }
-
+    
     public List<Order> getOrderAll() {
         List<Order> list = new ArrayList<>();
-        String sql = "select * from orders";
+        String sql = "select * from orders where status <> 1";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Order o = new Order(rs.getInt(1), rs.getString(2), rs.getString(5), rs.getInt(4), rs.getDouble("total"), rs.getString(6));
+                Order o = new Order(rs.getInt("order_id"),
+                        rs.getString("user_name"),
+                        rs.getInt("status"),
+                        rs.getDouble("total"),
+                        rs.getDate("orderDate"));
                 list.add(o);
             }
         } catch (Exception e) {
         }
         return list;
     }
-
+    
     public List<Food> GetOrderDetail(int id) {
         String sql = "select * from orderDetail where order_id = ?";
         List<Food> list = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
-
+            
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 FoodDAO fd = new FoodDAO();
                 Food f = fd.getFoodByID(rs.getInt(3) + "");
                 f.setQuantity(rs.getInt(7));
+                f.setPrice(rs.getDouble("price"));
                 list.add(f);
             }
         } catch (Exception e) {
         }
         return list;
     }
-
+    
     public Order getOrderById(int id) {
-
+        
         String sql = "select * from orders where order_id=?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, id + "");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Order o = new Order(rs.getInt(1), rs.getString(2), rs.getString(5), rs.getInt(4), rs.getDouble("total"), rs.getString(6));
+                Order o = new Order(rs.getInt("order_id"),
+                        rs.getString("user_name"),
+                        rs.getDouble("total"),
+                        rs.getInt("status"),
+                        rs.getDate("orderDate"),
+                        rs.getTime("orderTime"),
+                        pd.getPaymentById(rs.getInt("paymentID")),
+                        rs.getInt("statusPayment"),
+                        rs.getString("shipperNotes"),
+                        rs.getString("customerNotes"),
+                        rs.getString("shopNotes"));
                 o.setStatusPayment(rs.getInt("statusPayment"));
                 return o;
             }
@@ -158,7 +172,7 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-
+    
     public void updateStatus(int status, String id) {
         String sql = "update orders set status = ? where order_id = ?";
         try {
@@ -167,11 +181,11 @@ public class OrderDAO extends DBContext {
             ps.setString(2, id);
             ps.executeUpdate();
         } catch (Exception e) {
-
+            
             System.out.println(e);
         }
     }
-
+    
     public void updateStatus(int status, int id) {
         String sql = "update orders set status = ? where order_id = ?";
         try {
@@ -183,19 +197,64 @@ public class OrderDAO extends DBContext {
             System.out.println(e);
         }
     }
-
+    
+    public void updateStatus(int status, int id, int type, String reason, int statusPayment) {
+        String sql = "";
+        switch (type) {
+            case 1:         // customer cancel order
+                sql = "update orders set status = ?, customerNotes = ?, statusPayment = ? where order_id = ?";
+                try {
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setInt(1, status);
+                    ps.setString(2, reason);
+                    ps.setInt(3, statusPayment);
+                    ps.setInt(4, id);
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+                break;
+            case 2:     // shop cacel order
+                sql = "update orders set status = ?, shopNotes = ?, statusPayment = ? where order_id = ?";
+                try {
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setInt(1, status);
+                    ps.setString(2, reason);
+                    ps.setInt(3, statusPayment);
+                    ps.setInt(4, id);
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+                break;
+            case 3:
+                sql = "update orders set status = ?, shipperNotes = ?, statusPayment = ? where order_id = ?";
+                try {
+                    PreparedStatement ps = connection.prepareStatement(sql);
+                    ps.setInt(1, status);
+                    ps.setString(2, reason);
+                    ps.setInt(3, statusPayment);
+                    ps.setInt(4, id);
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+                break;
+        }
+    }
+    
     public void delete(String id) {
         try {
             String sqlOrderDetail = "delete from orderDetail where order_id = ?";
             PreparedStatement psOrderDetail = connection.prepareStatement(sqlOrderDetail);
             psOrderDetail.setString(1, id);
             psOrderDetail.executeUpdate();
-
+            
             String sqlDelivery = "delete from delivery where order_id = ?";
             PreparedStatement psDelivery = connection.prepareStatement(sqlDelivery);
             psDelivery.setString(1, id);
             psDelivery.executeUpdate();
-
+            
             String sqlOrders = "delete from orders where order_id = ?";
             PreparedStatement psOrders = connection.prepareStatement(sqlOrders);
             psOrders.setString(1, id);
@@ -204,7 +263,7 @@ public class OrderDAO extends DBContext {
             System.out.println("e: " + e);
         }
     }
-
+    
     public void insertDelivery(int id, String address) {
         String sql = "insert into delivery (order_id, delivery_location) values (?,?)";
         try {
@@ -216,7 +275,7 @@ public class OrderDAO extends DBContext {
             System.out.println(e);
         }
     }
-
+    
     public String getaddress(int id) {
         String sql = "  select delivery_location from delivery where order_id=?";
         try {
@@ -232,7 +291,7 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-
+    
     public String getDate(int id) {
         String sql = " select top 1 order_date from orderDetail where order_id = ?";
         try {
@@ -248,7 +307,7 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-
+    
     public ArrayList<Order> getDeliveryByUserName(String userName) {
         ArrayList<Order> listDelivery = new ArrayList<>();
         String sql = "SELECT "
@@ -300,7 +359,7 @@ public class OrderDAO extends DBContext {
         }
         return listDelivery;
     }
-
+    
     public void updateStatus(int statusDelivery, int statusPayment, int orderID, String shipperNotes) {
         if (shipperNotes != null) {
             String sql = "update [orders] "
@@ -332,7 +391,7 @@ public class OrderDAO extends DBContext {
             }
         }
     }
-
+    
     public void updateDeliveryDate(int orderId) {
         String sql = "update [delivery] "
                 + "set [delivery_date] = getdate(), "
@@ -345,7 +404,7 @@ public class OrderDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
+    
     public ArrayList getOD(int orderId) {          // xem chi tiet don hang o trang dash board
         ArrayList<OrderDetail> listOrderDetail = new ArrayList<>();
         String sql = "SELECT od.order_id, od.price, od.quantity, f.food_name, f.image, f.food_id "
@@ -368,7 +427,7 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-
+    
     public Order getOrderByID(int id) {
         Order o = null;
         String sql = " select * from [orders] where [order_id] = ? ";
@@ -382,13 +441,15 @@ public class OrderDAO extends DBContext {
                         rs.getDouble("total"),
                         rs.getInt("status"),
                         rs.getDate("orderDate"),
-                        rs.getTime("orderTime"));
+                        rs.getTime("orderTime"),
+                        pd.getPaymentById(rs.getInt("paymentID")),
+                        rs.getInt("statusPayment"));
             }
         } catch (Exception e) {
         }
         return o;
     }
-
+    
     public ArrayList<Order> getOrderConfirm() {
         ArrayList<Order> listOrder = new ArrayList<>();
         String sql = "SELECT TOP 5 o.order_id, o.user_name, o.total, d.delivery_location, o.status "
@@ -413,7 +474,7 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-
+    
     public int getNumberOrder() {
         String sql = "select count(*) from orders where status = 3";
         try {
@@ -426,7 +487,7 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
-
+    
     public double getTotalProfit() {
         String sql = "select SUM(total) from orders where statusPayment = 2 and status = 4";
         int total = 0;
@@ -441,7 +502,7 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
-
+    
     public double getTotalByMonth(int month) {
         String sql = "select SUM(total) from orders where statusPayment = 2 and status = 4 AND MONTH(orderDate) = 6";
         try {
@@ -455,7 +516,7 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
-
+    
     public void updateStatusConfirm(int orderID, String shopNotes) {
         if (shopNotes != null) {
             String sql = "update [orders] "

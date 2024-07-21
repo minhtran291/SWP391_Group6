@@ -6,7 +6,7 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <c:set var="currentHour" value="<%= java.time.LocalTime.now().getHour() %>"/>
-    <c:set var="isOpen" value="${currentHour ge 6 && currentHour lt 24}"/>
+    <c:set var="isOpen" value="${currentHour ge 8 && currentHour lt 23}"/>
     <head>
         <meta charset="utf-8">
         <title>Shop Detail</title>

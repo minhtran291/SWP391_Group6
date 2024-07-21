@@ -114,6 +114,10 @@ public class ActionCustomer extends HttpServlet {
                 break;
             case "remove-order":
                 removeOrder(request, response);
+                break;
+            case "homeSort":
+                getFoodBySort(request, response, 8);
+                break;
         }
 
     }
@@ -144,24 +148,16 @@ public class ActionCustomer extends HttpServlet {
 
     private void removeOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
+        String customerNotes = request.getParameter("customerNotes");
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("acc");
         if (u != null) {
             OrderDAO od = new OrderDAO();
-            List<Order> list = od.getOrder(u.getUsername());
+//            List<Order> list = od.getOrder(u.getUsername());
             Order o = od.getOrderById(Integer.parseInt(id));
-            if (o == null) {
-                String errorMessage = "Đơn hàng không được tìm thấy";
-                String encodedMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
-                response.sendRedirect("actioncustomer?action=history&err=" + encodedMessage);
-            } else if (o.getStatus() == 1) {
-                od.updateStatus(5, o.getId());
-                response.sendRedirect("actioncustomer?action=history");
-            } else {
-                String errorMessage = "Đơn hàng đã được giao, không thể hủy";
-                String encodedMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8.toString());
-                response.sendRedirect("actioncustomer?action=history&err=" + encodedMessage);
-            }
+            od.updateStatus(5, o.getId(), 1, customerNotes, 3);
+//            response.sendRedirect("actioncustomer?action=history");
+            goToHistory(request, response);
         } else {
             response.sendRedirect("login");
         }
@@ -202,7 +198,7 @@ public class ActionCustomer extends HttpServlet {
                 }
                 request.setAttribute("list", list);
             }
-
+            pagingForHitory(request, response, 10, list);
             request.getRequestDispatcher("/customer/history.jsp").forward(request, response);
         } else {
             response.sendRedirect("login");
@@ -224,7 +220,7 @@ public class ActionCustomer extends HttpServlet {
                     o.setStatus_text("Chưa xử lý");
                     break;
                 case 2:
-                    o.setStatus_text("Đơn hàng đã được order");
+                    o.setStatus_text("Đơn hàng đã được đặt thành công");
                     break;
                 case 3:
                     o.setStatus_text("Đơn hàng đang được giao");
@@ -242,6 +238,7 @@ public class ActionCustomer extends HttpServlet {
             request.setAttribute("user", u);
             request.setAttribute("list", list);
             request.setAttribute("order", o);
+            pagingForHitoryDetail(request, response, 5, list);
             request.getRequestDispatcher("/customer/historyDetail.jsp").forward(request, response);
         } else {
             response.sendRedirect("login");
@@ -372,4 +369,51 @@ public class ActionCustomer extends HttpServlet {
         pagingForFood(request, response, numberPerPage, listFoodByCategory);
     }
 
+    private void getFoodBySort(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String type = request.getParameter("type");
+        ArrayList<Food> listSort = fd.sort(type);
+        request.setAttribute("listSort", listSort);
+        request.setAttribute("type", type);
+        pagingForFood(request, response, numberPerPage, listSort);
+    }
+
+    private void pagingForHitoryDetail(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, List<Food> listHitoryDetail) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<Food> hitoryDetailOnCurrentPage = new ArrayList<>(listHitoryDetail.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listHitoryDetail.size())));
+
+        int totalPages = (int) Math.ceil((double) listHitoryDetail.size() / numberPerPage);
+
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("hitoryDetailOnCurrentPage", hitoryDetailOnCurrentPage);
+    }
+
+    private void pagingForHitory(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, List<Order> listHitory) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<Order> hitoryOnCurrentPage = new ArrayList<>(listHitory.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listHitory.size())));
+
+        int totalPages = (int) Math.ceil((double) listHitory.size() / numberPerPage);
+
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("hitoryOnCurrentPage", hitoryOnCurrentPage);
+    }
 }

@@ -148,7 +148,7 @@ public class order extends HttpServlet {
                                         request.setAttribute("count_cart", 0);
                                         od.insertDelivery(id, address);
                                         session.removeAttribute("cart");
-                                        request.setAttribute("success", "Đơn hàng đã được order");
+                                        request.setAttribute("success", "Đơn hàng đã được đặt thành công");
                                     }
                                 } else {
                                     session.setAttribute("address", address);

@@ -237,7 +237,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input value="${address}" name="address" type="text" id="form5" class="form-control order-form-input" />
+                                        <input name="address" type="text" id="form5" class="form-control order-form-input" />
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +265,11 @@
                                                             <td>${i.foodName}</td>
                                                             <td><img src="${i.image}" style="width: 200px;height: 160px; object-fit: cover" alt="alt"/></td>
                                                             <td>${i.quantity}</td>
-                                                            <td>${i.dicountRate != 0 ? i.price - (i.price * i.dicountRate/100) : i.price}
+                                                            <td><fmt:formatNumber type="currency" 
+                                                                              currencyCode="VND"
+                                                                              maxFractionDigits="0"
+                                                                              value="${i.dicountRate != 0 ? i.price - (i.price * i.dicountRate/100) : i.price}"/>
+
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
@@ -288,7 +292,10 @@
                             <c:if test="${success == null}">
                                 <div class="d-flex justify-content-between mb-4">
                                     <p class="mb-2">Tổng thanh toán</p>
-                                    <p class="mb-2">${total_s} VND</p>
+                                    <p class="mb-2"><fmt:formatNumber type="currency" 
+                                                      currencyCode="VND"
+                                                      maxFractionDigits="0"
+                                                      value="${total_s}"/></p>
                                 </div>
                                 <hr class="my-4">
                                 <div class="row mt-3">
