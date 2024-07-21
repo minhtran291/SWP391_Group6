@@ -232,7 +232,7 @@
                       href="manageblog">Quản lí Blog</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
-            </div
+                </div>
             </div>
 
             <!-- Pagination -->

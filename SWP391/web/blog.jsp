@@ -10,46 +10,111 @@
 <!DOCTYPE html>
 <html lang="vi">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Foody - Organic Food Website Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Foody - Organic Food Website Template</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap" rel="stylesheet"> 
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap" rel="stylesheet"> 
 
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <!-- Libraries Stylesheet -->
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-</head>
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <head>
+        <style>
+            .blog-item {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                border: 1px solid #ddd;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
 
-<body>
-    <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" role="status"></div>
-    </div>
-    <!-- Spinner End -->
+            .blog-img-container {
+                position: relative;
+                width: 100%;
+                height: 200px; /* Thay đổi kích thước theo ý muốn */
+                overflow: hidden;
+            }
+
+            .blog-img-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Đảm bảo ảnh phủ toàn bộ khu vực */
+            }
+
+            .blog-title-overlay {
+                position: absolute;
+                bottom: 0; /* Đặt tiêu đề ở dưới cùng của khu vực ảnh */
+                left: 0;
+                background: rgba(0, 0, 0, 0.7); /* Nền bán trong suốt để làm nổi bật tiêu đề */
+                color: #fff;
+                padding: 15px;
+                text-align: center;
+                width: 100%;
+                text-decoration: none;
+                box-sizing: border-box; /* Đảm bảo padding không làm ảnh hưởng đến kích thước */
+                font-size: 1.25rem; /* Kích thước chữ lớn hơn để nổi bật hơn */
+                font-weight: bold; /* Làm cho chữ đậm hơn */
+                border-top: 2px solid #fff; /* Thêm đường viền trên để làm nổi bật tiêu đề */
+                transition: background 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi mượt mà */
+            }
+
+            .blog-title-overlay:hover {
+                background: rgba(0, 0, 0, 0.9); /* Làm tối hơn khi hover */
+                transform: translateY(-5px); /* Di chuyển tiêu đề lên một chút khi hover */
+            }
+
+            .blog-content {
+                flex: 1;
+                padding: 15px; /* Thêm khoảng cách cho nội dung */
+            }
+
+            .blog-content a {
+                display: inline-block;
+                margin-top: 15px;
+                color: #007bff;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            .blog-content a:hover {
+                text-decoration: underline;
+            }
 
 
-    <!-- Navbar Start -->
-    <div class="container-fluid-top-bar fixed-top px-0 bg-white ">
+        </style>
+    </head>
+
+    <body>
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar Start -->
+        <div class="container-fluid-top-bar fixed-top px-0 bg-white ">
             <div class="top-bar row gx-0 align-items-center bg-white">
                 <div class="col-lg-6 px-5 text-start">
                     <small><i class="fa fa-map-marker-alt me-2"></i>Thạch Hòa, Thạch Thất, Hà Nội</small>
@@ -82,199 +147,193 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
                                     <a href="blog" class="dropdown-item">Blog Grid</a>
-                                    <a href="bestsellers.jsp" class="dropdown-item">Our Features</a>
-                                    <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
-                                    <a href="404.jsp" class="dropdown-item">404 Page</a>
                                     <a href="contact.jsp" class="dropdown-item">Liên Hệ</a>
                                 </div>
                             </div>
                             <c:if test="${acc!=null}">
-                            <form class="d-none d-lg-flex ms-2 align-items-center">
-                                <div class="input-group">
-                                    <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
-                                    <button class="btn btn-outline-success" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-
-
-
-                                    <div class="dropdown ">
-                                        <button type="button" class="btn-sm-square btn-transparent rounded-circle ms-3" 
-                                                data-bs-toggle="dropdown">
-                                            <i class="fa fa-user text-body "></i>
+                                <form class="d-none d-lg-flex ms-2 align-items-center">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                                        <button class="btn btn-outline-success" type="submit">
+                                            <i class="fa fa-search"></i>
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <a class="dropdown-item" href="profile">
-                                                    Hồ sơ
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="actioncustomer?action=history">
-                                                    Đơn hàng
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="managecomment?action=viewcomment">
-                                                    Xem lại bình luận
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="logout">
-                                                    Đăng xuất
-                                                </a>
-                                            </li>
 
-                                        </ul>
+
+
+                                        <div class="dropdown ">
+                                            <button type="button" class="btn-sm-square btn-transparent rounded-circle ms-3" 
+                                                    data-bs-toggle="dropdown">
+                                                <i class="fa fa-user text-body "></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    <a class="dropdown-item" href="profile">
+                                                        Hồ sơ
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                                        Đơn hàng
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                                        Xem lại bình luận
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="logout">
+                                                        Đăng xuất
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <a class="btn-sm-square btn-transparent rounded-circle ms-3" href="customer/cart.jsp">
+                                            <small class="fa fa-shopping-bag text-body"></small>
+                                        </a>
                                     </div>
-                                    <a class="btn-sm-square btn-transparent rounded-circle ms-3" href="customer/cart.jsp">
-                                        <small class="fa fa-shopping-bag text-body"></small>
-                                    </a>
-                                </div>
-                            </form>
+                                </form>
                             </c:if>
                             <!-- chua dang nhap -->    
-                    <c:if test="${acc==null}">
-                        <form class="d-none d-lg-flex ms-2 align-items-center">
-                                <div class="input-group">
-                            <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
-                                    <button class="btn btn-outline-success" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                            <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
-                                <i class="fa fa-user text-body"></i>
-                            </a>
-                            <a class="btn btn-square btn-transparent rounded-circle cart" href="actioncustomer?action=cart">
-                                <div class="cart-count">${count_cart}</div>
-                                <i class="fa fa-shopping-bag text-body"></i>
-                            </a>
-                        </form>
-                    </c:if>
+                            <c:if test="${acc==null}">
+                                <form class="d-none d-lg-flex ms-2 align-items-center">
+                                    <div class="input-group">
+                                        
+                                        <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
+                                            <i class="fa fa-user text-body"></i>
+                                        </a>
+                                        <a class="btn btn-square btn-transparent rounded-circle cart" href="actioncustomer?action=cart">
+                                            <div class="cart-count">${count_cart}</div>
+                                            <i class="fa fa-shopping-bag text-body"></i>
+                                        </a>
+                                </form>
+                            </c:if>
                         </div>
                     </div>
             </nav>
         </div>
-    <!-- Navbar End -->
+        <!-- Navbar End -->
 
 
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <h1 class="display-3 mb-3 animated slideInDown">Blog Grid</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-dark active" aria-current="page">Blog Grid</li>
-                </ol>
-            </nav>
+        <!-- Page Header Start -->
+        <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
+            <div class="container">
+                <h1 class="display-3 mb-3 animated slideInDown">Blog Grid</h1>
+                <nav aria-label="breadcrumb animated slideInDown">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-dark active" aria-current="page">Blog Grid</li>
+                    </ol>
+                </nav>
+            </div>
         </div>
-    </div>
-    <!-- Page Header End -->
-    <!-- Blog Start -->
+        <!-- Page Header End -->
+        <!-- Blog Start -->
         <div class="container-fluid py-5">
-        <div class="container">
-            <div class="row g-5">
-                <c:forEach var="blog" items="${blogs}">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="blog-item bg-light rounded overflow-hidden">
-                            <div class="blog-img position-relative overflow-hidden">
-                                <img class="img-fluid" src="img/blog-1.jpg" alt="">
-                                <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-4 py-2 px-4" href="">${blog.title}</a>
-                            </div>
-                            <div class="p-4">
-                                <div class="d-flex mb-3">
-                                    <small class="me-3"><i class="fa fa-user text-primary me-2"></i>${blog.author}</small>
-                                    <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>${blog.dateCreated}</small>
+            <div class="container">
+                <div class="row g-5">
+                    <c:forEach var="blog" items="${blogs}">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="blog-item bg-light rounded overflow-hidden">
+                                <div class="blog-img-container">
+                                    <img class="img-fluid" src="${blog.imagePath}" alt="${blog.title}">
+                                    <a class="blog-title-overlay" href="">${blog.title}</a>
                                 </div>
-                                
-                                <a class="text-uppercase" href="blogDetail?blogId=${blog.id}">Read More <i class="bi bi-arrow-right"></i></a>
+                                <div class="p-4 blog-content">
+                                    <div class="d-flex mb-3">
+                                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>${blog.author}</small>
+                                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>${blog.dateCreated}</small>
+                                    </div>
+                                    <a class="text-uppercase" href="blogDetail?blogId=${blog.id}">Read More <i class="bi bi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog End -->
+
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h1 class="fw-bold text-primary mb-4">F<span class="text-secondary">oo</span>dy</h1>
+                        <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-square btn-outline-body me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-light mb-4">Address</h5>
+                        <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                        <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                        <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-light mb-4">Quick Links</h5>
+                        <a class="btn btn-link" href="">About Us</a>
+                        <a class="btn btn-link" href="">Contact Us</a>
+                        <a class="btn btn-link" href="">Our Services</a>
+                        <a class="btn btn-link" href="">Terms & Condition</a>
+                        <a class="btn btn-link" href="">Support</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h5 class="text-light mb-4">Newsletter</h5>
+                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                        <div class="position-relative mx-auto" style="max-width: 400px;">
+                            <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
+
+                            <!-- This template is free as long as you keep the footer author’s credit link. -->
+                            Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="">Home</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
                             </div>
                         </div>
                     </div>
-                </c:forEach>
-            </div>
-        </div>
-    </div>
-    <!-- Blog End -->
-
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h1 class="fw-bold text-primary mb-4">F<span class="text-secondary">oo</span>dy</h1>
-                    <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-outline-body me-1" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-body me-0" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Address</h5>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Quick Links</h5>
-                    <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Contact Us</a>
-                    <a class="btn btn-link" href="">Our Services</a>
-                    <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="">Support</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Newsletter</h5>
-                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
-
-                        <!-- This template is free as long as you keep the footer author’s credit link. -->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="">Home</a>
-                            <a href="">Cookies</a>
-                            <a href="">Help</a>
-                            <a href="">FQAs</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
+        <!-- Footer End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="fa fa-angle-double-up"></i></a>
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="fa fa-angle-double-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-</body>
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+    </body>
 
 </html>

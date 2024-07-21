@@ -376,35 +376,6 @@ public class FoodDAO extends DBContext {
         return null;
     }
 
-//    public List<Food> selectAllBestSellers() {
-//        List<Food> bestSellers = new ArrayList<>();
-//        String query = "  select top 4 * \n"
-//                + "  from food\n"
-//                + "  order by sold DESC";
-//
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                int foodId = rs.getInt("foodId");
-//                String foodName = rs.getString("foodName");
-//                double price = rs.getDouble("price");
-//                int stock = rs.getInt("stock");
-//                Date createDate = rs.getDate("createDate");
-//                String description = rs.getString("description");
-//                String image = rs.getString("image");
-//                int categoryId = rs.getInt("categoryId");
-//                String categoryName = rs.getString("categoryName");
-//
-//                Category category = new Category(categoryId, categoryName);
-//                Food food = new Food(foodId, foodName, price, stock, createDate, description, stock, category, image);
-//                bestSellers.add(food);
-//            }
-//        } catch (SQLException ex) {
-//
-//        }
-//
-//        return bestSellers;
-//    }
     public List<Food> selectAllBestSellers() {
 
         List<Food> listBestSellers = new ArrayList<>();
@@ -462,23 +433,20 @@ public class FoodDAO extends DBContext {
     public static void main(String[] args) throws ClassNotFoundException {
         try {
             String username = "sa";
-            String password = "123";
+            String password = "1";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP391";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(url, username, password);
             FoodDAO fd = new FoodDAO();
-            ArrayList<Food> lSame = fd.getAllFood();
-            for (Food food : lSame) {
-                System.out.println(food);
-            }
+            FoodDetail foodId = fd.getFoodDetailByID("8");
+            System.out.println(foodId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public FoodDetail getFoodDetailByID(String foodId) {
-        String sql = "select * from food "
-                + "where food_id =? ";
+        String sql = "SELECT * FROM food f LEFT JOIN discount d ON f.food_id = d.food_id WHERE f.food_id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, foodId);
@@ -492,7 +460,8 @@ public class FoodDAO extends DBContext {
                         rs.getString("description"),
                         rs.getInt("sold"),
                         cd.getCategoryById(rs.getInt("category_id")),
-                        rs.getString("image"));
+                        rs.getString("image"),
+                        rs.getInt("discount_rate"));
             }
         } catch (Exception e) {
         }

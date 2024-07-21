@@ -21,7 +21,7 @@ public class FoodDetail {
     private int sold;
     private Category categoryId;
     private String image;
-
+    private int discountRate;
     private int quantity;
 
     public FoodDetail() {
@@ -47,6 +47,27 @@ public class FoodDetail {
         this.categoryId = categoryId;
         this.image = image;
     }
+        public FoodDetail(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image, int discountRate) {
+        this.foodId = foodId;
+        this.foodName = foodName;
+        this.price = price;
+        this.stock = stock;
+        this.createDate = createDate;
+        this.description = description;
+        this.sold = sold;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.discountRate = discountRate;
+    }
+    
+    public int getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(int discountRate) {
+        this.discountRate = discountRate;
+    }
+    
 
     public int getFoodId() {
         return foodId;

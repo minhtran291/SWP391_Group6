@@ -3,14 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+
 import java.util.Date;
 
 public class Blog {
+
     private int id;
     private String title;
     private String content;
     private String author;
     private Date dateCreated;
+    private String imagePath;
 
     public Blog(int id, String title, String content, String author, Date dateCreated) {
         this.id = id;
@@ -19,12 +22,36 @@ public class Blog {
         this.author = author;
         this.dateCreated = dateCreated;
     }
-        public Blog(String title, String content, String author, Date dateCreated) {
-        
+    public Blog(int id, String title, String content, String author, Date dateCreated, String imagePath) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.dateCreated = dateCreated;
+        this.imagePath = imagePath;
+    }
+
+    public Blog(String title, String content, String author, Date dateCreated) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.dateCreated = dateCreated;
+    }
+
+    public Blog(String title, String content, String author, Date dateCreated, String imagePath) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.dateCreated = dateCreated;
+        this.imagePath = imagePath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     // Getters và setters
@@ -67,14 +94,15 @@ public class Blog {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
+
     @Override
     public String toString() {
-        return "Blog{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", author='" + author + '\'' +
-                ", dateCreated=" + dateCreated +
-                '}';
+        return "Blog{"
+                + "id=" + id
+                + ", title='" + title + '\''
+                + ", content='" + content + '\''
+                + ", author='" + author + '\''
+                + ", dateCreated=" + dateCreated
+                + '}';
     }
 }

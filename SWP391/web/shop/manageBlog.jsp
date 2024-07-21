@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <html lang="vi">
-   <head>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -94,6 +94,23 @@
                         <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                             <i class="fa fa-search text-body"></i>
                         </button>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
+                                    data-bs-toggle="dropdown">
+                                <i class="fa fa-user text-body"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="actionshop?action=profile">Hồ sơ</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="managecomment?action=viewcomment">Xem lại bình luận</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="logout">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -111,7 +128,7 @@
             <div class="modal fade" id="addBlogModal" tabindex="-1" aria-labelledby="addBlogModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
-                        <form action="manageblog" method="post">
+                        <form action="manageblog" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="action" value="add">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addBlogModalLabel">Thêm Blog</h5>
@@ -128,8 +145,12 @@
                                     <textarea class="form-control" id="content" name="content" rows="5" required=""></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="author" class="form-label">Tác giả:</label>
+                                    <label for="author" class="form-label">Tác Giả:</label>
                                     <input type="text" class="form-control" id="author" name="author" required="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="author" class="form-label">Ảnh:</label>
+                                    <input type="file" name="blogImage" id="imagePath" accept="image/*" required="">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -143,122 +164,133 @@
 
             <!-- Danh sách Blog -->
             <table class="table">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tiêu đề</th>
-            <th scope="col">Nội dung</th>
-            <th scope="col">Tác giả</th>
-            <th scope="col">Ngày tạo</th>
-            <th scope="col">Tùy chọn</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="blog" items="${blogOnCurrentPage}">
-            <tr style="vertical-align: middle">
-                <th scope="row">${blog.id}</th>
-                <td>${blog.title}</td>
-                <td class="content-column">
-                    <div class="content-wrapper">
-                        <textarea class="form-control" id="content" name="contentUpdate" rows="5" required="" readonly>${blog.content}</textarea>
-                    </div>
-                </td>
-                <td>${blog.author}</td>
-                <td><fmt:formatDate value="${blog.dateCreated}" pattern="dd-MM-yyyy"/></td>
-                <td>
-                    <button class="btn btn-sm btn-primary " data-bs-toggle="modal" data-bs-target="#updateDiscount${blog.id}">
-                        Sửa
-                    </button>
-                    <div class="modal fade text-start" id="updateDiscount${blog.id}">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Cập nhật Blog</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tiêu đề</th>
+                        <th scope="col">Nội dung</th>
+                        <th scope="col">Tác giả</th>
+                        <th scope="col">Ảnh</th>
+                        <th scope="col">Ngày tạo</th>
+                        <th scope="col">Tùy chọn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="blog" items="${blogOnCurrentPage}">
+                        <tr style="vertical-align: middle">
+                            <th scope="row">${blog.id}</th>
+                            <td>${blog.title}</td>
+                            <td class="content-column">
+                                <div class="content-wrapper">
+                                    <textarea class="form-control" id="content" name="contentUpdate" rows="5" required="" readonly>${blog.content}</textarea>
                                 </div>
-                                <div class="modal-body">
-                                    <form action="manageblog" method="post">
-                                        <input type="hidden" name="action" value="update">
-                                        <input type="hidden" name="id" value="${blog.id}">
-                                        <b>Tiêu đề:</b>
-                                        <input type="text" class="form-control" value="${blog.title}" name="titleUpdate">
-                                        <h5 class="text-danger">${requestScope.errorFoodIdUpdate}</h5>
-                                        <div class="content-wrapper">
-                                            <label for="content" class="form-label">Nội dung:</label>
-                                            <textarea class="form-control" id="content" name="contentUpdate" rows="5" required="">${blog.content}</textarea>
+                            </td>
+                            <td>${blog.author}</td>
+                            <td>
+                                <img src="${blog.imagePath}" alt="Blog Image" style="max-width: 100px; max-height: 100px;"/>
+                            </td>
+                            <td><fmt:formatDate value="${blog.dateCreated}" pattern="dd-MM-yyyy"/></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary " data-bs-toggle="modal" data-bs-target="#updateDiscount${blog.id}">
+                                    Sửa
+                                </button>
+                                <div class="modal fade text-start" id="updateDiscount${blog.id}">
+                                    <div class="modal-dialog modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Cập nhật Blog</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="manageblog" method="post" enctype="multipart/form-data">
+                                                    <input type="hidden" name="action" value="update">
+                                                    <input type="hidden" name="id" value="${blog.id}">
+                                                    <b>Tiêu đề:</b>
+                                                    <input type="text" class="form-control" value="${blog.title}" name="titleUpdate">
+                                                    <h5 class="text-danger">${requestScope.errorFoodIdUpdate}</h5>
+                                                    <div class="content-wrapper">
+                                                        <label for="content" class="form-label">Nội dung:</label>
+                                                        <textarea class="form-control" id="content" name="contentUpdate" rows="5" required="">${blog.content}</textarea>
+                                                    </div>
+                                                    <b>Tác giả:</b>
+                                                    <input type="text" class="form-control" required="" name="authorUpdate" value="${blog.author}">
+                                                    <h5 class="text-danger">${requestScope.errorStartDateUpdate}</h5>
+                                                    <b>Hình ảnh hiện tại:</b>
+                                                    <div>
+                                                        <img src="${blog.imagePath}" alt="Blog Image" style="max-width: 100px; max-height: 100px;"/>
+                                                    </div>
+
+                                                    <b>Cập nhật hình ảnh:</b>
+                                                    <input type="file" class="form-control" name="imageUpdate">
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                                        <button type="submit" class="btn btn-success">Lưu</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <b>Tác giả:</b>
-                                        <input type="text" class="form-control" required="" name="authorUpdate" value="${blog.author}">
-                                        <h5 class="text-danger">${requestScope.errorStartDateUpdate}</h5>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-                                            <button type="submit" class="btn btn-success">Lưu</button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteBlogModal${blog.id}">
+                                    Xóa
+                                </button>
+                                <div class="modal fade" id="deleteBlogModal${blog.id}" tabindex="-1" aria-labelledby="deleteBlogModalLabel${blog.id}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteBlogModalLabel${blog.id}">Xác nhận xóa Blog</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có chắc chắn muốn xóa Blog "${blog.title}" không?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                <a href="manageblog?action=delete&id=${blog.id}" class="btn btn-danger">Xóa</a>
+                                            </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteBlogModal${blog.id}">
-                        Xóa
-                    </button>
-                    <div class="modal fade" id="deleteBlogModal${blog.id}" tabindex="-1" aria-labelledby="deleteBlogModalLabel${blog.id}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteBlogModalLabel${blog.id}">Xác nhận xóa Blog</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Bạn có chắc chắn muốn xóa Blog "${blog.title}" không?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                    <a href="manageblog?action=delete&id=${blog.id}" class="btn btn-danger">Xóa</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
 
 
-        <!-- Offcanvas menu -->
-        <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
-            <div class="offcanvas-header">
-                <h1 class="offcanvas-title">Quản lí cửa hàng</h1>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+            <!-- Offcanvas menu -->
+            <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
+                <div class="offcanvas-header">
+                    <h1 class="offcanvas-title">Quản lí cửa hàng</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="discount?action=list">Quản lí giảm giá</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="manageblog">Quản lí Blog</a></p>
+                    <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
+                </div>
             </div>
-            <div class="offcanvas-body">
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="discount?action=list">Quản lí giảm giá</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="manageblog">Quản lí Blog</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
-            </div>
-        </div>
-        <c:set var="n" value="${currentPage}"/>
-        <ul class="pagination justify-content-center">
-            <c:forEach var="p" begin="${1}" end="${totalPages}">
-                <li class="page-item ${p == n ? 'active' : ''}">
-                    <a class="page-link" href="manageblog?action=list&&page=${p}">${p}</a>
-                </li>
-            </c:forEach>
-        </ul>
+            <c:set var="n" value="${currentPage}"/>
+            <ul class="pagination justify-content-center">
+                <c:forEach var="p" begin="${1}" end="${totalPages}">
+                    <li class="page-item ${p == n ? 'active' : ''}">
+                        <a class="page-link" href="manageblog?action=list&&page=${p}">${p}</a>
+                    </li>
+                </c:forEach>
+            </ul>
 
     </body>
 

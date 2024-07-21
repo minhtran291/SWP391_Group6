@@ -100,7 +100,7 @@
 
 
                         <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                            <div class="cart-count">${count_cart}}</div>
+                            <div class="cart-count">${count_cart}</div>
                             <i class="fa fa-shopping-bag text-body"></i>
                         </a>
                     </form>

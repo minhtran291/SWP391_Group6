@@ -93,9 +93,6 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
                                     <a href="blog" class="dropdown-item">Blog</a>
-                                    <a href="bestsellers.jsp" class="dropdown-item">Our Features</a>
-                                    <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
-                                    <a href="404.jsp" class="dropdown-item">404 Page</a>
                                     <a href="contact.jsp" class="dropdown-item">Liên Hệ</a>
                                 </div>
                             </div>
@@ -148,10 +145,7 @@
                     <c:if test="${acc==null}">
                         <form class="d-none d-lg-flex ms-2 align-items-center">
                                 <div class="input-group">
-                            <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
-                                    <button class="btn btn-outline-success" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
+                            
                             <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>
@@ -176,7 +170,7 @@
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
                         <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-dark active" aria-current="page">Blog Grid</li>
+                        <li class="breadcrumb-item text-dark active" aria-current="page">Blog</li>
                     </ol>
                 </nav>
             </div>
@@ -191,7 +185,7 @@
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeIn about-img" data-wow-delay="0.1s">
                     <div class="position-relative overflow-hidden p-5 pe-0">
-                        <img class="img-fluid w-100" src="img/about-2.jpg" alt="About Us">
+                        <img class="img-fluid w-100" src="${blogDetail.imagePath}" alt="About Us">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeIn about-section" data-wow-delay="0.5s">

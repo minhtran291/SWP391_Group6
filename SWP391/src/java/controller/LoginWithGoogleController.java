@@ -56,7 +56,7 @@ public class LoginWithGoogleController extends HttpServlet {
         String message = "";
         if (acc != null) {
             session.setAttribute("acc", acc);
-            response.sendRedirect("actioncustomer?action=getListFood");
+            response.sendRedirect("home");
         } else {
             String username = "";
             String email = user.getEmail();
@@ -68,7 +68,7 @@ public class LoginWithGoogleController extends HttpServlet {
             User userRegis = new User(username, password, gender, email, code);
             userDao.addUserLoginGG(userRegis);
             session.setAttribute("acc", userRegis);
-            response.sendRedirect("actioncustomer?action=getListFood");
+            response.sendRedirect("home");
         }
     }
 

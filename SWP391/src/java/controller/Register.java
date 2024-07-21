@@ -89,11 +89,11 @@ public class Register extends HttpServlet {
         if(!errorAccount.isEmpty() || !errorEmail.isEmpty() || !errorPhone.isEmpty()){
             request.getRequestDispatcher("register.jsp").forward(request, response);
         }else{
-            User u =new User(email, password, 0, email, phone);
+            User u =new User(account, password, 0, email, phone);
             ud.addUser(u);
             session.setAttribute("acc", u);
 //            request.getRequestDispatcher("actioncustomer?action=getListFood").forward(request, response);
-            response.sendRedirect("actioncustomer?action=getListFood");
+            response.sendRedirect("home");
         }
     }
 

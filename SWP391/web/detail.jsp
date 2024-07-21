@@ -100,6 +100,9 @@
             color: green;
             margin-top: 10px;
         }
+        .text-danger.strikethrough {
+            text-decoration: line-through;
+        }
     </style>
 </head>
 <body class="d-flex flex-column" style="min-height: 100vh;">
@@ -212,13 +215,37 @@
                          </div>
                          <small class="pt-1">(99 Reviews)</small>
                      </div>-->
-                    <h3 class="font-weight-semi-bold mb-4"> <p> <span class="text-danger fw-bold">
+                    <c:if test="${detail.discountRate == 0}">
+                    <h3 class="font-weight-semi-bold mb-4"> 
+
+                        <p>Giá gốc:<span class="text-danger fw-bold">
                                 <fmt:formatNumber type="currency" 
                                                   currencyCode="VND"
                                                   maxFractionDigits="0"
-                                                  value="${detail.price}"></fmt:formatNumber>
-                                <!--<h4> <span>Giá bán: ${detail.price}">-->
-                            </span></p></h3>
+                                                  value="${detail.price}">
+                                </fmt:formatNumber>
+                            </span></p> 
+                    </h3>
+                    </c:if>
+                    <c:if test="${detail.discountRate != 0}">
+                    <h3 class="font-weight-semi-bold mb-4"> 
+                        
+                        <p>Giảm giá:<span class="text-danger fw-bold">
+                                <fmt:formatNumber type="currency" 
+                                                  currencyCode="VND"
+                                                  maxFractionDigits="0"
+                                                  value="${detail.price - detail.price*detail.discountRate/100}">
+                                </fmt:formatNumber>
+                            </span></p> 
+                        <p>Giá gốc: <span class="text-danger fw-bold strikethrough">
+                                <fmt:formatNumber type="currency" 
+                                                  currencyCode="VND"
+                                                  maxFractionDigits="0"
+                                                  value="${detail.price}" >
+                                </fmt:formatNumber>
+                            </span></p>
+                    </h3>
+                    </c:if>
 
                     <p class="mb-2">Số lượng: ${detail.stock}</p>
                     <p class="mb-2">Đã bán: ${detail.sold}</p>

@@ -82,9 +82,6 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
                                     <a href="blog" class="dropdown-item">Blog Grid</a>
-                                    <a href="bestsellers.jsp" class="dropdown-item">BestSeller</a>
-                                    <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
-                                    <a href="404.jsp" class="dropdown-item">404 Page</a>
                                     <a href="contact.jsp" class="dropdown-item">Liên Hệ</a>
                                 </div>
                             </div>
@@ -137,10 +134,7 @@
                     <c:if test="${acc==null}">
                         <form class="d-none d-lg-flex ms-2 align-items-center">
                                 <div class="input-group">
-                            <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
-                                    <button class="btn btn-outline-success" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
+                            
                             <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>
