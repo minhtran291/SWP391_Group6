@@ -50,12 +50,18 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <div style="margin-left: 20px;">
+                <button class="btn btn-dark btn-lg" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
             <div class="container">
                 <ul class="navbar-nav">
                     <!--                    có sự khác nhau trong narbar-nav tự css và sử dụng các class
                                         được định nghĩa sẵn trong bootstrap 5 như d-flex và flex-row-->
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="actionshop?action=dashBoard">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -84,11 +90,11 @@
                                             Hồ sơ
                                         </a>
                                     </li>
-<!--                                    <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Đơn hàng
-                                        </a>
-                                    </li>-->
+                                    <!--                                    <li>
+                                                                            <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                                Đơn hàng
+                                                                            </a>
+                                                                        </li>-->
                                     <li>
                                         <a class="dropdown-item" href="managecomment?action=viewcomment">
                                             Xem lại bình luận
@@ -101,10 +107,10 @@
                                     </li>
                                 </ul>
                             </div>
-<!--                            <a class="btn btn-square bg-white rounded-circle cart" href="">
-                                <div class="cart-count">0</div>
-                                <i class="fa fa-shopping-bag text-body"></i>
-                            </a>-->
+                            <!--                            <a class="btn btn-square bg-white rounded-circle cart" href="">
+                                                            <div class="cart-count">0</div>
+                                                            <i class="fa fa-shopping-bag text-body"></i>
+                                                        </a>-->
                         </form>
                     </c:if>
                     <!-- chua dang nhap -->    
@@ -134,51 +140,97 @@
             <h5>Người nhận : ${order.name}</h5>
             <h5>Địa chỉ : ${address}</h5>
             <h5>Số điện thoại : ${phone}</h5>
-            <h5>Tổng tiền : ${order.total}</h5>
-            <h5>Trạng thái : ${order.status_text}</h5>
-            <table class="table table-bordered mt-3">
+            <h5>Tổng tiền : <fmt:formatNumber type="currency" 
+                              currencyCode="VND"
+                              maxFractionDigits="0"
+                              value="${order.total}"/></h5>
+            <h5>Hình thức thanh toán : ${order.payment.paymentType}</h5>
+            <h5>Trạn thái thanh toán : ${order.statusPaymentName}</h5>
+            <c:if test="${order.shipperNotes != null}">
+                <h5>Shipper: ${order.shipperNotes}</h5>
+            </c:if>
+            <c:if test="${order.customerNotes != null}">
+                <h5>Khách hàng: ${order.customerNotes}</h5>
+            </c:if>
+            <c:if test="${order.shopNotes != null}">
+                <h5>Cửa hàng: ${order.shopNotes}</h5>
+            </c:if>
+            <table class="table table-bordered mt-3 text-center">
                 <thead>
                     <tr>
-
-                        <th scope="col">Tên sản phẩm</th>
-                        <th scope="col">Ảnh sản phẩm</th>
+                        <th scope="col">Số thứ tự</th>
+                        <th scope="col">Tên món ăn</th>
+                        <th scope="col">Ảnh món ăn</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Giá sản phẩm</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     <c:if test="${list != null}">
-                        <c:forEach items="${list}" var="i"> 
-                            <tr>
-                                <td>${i.foodName}</td>
-                                <td><img src="${i.image}" style="width: 200px;height: 160px; object-fit: cover" alt="alt"/></td>
-                                <td>${i.quantity}</td>
-                                <td>${i.price}
-                                </td>
+                        <c:set var="s" value="${0}"/>
+                        <c:forEach var="o" items="${orderDetailOnCurrentPage}">
+                            <c:set var="s" value="${s + 1}" />
+                            <tr style="vertical-align: middle">
+                                <td>${s}</td>
+                                <td>${o.food.foodName}</td>
+                                <td><img width="113px" height="113px" src="${o.food.image}" alt="${o.food.foodName}"></td>
+                                <td>${o.quantity}</td>
+                                <td><fmt:formatNumber type="currency" 
+                                                  currencyCode="VND"
+                                                  maxFractionDigits="0"
+                                                  value="${o.price}"/></td>
                             </tr>
                         </c:forEach>
                     </c:if>
-
-
-
-
-
                 </tbody>
             </table>
-            <form class="mb-5" action="actionshop" style="width: 30vw; margin-left: auto;padding:50px ; border: 1px solid #ccc; border-radius: 10px" >
-                <input type="hidden" name="action" value="update-status">
-                <input type="hidden" value="${order.id}" name="id">
-                <select class="form-select" name="status" aria-label="Default select example">
-                    <option value="1" ${param.ostatus != null && param.ostatus == '1' ? "selected" : ""}>Chưa xử lý</option>
-                    <option value="2" ${param.ostatus != null && param.ostatus == '2' ? "selected" : ""}>Đang xử lý</option>
-                    <option value="3" ${param.ostatus != null && param.ostatus == '3' ? "selected" : ""}>Đang giao</option>
-                    <option value="4" ${param.ostatus != null && param.ostatus == '4' ? "selected" : ""}>Đã giao</option>
-                    <option value="5" ${param.ostatus != null && param.ostatus == '5' ? "selected" : ""}>Hủy đơn hàng</option>
-                </select>
-                <button class="btn btn-primary mt-3" type="submit">Cập nhật</button>
-            </form>
+            <!--            <form class="mb-5" action="actionshop" style="width: 30vw; margin-left: auto;padding:50px ; border: 1px solid #ccc; border-radius: 10px" >
+                            <input type="hidden" name="action" value="update-status">
+                            <input type="hidden" value="${order.id}" name="id">
+                            <select class="form-select" name="status" aria-label="Default select example">
+                                <option value="1" ${order.status != null && order.status == '1' ? "selected" : ""}>Chưa xử lý</option>
+                                <option value="2" ${order.status != null && order.status == '2' ? "selected" : ""}>Đang xử lý</option>
+                                <option value="3" ${order.status != null && order.status == '3' ? "selected" : ""}>Đang giao</option>
+                                <option value="4" ${order.status != null && order.status == '4' ? "selected" : ""}>Đã giao</option>
+                                <option value="5" ${order.status != null && order.status == '5' ? "selected" : ""}>Hủy đơn hàng</option>
+                            </select>
+                            <button class="btn btn-primary mt-3" type="submit">Cập nhật</button>
+                        </form>-->
         </div>
 
+        <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
+            <div class="offcanvas-header">
+                <h1 class="offcanvas-title">Quản lí cửa hàng</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="discount?action=list">Quản lí giảm giá</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="manageblog">Quản lí Blog</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
+            </div>
+        </div>
+
+        <c:set var="n" value="${currentPage}"/>
+        <ul class="pagination justify-content-center">
+            <c:forEach var="p" begin="${1}" end="${totalPages}">
+                <li class="page-item">
+                    <a class="page-link ${p == n?"active":""}" 
+                       href="actionshop?action=order-detail&&page=${p}&&id=${order.id}">${p}</a>
+                </li>
+            </c:forEach>
+        </ul>
     </body>
 </html>

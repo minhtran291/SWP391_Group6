@@ -21,6 +21,7 @@ public class Food {
     private int sold;
     private Category categoryId;
     private String image;
+    private int dicountRate;
 
     private int quantity;
 
@@ -31,12 +32,12 @@ public class Food {
         this.foodName = foodName;
         this.stock = stock;
     }
-    
+
     public Food(String foodName, String image) {
         this.foodName = foodName;
         this.image = image;
     }
-    
+
     public Food(String foodName, double price, int stock, Category categoryId, String description, String image) {
         this.foodName = foodName;
         this.price = price;
@@ -56,6 +57,19 @@ public class Food {
         this.sold = sold;
         this.categoryId = categoryId;
         this.image = image;
+    }
+
+    public Food(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image, int discountRate) {
+        this.foodId = foodId;
+        this.foodName = foodName;
+        this.price = price;
+        this.stock = stock;
+        this.createDate = createDate;
+        this.description = description;
+        this.sold = sold;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.dicountRate = discountRate;
     }
 
     public int getFoodId() {
@@ -138,21 +152,29 @@ public class Food {
         this.image = image;
     }
 
-    
-   @Override
+    public int getDicountRate() {
+        return dicountRate;
+    }
+
+    public void setDicountRate(int dicountRate) {
+        this.dicountRate = dicountRate;
+    }
+
+    @Override
     public String toString() {
-    return "Food{" +
-            "foodId=" + foodId +
-            ", foodName='" + foodName + '\'' +
-            ", price=" + price +
-            ", stock=" + stock +
-            ", createDate=" + createDate +
-            ", description='" + description + '\'' +
-            ", sold=" + sold +
-            ", categoryId=" + categoryId +
-            ", image='" + image + '\'' +
-            ", quantity=" + quantity +
-            '}';
-}
-    
+        return "Food{"
+                + "foodId=" + foodId
+                + ", foodName='" + foodName + '\''
+                + ", price=" + price
+                + ", stock=" + stock
+                + ", createDate=" + createDate
+                + ", description='" + description + '\''
+                + ", sold=" + sold
+                + ", categoryId=" + categoryId
+                + ", image='" + image + '\''
+                + ", discountRate=" + dicountRate
+                + ", quantity=" + quantity
+                + '}';
+    }
+
 }

@@ -5,9 +5,9 @@
 package controller;
 
 import dal.CommentDAO;
+import dal.FavoriteDAO;
 import dal.FoodDAO;
 import dal.ImageDAO;
-import dal.ReviewDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,9 +21,9 @@ import java.util.Date;
 import java.util.List;
 import model.FoodDetail;
 import model.Image;
-import model.Review;
 import model.User;
 import model.Comment;
+import model.Favorite;
 import model.Food;
 
 /**
@@ -31,6 +31,7 @@ import model.Food;
  * @author anhdo
  */
 public class DetailControl extends HttpServlet {
+    FavoriteDAO fdao = new FavoriteDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -66,6 +67,22 @@ public class DetailControl extends HttpServlet {
             
         }
     }
+      private void deleteFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String wishid = request.getParameter("deleteId");
+        User u = (User)session.getAttribute("acc");
+        String name = u.getUsername();
+        try {
+            int cmid = Integer.parseInt(wishid);
+            fdao.deleteFoodFavorite(cmid);
+            ArrayList<Favorite> ulist = fdao.getFoodbyUserName(name);
+            session.setAttribute("ulist", ulist);
+           
+            request.getRequestDispatcher("myfavorite.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
+
+    }
      protected void doGet_Detail(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -81,33 +98,13 @@ public class DetailControl extends HttpServlet {
         Image img2 = imgdao.getImgbyFoodId2(foodId);
         Image img3 = imgdao.getImgbyFoodId3(foodId);
         List<Food> sameF = dao.getsameFood(fId);
+        List<Comment> listcmt = cdao.getCommentbyFoodID(foodId);
         
-        Comment cmt1 = cdao.getCommentbyFoodID(foodId,1);
-        Comment cmt2 = cdao.getCommentbyFoodID(foodId,2);
-        Comment cmt3 = cdao.getCommentbyFoodID(foodId,3);
-        Comment cmt4 = cdao.getCommentbyFoodID(foodId,4);
-        Comment cmt5 = cdao.getCommentbyFoodID(foodId,5);
-        Comment cmt6 = cdao.getCommentbyFoodID(foodId,6);
-        Comment cmt7 = cdao.getCommentbyFoodID(foodId,7);
-        Comment cmt8 = cdao.getCommentbyFoodID(foodId,8);
-        Comment cmt9 = cdao.getCommentbyFoodID(foodId,9);
-        Comment cmt10 = cdao.getCommentbyFoodID(foodId,10);
-
-        
-        request.setAttribute("cmt1", cmt1);
-        request.setAttribute("cmt2", cmt2);
-        request.setAttribute("cmt3", cmt3);
-        request.setAttribute("cmt4", cmt4);
-        request.setAttribute("cmt5", cmt5);
-        request.setAttribute("cmt6", cmt6);
-        request.setAttribute("cmt7", cmt7);
-        request.setAttribute("cmt8", cmt8);
-        request.setAttribute("cmt9", cmt9);
-        request.setAttribute("cmt10", cmt10);
         request.setAttribute("img1", img1);
         request.setAttribute("img2", img2);
         request.setAttribute("img3", img3);
         request.setAttribute("sameF", sameF);
+        request.setAttribute("listcmt", listcmt);
         request.setAttribute("detail", fd);
         request.getRequestDispatcher("detail.jsp").forward(request, response);
     
@@ -128,6 +125,9 @@ public class DetailControl extends HttpServlet {
             case "send":
                 doPost_Send(request,response);
                 break;
+            case "save":
+                doPost_Save(request,response);
+                break;
             
         }
         
@@ -136,19 +136,40 @@ public class DetailControl extends HttpServlet {
             throws ServletException, IOException {
          String content = request.getParameter("content");
         String foodId =request.getParameter("foodId");
-        
+//          int rating = Integer.parseInt(request.getParameter("rating"));
         HttpSession session = request.getSession();
         User a = (User) session.getAttribute("acc");
         String name = a.getUsername();
         CommentDAO cdao = new CommentDAO();
-       // ArrayList<model.Comment> listcmt = cdao.getAllCmt();      
-        
-         cdao.addComment(foodId, name, content);
-        //request.setAttribute("listcmt", listcmt);
+ 
+        cdao.addComment(foodId, name, content);
+//        cdao.addRating(foodId, name, rating);
         response.sendRedirect("detail?action=detail&foodId="+request.getParameter("foodId"));
-       // request.getRequestDispatcher("detail?action=detail&foodId="+request.getParameter("foodId")).forward(request, response);
      }
-     
+ protected void doPost_Save(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+     String errorphone = "";
+        String foodid = request.getParameter("foodId");
+        String foodname = request.getParameter("foodname");
+        String image = request.getParameter("image");
+         HttpSession session = request.getSession();
+          if (!fdao.checkFoodName(foodname)) {
+            errorphone = "Số điện thoại đã tồn tại";
+            request.setAttribute("errorphone", errorphone);
+        }
+          if (!errorphone.isEmpty() ) {
+              fdao.deleteFoodFavoritebyName(foodname);
+              request.setAttribute("errorphone", errorphone);
+             response.sendRedirect("detail?action=detail&foodId="+request.getParameter("foodId"));
+          }else{
+         User u = (User)session.getAttribute("acc");
+        String name = u.getUsername();
+        fdao.addtoFavoite(foodid, name, foodname, image);
+          response.sendRedirect("detail?action=detail&foodId="+request.getParameter("foodId"));
+          }
+    }
+
+    
 
     /**
      * Returns a short description of the servlet.

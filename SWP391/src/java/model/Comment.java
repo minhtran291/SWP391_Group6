@@ -18,18 +18,41 @@ public class Comment {
     private String commentText;
     private Date createDate;
     private Food foodName;
+    private int rating;
+    private int ratingid;
 
     public Comment() {
     }
 
-    public Comment(int commentId, FoodDetail foodId, User userName, String commentText, Date createDate) {
+    public Comment(int rating, int ratingid) {
+        this.rating = rating;
+        this.ratingid = ratingid;
+    }
+
+    public Comment(int commentId, FoodDetail foodId, User userName, String commentText, Date createDate,int rating) {
+        this.commentId = commentId;
+        this.foodId = foodId;
+        this.userName = userName;
+        this.commentText = commentText;
+        this.createDate = createDate;
+        this.rating = rating;
+    }
+public Comment(int commentId, FoodDetail foodId, User userName, String commentText, Date createDate) {
         this.commentId = commentId;
         this.foodId = foodId;
         this.userName = userName;
         this.commentText = commentText;
         this.createDate = createDate;
     }
+    public Comment(int commentId, FoodDetail foodId, User userName, Date createDate, int rating) {
+        this.commentId = commentId;
+        this.foodId = foodId;
+        this.userName = userName;
+        this.createDate = createDate;
+        this.rating = rating;
+    }
 
+   
     public Comment(int commentId, FoodDetail foodId, User userName, String commentText, Date createDate, Food foodName) {
         this.commentId = commentId;
         this.foodId = foodId;
@@ -86,6 +109,24 @@ public class Comment {
     public void setFoodName(Food foodName) {
         this.foodName = foodName;
     }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getRatingid() {
+        return ratingid;
+    }
+
+    public void setRatingid(int ratingid) {
+        this.ratingid = ratingid;
+    }
+
+   
 
     
 }

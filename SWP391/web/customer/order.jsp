@@ -89,6 +89,7 @@
                                             Đơn hàng
                                         </a>
                                     </li>
+                                    <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
                                     <li>
                                         <a class="dropdown-item" href="managecomment?action=viewcomment">
                                             Xem lại bình luận
@@ -236,7 +237,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input value="${address}" name="address" type="text" id="form5" class="form-control order-form-input" />
+                                        <input name="address" type="text" id="form5" class="form-control order-form-input" />
                                     </div>
                                 </div>
                             </div>
@@ -256,13 +257,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <c:set value="0" var="discount" />
                                                 <c:if test="${list != null}">
                                                     <c:forEach items="${list}" var="i"> 
+                                                        <c:set value="${discount + (i.price * i.dicountRate/100)}" var="discount" />
                                                         <tr>
                                                             <td>${i.foodName}</td>
                                                             <td><img src="${i.image}" style="width: 200px;height: 160px; object-fit: cover" alt="alt"/></td>
                                                             <td>${i.quantity}</td>
-                                                            <td>${i.price}
+                                                            <td><fmt:formatNumber type="currency" 
+                                                                              currencyCode="VND"
+                                                                              maxFractionDigits="0"
+                                                                              value="${i.dicountRate != 0 ? i.price - (i.price * i.dicountRate/100) : i.price}"/>
+
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
@@ -285,7 +292,10 @@
                             <c:if test="${success == null}">
                                 <div class="d-flex justify-content-between mb-4">
                                     <p class="mb-2">Tổng thanh toán</p>
-                                    <p class="mb-2">${total_s} VND</p>
+                                    <p class="mb-2"><fmt:formatNumber type="currency" 
+                                                      currencyCode="VND"
+                                                      maxFractionDigits="0"
+                                                      value="${total_s}"/></p>
                                 </div>
                                 <hr class="my-4">
                                 <div class="row mt-3">
@@ -296,7 +306,7 @@
                                         <div class="col-12">
                                             <div data-mdb-input-init class="form-outline">
                                                 <input checked name="payment" type="radio" value="0"/> Tiền mặt <br>
-                                                <input name="payment" type="radio" value="1"/> Chuyển khoản
+                                                <input name="payment" type="radio" value="1"/> Thanh toán VNPay
                                             </div>
                                         </div>
                                     </div>

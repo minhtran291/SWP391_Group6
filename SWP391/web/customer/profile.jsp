@@ -53,7 +53,7 @@
             <div class="container">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="actioncustomer?action=getListFood">
+                        <a class="nav-link" href="home">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -111,12 +111,12 @@
         <div class="flex-grow-1 mb-5">
             <div class="container">
                 <h1 class="text-center mt-3">Thông tin người dùng</h1>
-                <form class="mt-5">
+                <form class="mt-5" action="" method="">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="d-flex justify-content-center mb-3">
-                                <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" 
-                                     alt="Hình ảnh đại diện" class="rounded-circle" style="width: 250px; height: 250px;">
+                                <img src="${sessionScope.acc.avatar}" 
+                                     alt="Hình ảnh đại diện" class="avatar img-circle img-thumbnail" style="width: 200px; height: 200px;">
                             </div>
                             <p class="text-center">Avatar</p>
                         </div>
@@ -169,7 +169,8 @@
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">
-                                <button class="btn btn-primary w-25">Cập nhật</button>
+                                <!--<button class="btn btn-primary w-25">Cập nhật</button>-->
+                                <a class="btn btn-primary w-25" href="UpdateProfile.jsp">Cập Nhật</a>
                             </div>
                         </div>
                     </div>

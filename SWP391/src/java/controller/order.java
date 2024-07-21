@@ -78,9 +78,13 @@ public class order extends HttpServlet {
 
             if (total != 0) {
                 List<Food> list = (List<Food>) session.getAttribute("cart");
+                total = 0;
+                for (Food f : list) {
+                    total += (f.getPrice() - (f.getPrice() * f.getDicountRate() / 100)) * f.getQuantity();
+                }
+                session.setAttribute("total_s", total);
                 request.setAttribute("list", list);
                 request.setAttribute("user", acc);
-
                 request.getRequestDispatcher("customer/order.jsp").forward(request, response);
 
             } else {
@@ -144,11 +148,11 @@ public class order extends HttpServlet {
                                         request.setAttribute("count_cart", 0);
                                         od.insertDelivery(id, address);
                                         session.removeAttribute("cart");
-                                        request.setAttribute("success", "Đơn hàng đã được order");
+                                        request.setAttribute("success", "Đơn hàng đã được đặt thành công");
                                     }
                                 } else {
                                     session.setAttribute("address", address);
-                                    Long total = total = (long) Double.parseDouble(session.getAttribute("total_s").toString());
+                                    Long total = total = (long) (Double.parseDouble(session.getAttribute("total_s").toString()));
                                     response.sendRedirect("vnpay?amount=" + total);
                                     return;
                                 }

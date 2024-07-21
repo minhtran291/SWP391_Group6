@@ -37,36 +37,61 @@ public class CommentDAO extends DBContext {
         }
     }
 
-    public Comment getCommentbyFoodID(String foodId, int num) {
-        String sql = "WITH OrderedComments AS (\n"
-                + "    SELECT \n"
-                + "        [comment_id],\n"
-                + "        [food_id],\n"
-                + "        [user_name],\n"
-                + "        [comment_text],\n"
-                + "        [create_date],\n"
-                + "        ROW_NUMBER() OVER (ORDER BY [comment_id] DESC) AS RowNum\n"
-                + "    FROM [SWP391].[dbo].[comments]\n"
-                + "    WHERE [food_id] = ?\n"
-                + ")\n"
-                + "SELECT * \n"
-                + "FROM OrderedComments\n"
-                + "WHERE RowNum = ?;";
+//    public Comment getCommentbyFoodID(String foodId, int num) {
+//        String sql = "WITH OrderedComments AS (\n"
+//                + "    SELECT \n"
+//                + "        [comment_id],\n"
+//                + "        [food_id],\n"
+//                + "        [user_name],\n"
+//                + "        [comment_text],\n"
+//                + "        [create_date],\n"
+//                + "        ROW_NUMBER() OVER (ORDER BY [comment_id] DESC) AS RowNum\n"
+//                + "    FROM [SWP391].[dbo].[comments]\n"
+//                + "    WHERE [food_id] = ?\n"
+//                + ")\n"
+//                + "SELECT * \n"
+//                + "FROM OrderedComments\n"
+//                + "WHERE RowNum = ?;";
+//        try {
+//            PreparedStatement ps = connection.prepareStatement(sql);
+//            ps.setString(1, foodId);
+//            ps.setInt(2, num);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                return new Comment(rs.getInt("comment_id"),
+//                        fdao.getFoodDetailByID(rs.getString("food_id")),
+//                        udao.getUser(rs.getString("user_name")),
+//                        rs.getString("comment_text"),
+//                        rs.getDate("create_date"));
+//            }
+//        } catch (Exception e) {
+//        }
+//        return null;
+//    }
+    public ArrayList<Comment> getCommentbyFoodID(String foodId) {
+        String sql = "SELECT TOP (1000) [comment_id]\n"
+                + "      ,[food_id]\n"
+                + "      ,[user_name]\n"
+                + "      ,[comment_text]\n"
+                + "      ,[create_date]\n"
+                + "  FROM [SWP391].[dbo].[comments]\n"
+                + "  where food_id = ?"
+                + "  ORDER BY [comment_id] DESC ";
+        ArrayList<Comment> list = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, foodId);
-            ps.setInt(2, num);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new Comment(rs.getInt("comment_id"),
+                list.add(new Comment(rs.getInt("comment_id"),
                         fdao.getFoodDetailByID(rs.getString("food_id")),
                         udao.getUser(rs.getString("user_name")),
                         rs.getString("comment_text"),
-                        rs.getDate("create_date"));
+                        rs.getDate("create_date")));
             }
         } catch (Exception e) {
         }
-        return null;
+        return list;
     }
 
     public ArrayList<Comment> getCommentByUserName(String username) {
@@ -88,7 +113,7 @@ public class CommentDAO extends DBContext {
         return list;
     }
 
-    public void UpdateCmt(String commentText,int commentId) {
+    public void UpdateCmt(String commentText, int commentId) {
         String sql = "UPDATE [dbo].[comments]\n"
                 + "   SET [comment_text] = ? \n"
                 + " WHERE comment_id =?\n";
@@ -109,5 +134,46 @@ public class CommentDAO extends DBContext {
             ps.executeUpdate();
         } catch (SQLException e) {
         }
+    }
+
+    public void addRating(String foodId, String name, int rating) {
+        String sql = "INSERT INTO [dbo].[rating]\n"
+                + "           ([food_id]\n"
+                + "           ,[user_name]\n"
+                + "           ,[rating]\n"
+                + "           ,[created_date])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,getDate())\n"
+                + "\n"
+                + "";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, foodId);
+            ps.setString(2, name);
+            ps.setInt(3, rating);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    public Comment getRatingbyFoodID(String foodId) {
+        String sql = "SELECT TOP (1000) [rating_id], [rating]\n"
+                + "      \n"
+                + "  FROM [SWP391].[dbo].[rating]"
+                + " where food_id = ? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, foodId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Comment(rs.getInt("rating_id"),
+                        rs.getInt("rating"));
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

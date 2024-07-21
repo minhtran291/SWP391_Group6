@@ -4,10 +4,11 @@
     Author     : Dell
 --%>
 
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="css/register.css">
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -65,7 +66,7 @@
                 </ul>
 
                 <div style="margin-right: 20px">
-                    <form class="d-flex" action="actionshop?action=homeFood" method="get">
+                    <form class="d-flex" action="actionshop" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
                         <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                style="width: 300px">
@@ -84,16 +85,12 @@
                                         Hồ sơ
                                     </a>
                                 </li>
-<!--                                <li>
-                                    <a class="dropdown-item" href="actioncustomer?action=history">
-                                        Đơn hàng
-                                    </a>
-                                </li>-->
-                                <li>
-                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
-                                        Xem lại bình luận
-                                    </a>
-                                </li>
+                                <!--                                <li>
+                                                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                        Đơn hàng
+                                                                    </a>
+                                                                </li>-->
+                               
                                 <li>
                                     <a class="dropdown-item" href="logout">
                                         Đăng xuất
@@ -101,11 +98,9 @@
                                 </li>
                             </ul>
                         </div>
-
-
-<!--                        <a class="btn btn-square bg-white rounded-circle" href="">
-                            <i class="fa fa-shopping-bag text-body"></i>
-                        </a>-->
+                        <!--                        <a class="btn btn-square bg-white rounded-circle" href="">
+                                                    <i class="fa fa-shopping-bag text-body"></i>
+                                                </a>-->
                     </form>
                 </div>
             </div>
@@ -113,11 +108,13 @@
 
 
 
+
+
         <c:set var="n" value="${currentPage}"/>
 
         <div class="flex-grow-1">
 
-            <div class="d-flex bg-light mb-5">
+<!--            <div class="d-flex bg-light mb-5">
                 <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -135,7 +132,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div>-->
 
             <h1 class="text-center m-3">Quản lý nhân viên</h1>
 
@@ -182,7 +179,7 @@
                                            id="passwordInput" 
                                            >
                                     <h5 id="passwordError" style="color: red; display: none;">
-                                        Mật khẩu phải có ít nhất 8 ký tự.
+                                        Mật khẩu phải có ít nhất 6 ký tự.
                                     </h5>
                                 </div>      
                                 <b>Giới tính:</b><br>
@@ -209,6 +206,7 @@
                                     <h5 class="text-danger">${requestScope.errorEmail}</h5>
                                 </div>
 
+                                 
                                 <div>
                                     <label class="form-label" for="phoneInput">Số điện thoại</label>
                                     <input type="text"
@@ -242,12 +240,19 @@
                     <th>Giới tính</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
+                    <th></th>
                 </tr>
                 <c:forEach var="f" items="${empOnCurrentPage}">
                     <tr style="vertical-align: middle">
                         <td>${f.userid}</td>
                         <td>${f.username}</td>             
-                        <td>${f.password}</td>
+                        <c:forEach var="password" items="${f.password}" varStatus="status">
+
+                            <td>
+                                <span id="passwordField${status.index}" data-password="${password}">${fn:length(password) > 0 ? '******' : ''}</span>
+                            </td>
+
+                        </c:forEach>
                         <td>${f.gender == 1 ? "Nam" : "Nữ"}</td>
                         <td>${f.email}</td>
                         <td>${f.phone}</td>
@@ -302,47 +307,44 @@
                                                            value="${f.password}"
                                                            >
                                                     <h5 id="passwordError" style="color: red; display: none;">
-                                                        Mật khẩu phải có ít nhất 8 ký tự.
+                                                        Mật khẩu phải có ít nhất 6 ký tự.
                                                     </h5>
                                                 </div>      
-                                                <div>
-                                                    <label for="form3Examplev3">Giới Tính</label>
-                                                    <br>
-                                                    <input name="gender" required type="radio" value="1" id="genderMale" />
-                                                    <label for="genderMale">Nam</label><br>
-                                                    <input name="gender" required type="radio" value="0" id="genderFemale" />
-                                                    <label for="genderFemale">Nữ</label><br>
-                                                </div>
+                                              
 
-                                                <div>
-
+                                                 <div>
                                                     <label class="form-label" for="emailInput">Email</label>
-
                                                     <input type="email"
-                                                           required 
+                                                           required
                                                            class="form-control"
                                                            value="${f.email}"
-                                                           required=""
                                                            name="email"
-                                                           id="emailInput"
-                                                           >
+                                                           id="email"
+                                                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+                                                           oninvalid="this.setCustomValidity('Vui lòng nhập một địa chỉ email hợp lệ.')"
+                                                           oninput="setCustomValidity('')">
                                                     <h5 id="emailError" style="color: red; display: none;">
                                                         Vui lòng nhập một địa chỉ email hợp lệ.
                                                     </h5>
-                                                    <div><label class="text-danger" for="form3Examplea9">${requestScope.mess}</label></div>
+                                                    <div>
+                                                        <label class="text-danger" for="form3Examplea9">${requestScope.mess}</label>
+                                                    </div>
                                                     <h5 class="text-danger">${requestScope.errorEmailUpdate}</h5>
                                                 </div>
 
                                                 <div>
                                                     <label class="form-label" for="phoneInput">Số điện thoại</label>
-                                                    <input type="text"
+                                                    <input type="tel"
                                                            class="form-control"
-                                                           name="phone" required
-                                                           type="tel" id="phoneInput" 
+                                                           name="phone"
+                                                           id="phone"
                                                            value="${f.phone}"
-                                                           >
+                                                           pattern="\d{10}"
+                                                           required
+                                                           oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại hợp lệ.')"
+                                                           oninput="setCustomValidity('')">
                                                     <h5 id="phoneError" style="color: red; display: none;">
-                                                        Số điện thoại phải có ít nhất 10 chữ số.
+                                                        Số điện thoại phải có đúng 10 chữ số.
                                                     </h5>
                                                     <h5 class="text-danger">${requestScope.errorphoneUpdate}</h5>
                                                 </div>
@@ -382,6 +384,10 @@
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="discount?action=list">Quản lí giảm giá</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="manageblog">Quản lí Blog</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
             </div>
@@ -435,7 +441,7 @@
             var errorNameUpdate = "${requestScope.errorNameUpdate}";
             var errorEmailUpdate = "${requestScope.errorEmailUpdate}";
             var errorphoneUpdate = "${requestScope.errorphoneUpdate}";
-            if (errorNameUpdate.trim() !== "" || errorerrorEmailUpdate.trim() !== "" || errorphoneUpdate.trim() !== "") {
+            if (errorNameUpdate.trim() !== "" || errorEmailUpdate.trim() !== "" || errorphoneUpdate.trim() !== "") {
                 $(document).ready(function () {
                     $('#updateEmployee${id}').modal('show');
                 });

@@ -18,8 +18,28 @@ public class User {
     private String phone;
     private int roleid;
     private int orderNumber;
-
+    private String rolename;
+private String avatar;
     public User() {
+    }
+
+    public User(int roleid, String rolename) {
+        this.roleid = roleid;
+        this.rolename = rolename;
+    }
+    
+    
+    
+    public User(int userid, String username, String password, int gender, String email, String phone, int roleid,String rolename) {
+        this.userid = userid;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.roleid = roleid;
+        this.orderNumber = orderNumber;
+        this.rolename = rolename;
     }
 
     public User(int userid, String username, String password, int gender, String email, String phone, int roleid) {
@@ -31,6 +51,8 @@ public class User {
         this.phone = phone;
         this.roleid = roleid;
     }
+    
+    
 
     public User(String username, String password, int gender, String email, String phone) {
         this.username = username;
@@ -120,6 +142,22 @@ public class User {
 
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
 //    @Override

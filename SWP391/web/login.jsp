@@ -52,7 +52,7 @@
                 </div>  
                 <div class="form-group">
                     <input name="password" type="password" value="${cookie.cpass.value}" 
-                           class="form-control" placeholder="Mật khẩu" required="" minlength="6"> 
+                           class="form-control" placeholder="Mật khẩu" required=""> 
                 </div>
                 <div class="mb-3">
                     <input type="checkbox" ${(cookie.cremem!=null?'checked':'')} name="remember" value="ON"/>Ghi nhớ đăng nhập
@@ -61,9 +61,15 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
                 </div>
+<!--                <a 
+                    href="https://accounts.google.com/o/oauth2/auth?scope=email profile&redirect_uri=http://localhost:8080/SWP391/LoginWithGoogleController&response_type=code
+                    &client_id=855024682610-7me9k0ap16evk6iero8s8293i4sp7o7o.apps.googleusercontent.com&approval_prompt=force"
+                    class="btn btn-google btn-block">
+                    <i class="fa fa-google"></i> Login with Google
+                </a>-->
                 <a 
                     href="https://accounts.google.com/o/oauth2/auth?scope=email profile&redirect_uri=http://localhost:8080/SWP391/LoginWithGoogleController&response_type=code
-                                   &client_id=855024682610-7me9k0ap16evk6iero8s8293i4sp7o7o.apps.googleusercontent.com&approval_prompt=force"
+                    &client_id=855024682610-7me9k0ap16evk6iero8s8293i4sp7o7o.apps.googleusercontent.com&approval_prompt=force"
                     class="btn btn-google btn-block">
                     <i class="fa fa-google"></i> Login with Google
                 </a>

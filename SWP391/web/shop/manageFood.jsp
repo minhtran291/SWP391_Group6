@@ -146,7 +146,7 @@
                         <div class="modal-content">  
 
                             <div class="modal-header">
-                                <h4 class="modal-title">Thêm sản món ăn mới</h4>
+                                <h4 class="modal-title">Thêm món ăn mới</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 
@@ -205,6 +205,34 @@
                         </div>
                     </div>
                 </div>
+                <div class="dropdown" style="margin-left: 1100px">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                            style="margin-right: 20px;">
+                        Sắp xếp</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item ${type eq "1"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=1">Tên tăng dần</a></li>
+                        <li><a class="dropdown-item ${type eq "2"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=2">Tên giảm dần</a></li>
+                        <li><a class="dropdown-item ${type eq "3"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=3">Giá tăng dần</a></li>
+                        <li><a class="dropdown-item ${type eq "4"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=4">Giá giảm đần</a></li>
+                        <li><a class="dropdown-item ${type eq "5"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=5">Ngày thêm vào mới nhất</a></li>
+                        <li><a class="dropdown-item ${type eq "6"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=6">Ngày thêm vào cũ nhất</a></li>
+                        <li><a class="dropdown-item ${type eq "7"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=7">Số lượng đã bán nhiều</a></li>
+                        <li><a class="dropdown-item ${type eq "8"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=8">Số lượng đã bán ít</a></li>
+                        <li><a class="dropdown-item ${type eq "9"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=9">Số lượng tồn kho nhiều</a></li>
+                        <li><a class="dropdown-item ${type eq "10"?"active":""}" 
+                               href="actionshop?action=manageSort&&type=10">Số lượng tồn kho ít</a></li>
+                    </ul>
+                </div>
+
                 <div class="dropdown ms-auto">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                             style="margin-right: 20px;">
@@ -375,29 +403,46 @@
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
                 <p><a class="btn text-white btn-primary" 
+                      href="discount?action=list">Quản lí giảm giá</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="manageblog">Quản lí Blog</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
             </div>
         </div>
 
 
         <ul class="pagination justify-content-center">
-            <c:forEach var="p" begin="${1}" end="${totalPages}">
+            <c:if test="${totalPages > 1}">
                 <li class="page-item">
-                    <c:if test="${listSearch != null}">
-                        <a class="page-link ${p==n?"active":""}"  
-                           href="actionshop?action=manageGetFoodBySearch&&page=${p}&&search=${search}">${p}</a>
-                    </c:if>
-                    <c:if test="${listFoodByCategory != null}">
-                        <a class="page-link ${p==n?"active":""}"  
-                           href="actionshop?action=manageGetFoodByCategory&&page=${p}&&cid=${cid}">${p}</a>
-                    </c:if>
-                    <c:if test="${listFoodByCategory == null && listSearch == null}">
-                        <a class="page-link ${p==n?"active":""}"  
-                           href="actionshop?action=manageFood&&page=${p}">${p}</a>
-                    </c:if>
+                    <a class="page-link ${1==currentPage?'active':''}" 
+                       href="actionshop?action=manageFood&&page=1">1</a>
                 </li>
-            </c:forEach>
+                <c:if test="${currentPage > 3}">
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                </c:if>
+                <c:forEach var="p" begin="${currentPage-1}" end="${currentPage+1}">
+                    <c:if test="${p > 1 && p < totalPages}">
+                        <li class="page-item">
+                            <a class="page-link ${p==currentPage?'active':''}" 
+                               href="actionshop?action=manageFood&&page=${p}">${p}</a>
+                        </li>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${currentPage < totalPages - 2}">
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                </c:if>
+                <li class="page-item">
+                    <a class="page-link ${totalPages==currentPage?'active':''}" 
+                       href="actionshop?action=manageFood&&page=${totalPages}">${totalPages}</a>
+                </li>
+            </c:if>
         </ul>
+
 
 
         <footer>

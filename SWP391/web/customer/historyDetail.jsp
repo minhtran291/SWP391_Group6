@@ -89,6 +89,7 @@
                                             Đơn hàng
                                         </a>
                                     </li>
+                                    <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
                                     <li>
                                         <a class="dropdown-item" href="managecomment?action=viewcomment">
                                             Xem lại bình luận
@@ -137,9 +138,18 @@
             <h5>Email : ${user.email}</h5>
             <h5>Số điện thoại : ${user.phone}</h5>
             <h5>Địa chỉ : ${address}</h5>
-            <h5>Tổng tiền : ${order.total}</h5>
-            <h5>Trạng thái : ${order.status_text}</h5>
-            <table class="table table-bordered mt-3">
+            <h5>Trạng thái đơn hàng : ${order.status_text}</h5>
+            <h5>Tổng tiền : <fmt:formatNumber type="currency" 
+                              currencyCode="VND"
+                              maxFractionDigits="0"
+                              value="${order.total}">
+                </fmt:formatNumber></h5>
+            <h5>Hình thức thanh toán : ${order.payment.paymentType}</h5>
+            <h5>Trạng thái thanh toán : ${order.statusPaymentName}</h5>
+            <c:if test="${order.shopNotes != null}">
+                <h5>Cửa hàng: ${order.shopNotes}</h5>
+            </c:if>
+            <table class="table table-bordered mt-3 text-center">
                 <thead>
                     <tr>
 
@@ -151,22 +161,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:if test="${list != null}">
-                        <c:forEach items="${list}" var="i"> 
-                            <tr>
+                    <c:if test="${hitoryDetailOnCurrentPage != null}">
+                        <c:forEach items="${hitoryDetailOnCurrentPage}" var="i"> 
+                            <tr style="vertical-align: middle">
                                 <td>${i.foodName}</td>
                                 <td><img src="${i.image}" style="width: 200px;height: 160px; object-fit: cover" alt="alt"/></td>
                                 <td>${i.quantity}</td>
-                                <td>${i.price}
+                                <td><fmt:formatNumber type="currency" 
+                                                  currencyCode="VND"
+                                                  maxFractionDigits="0"
+                                                  value="${i.price}">
+                                    </fmt:formatNumber>
                                 </td>
                             </tr>
                         </c:forEach>
                     </c:if>
-
-
-
-
-
                 </tbody>
             </table>
             <c:if test="${list == null}">
@@ -174,5 +183,16 @@
             </c:if>
         </div>
 
+        <c:set var="n" value="${currentPage}"/>
+        <ul class="pagination justify-content-center">
+            <c:forEach var="p" begin="${1}" end="${totalPages}">
+                <li class="page-item">
+                    <a class="page-link ${p == n?"active":""}" 
+                       href="actioncustomer?action=history_detail&&page=${p}&&id=${order.id}">${p}</a>
+                </li>
+            </c:forEach>
+        </ul>
+
+        <jsp:include page="../footer.jsp"></jsp:include>
     </body>
 </html>

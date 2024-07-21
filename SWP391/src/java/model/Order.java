@@ -33,7 +33,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, User users, double total, int status, Date orderDate, Time orderTime) {
+    public Order(int id, User users, double total, int status, Date orderDate, Time orderTime, Payment payment, int statusPayment) {
         this.id = id;
         this.users = users;
         this.total = total;
@@ -41,15 +41,42 @@ public class Order {
         this.statusName = StatusEnum.findByCode(status).description;
         this.orderDate = orderDate;
         this.orderTime = orderTime;
+        this.payment = payment;
+        this.statusPaymentName = StatusPayment.findByCode(statusPayment).description;
     }
     
-    public Order(int id, String name, String address, int status, double total, String date) {
+    public Order(int id, String name, int status, double total, Date orderDate) {
         this.id = id;
         this.name = name;
-        this.address = address;
         this.status = status;
         this.total = total;
-        this.date = date;
+        this.orderDate = orderDate;
+        this.statusName = StatusEnum.findByCode(status).description;
+    }
+    
+    public Order(int id, String name, double total, int status, Date orderDate, Time orderTime, Payment payment, int statusPayment) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.total = total;
+        this.orderDate = orderDate;
+        this.orderTime = orderTime;
+        this.payment = payment;
+        this.statusPaymentName = StatusPayment.findByCode(statusPayment).description;
+    }
+    
+    public Order(int id, String name, double total, int status, Date orderDate, Time orderTime, Payment payment, int statusPayment, String shipperNotes, String customerNotes, String shopNotes) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.total = total;
+        this.orderDate = orderDate;
+        this.orderTime = orderTime;
+        this.payment = payment;
+        this.statusPaymentName = StatusPayment.findByCode(statusPayment).description;
+        this.shipperNotes = shipperNotes;
+        this.customerNotes = customerNotes;
+        this.shopNotes = shopNotes;
     }
     
     public Order(int id, User users, double total, int status, Payment payment, int statusPayment, String shopNotes, String address) {

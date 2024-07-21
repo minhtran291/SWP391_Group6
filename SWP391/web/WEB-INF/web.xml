@@ -14,15 +14,59 @@
     </filter>
     <filter-mapping>
         <filter-name>ShipperFilter</filter-name>
-        <url-pattern></url-pattern>
+        <url-pattern>/actionshipper</url-pattern>
+        <url-pattern>/shipper/homeShipper.jsp</url-pattern>
+        <url-pattern/>
     </filter-mapping>
     <filter-mapping>
         <filter-name>ShopFilter</filter-name>
         <url-pattern>/actionshop</url-pattern>
+        <url-pattern>/CategoryServlet</url-pattern>
+        <url-pattern>/AddFoodServlet</url-pattern>
+        <url-pattern>/DeleteFoodServlet</url-pattern>
+        <url-pattern>/EditFoodServlet</url-pattern>
+        <url-pattern>/employee</url-pattern>
+        <url-pattern>/manageblog</url-pattern>
+        <url-pattern>/discount</url-pattern>
+        <url-pattern>/shop/addCategory.jsp</url-pattern>
+        <url-pattern>/shop/changepass.jsp</url-pattern>
+        <url-pattern>/shop/editCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageFood.jsp</url-pattern>
+        <url-pattern>/shop/profileShop.jsp</url-pattern>
+        <url-pattern>/shop/shopHome.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/actionshop</url-pattern>
+        <url-pattern>/actionadmin</url-pattern>
+        <url-pattern>/actionshipper</url-pattern>
+        <url-pattern>/add-to-cart</url-pattern>
+        <url-pattern>/employee</url-pattern>
+        <url-pattern>/AddFoodServlet</url-pattern>
+        <url-pattern>/DeleteFoodServlet</url-pattern>
+        <url-pattern>/EditFoodServlet</url-pattern>
+        <url-pattern>/managefavorite</url-pattern>
+        <url-pattern>/managecomment</url-pattern>
+        <url-pattern>/manageblog</url-pattern>
+        <url-pattern>/discount</url-pattern>
+        <url-pattern>/shop/addCategory.jsp</url-pattern>
+        <url-pattern>/shop/changepass.jsp</url-pattern>
+        <url-pattern>/shop/editCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageCategory.jsp</url-pattern>
+        <url-pattern>/shop/manageFood.jsp</url-pattern>
+        <url-pattern>/shop/profileShop.jsp</url-pattern>
+        <url-pattern>/shop/shopHome.jsp</url-pattern>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/changepass</url-pattern>
+        <url-pattern>/customer/changepass.jsp</url-pattern>
+        <url-pattern>/customer/profile.jsp</url-pattern>
+        <url-pattern>/customer/history.jsp</url-pattern>
+        <url-pattern>/customer/historyDetail.jsp</url-pattern>
+        <url-pattern>/customer/order.jsp</url-pattern>
+        <url-pattern>/UpdateProfile.jsp</url-pattern>
+        <url-pattern>/managecomment.jsp</url-pattern>
+        <url-pattern>/myfavorite.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>ActionCustomer</servlet-name>
@@ -119,6 +163,34 @@
     <servlet>
         <servlet-name>ActionShipper</servlet-name>
         <servlet-class>controller.ActionShipper</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActionAdmin</servlet-name>
+        <servlet-class>controller.ActionAdmin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveProduct</servlet-name>
+        <servlet-class>controller.SaveProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageFavorite</servlet-name>
+        <servlet-class>controller.ManageFavorite</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogDetailServlet</servlet-name>
+        <servlet-class>controller.BlogDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogServlet</servlet-name>
+        <servlet-class>controller.BlogServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DiscountServlet</servlet-name>
+        <servlet-class>controller.DiscountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageBlogServlet</servlet-name>
+        <servlet-class>controller.ManageBlogServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>
@@ -243,5 +315,33 @@
     <servlet-mapping>
         <servlet-name>ActionShipper</servlet-name>
         <url-pattern>/actionshipper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActionAdmin</servlet-name>
+        <url-pattern>/actionadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveProduct</servlet-name>
+        <url-pattern>/saveproduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageFavorite</servlet-name>
+        <url-pattern>/managefavorite</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetailServlet</servlet-name>
+        <url-pattern>/blogDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogServlet</servlet-name>
+        <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DiscountServlet</servlet-name>
+        <url-pattern>/discount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageBlogServlet</servlet-name>
+        <url-pattern>/manageblog</url-pattern>
     </servlet-mapping>
 </web-app>

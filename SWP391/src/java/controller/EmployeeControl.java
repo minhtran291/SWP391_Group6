@@ -141,7 +141,6 @@ public class EmployeeControl extends HttpServlet {
 
         String name = request.getParameter("username");
         String pass = request.getParameter("password");
-        String gender = request.getParameter("gender");
         String empemail = request.getParameter("email");
         String empphone = request.getParameter("phone");
         String id = request.getParameter("id");
@@ -167,8 +166,7 @@ public class EmployeeControl extends HttpServlet {
 
             try {
                  int empid = Integer.parseInt(id);
-                int genderimp = Integer.parseInt(gender);
-                ud.UpdateEmp(name, pass, genderimp, empemail, empphone, empid);
+                ud.UpdateEmp(name, pass,  empemail, empphone, empid);
                 ArrayList<User> ulist = ud.getEmployee();
                 session.setAttribute("ulist", ulist);
                 getEmployee(request, response, numberPerPage);

@@ -41,7 +41,19 @@
             <div class="spinner-border text-primary" role="status"></div>
         </div>
         <!-- Spinner End -->
+<head>
+    <style>
+        .btn-transparent {
+            background-color: transparent; /* Nền trong suốt */
+            border: none; /* Loại bỏ viền nếu có */
+            padding: 0; /* Loại bỏ khoảng cách bên trong nếu cần */
+        }
 
+        .fa-user-small {
+            font-size: 12px; /* Điều chỉnh kích thước theo ý bạn */
+        }
+    </style>
+</head>
 
         <!-- Navbar Start -->
 
@@ -77,13 +89,14 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="blog.jsp" class="dropdown-item">Blog Grid</a>
+                                    <a href="blog" class="dropdown-item">Blog</a>
                                     <a href="BestSellersServlet" class="dropdown-item">Best Seller</a>
                                     <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
                                     <a href="404.jsp" class="dropdown-item">404 Page</a>
                                     <a href="contact.jsp" class="dropdown-item">Liên Hệ</a>
                                 </div>
                             </div>
+                            <c:if test="${acc!=null}">
                             <form class="d-none d-lg-flex ms-2 align-items-center">
                                 <div class="input-group">
                                     <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
@@ -93,19 +106,62 @@
 
 
 
-                                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="login.jsp">
-                                        <small class="fa fa-user text-body"></small>
-                                    </a>
-                                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="customer/cart.jsp">
+                                    <div class="dropdown ">
+                                        <button type="button" class="btn-sm-square btn-transparent rounded-circle ms-3" 
+                                                data-bs-toggle="dropdown">
+                                            <i class="fa fa-user text-body "></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <a class="dropdown-item" href="profile">
+                                                    Hồ sơ
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="actioncustomer?action=history">
+                                                    Đơn hàng
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                                    Xem lại bình luận
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="logout">
+                                                    Đăng xuất
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <a class="btn-sm-square btn-transparent rounded-circle ms-3" href="customer/cart.jsp">
                                         <small class="fa fa-shopping-bag text-body"></small>
                                     </a>
                                 </div>
                             </form>
-
+                            </c:if>
+                            <!-- chua dang nhap -->    
+                    <c:if test="${acc==null}">
+                        <form class="d-none d-lg-flex ms-2 align-items-center">
+                                <div class="input-group">
+                            <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                                    <button class="btn btn-outline-success" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                            <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
+                                <i class="fa fa-user text-body"></i>
+                            </a>
+                            <a class="btn btn-square btn-transparent rounded-circle cart" href="actioncustomer?action=cart">
+                                <div class="cart-count">${count_cart}</div>
+                                <i class="fa fa-shopping-bag text-body"></i>
+                            </a>
+                        </form>
+                    </c:if>
                         </div>
                     </div>
             </nav>
-
+            
         </div>
 
         <!-- Navbar End -->
@@ -159,30 +215,31 @@
         <!-- Carousel End -->
 
         <div class="container-fluid bg-light bg-icon my-5 py-6">
-    <div class="container">
-        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-            <h1 class="display-5 mb-3">Best Seller</h1>
+            <div class="container">
+                <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                    <h1 class="display-5 mb-3">Best Seller</h1>
+                </div>
+                <div class="row g-4">
+                    <c:choose>
+                        <c:when  test="${not empty listBestSellers}">
+                            <c:forEach var="product" items="${listBestSellers}" varStatus="status">
+                                <c:if test="${status.index < 6}">
+                                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                        <div class="bg-white text-center h-100 p-4 p-xl-5">
+                                            <img class="img-fluid mb-4" src="${product.image}" alt="">
+                                            <h4 class="mb-3">${product.foodName}</h4>
+                                            <p class="mb-4">${product.description}</p>
+                                            <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="detail?action=detail&foodId=${product.foodId}">View</a>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:when>
+
+                    </c:choose>
+                </div>
+            </div>
         </div>
-        <div class="row g-4">
-            <c:choose>
-                <c:when  test="${not empty listBestSellers}">
-                    <c:forEach var="product" items="${listBestSellers}" varStatus="status">
-                        <c:if test="${status.index < 6}">
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                <div class="bg-white text-center h-100 p-4 p-xl-5">
-                                    <img class="img-fluid mb-4" src="${product.image}" alt="">
-                                    <h4 class="mb-3">${product.foodName}</h4>
-                                    <p class="mb-4">${product.description}</p>
-                                    <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="detail?action=detail&foodId=${product.foodId}">View</a>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </c:when>
-            </c:choose>
-        </div>
-    </div>
-</div>
         <!-- Feature End -->
 
 
@@ -213,32 +270,32 @@
 
 
         <!-- Product Start -->
-            <div class="container-fluid bg-light bg-icon my-5 py-6">
-    <div class="container">
-        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-            <h1 class="display-5 mb-3">Sản phẩm mới</h1>
+        <div class="container-fluid bg-light bg-icon my-5 py-6">
+            <div class="container">
+                <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                    <h1 class="display-5 mb-3">Sản phẩm mới</h1>
+                </div>
+                <div class="row g-4">
+                    <c:choose>
+                        <c:when  test="${not empty listNewFoods}">
+                            <c:forEach var="product" items="${listNewFoods}" varStatus="status">
+                                <c:if test="${status.index < 6}">
+                                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                        <div class="bg-white text-center h-100 p-4 p-xl-5">
+                                            <img class="img-fluid mb-4" src="${product.image}" alt="">
+                                            <h4 class="mb-3">${product.foodName}</h4>
+                                            <p class="mb-4">${product.description}</p>
+                                            <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="detail?action=detail&foodId=${product.foodId}">Read More</a>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:when>
+
+                    </c:choose>
+                </div>
+            </div>
         </div>
-        <div class="row g-4">
-            <c:choose>
-                <c:when  test="${not empty listNewFoods}">
-                    <c:forEach var="product" items="${listNewFoods}" varStatus="status">
-                        <c:if test="${status.index < 6}">
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                <div class="bg-white text-center h-100 p-4 p-xl-5">
-                                    <img class="img-fluid mb-4" src="${product.image}" alt="">
-                                    <h4 class="mb-3">${product.foodName}</h4>
-                                    <p class="mb-4">${product.description}</p>
-                                    <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="detail?action=detail&foodId=${product.foodId}">Read More</a>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </c:when>
-                
-            </c:choose>
-        </div>
-    </div>
-</div>
         <!--Product End -->
         <!-- Firm Visit Start -->
         <div class="container-fluid bg-primary bg-icon mt-5 py-6">

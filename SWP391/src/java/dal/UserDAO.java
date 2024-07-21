@@ -69,8 +69,8 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
-    
-   public User getUserEmail(String email) {
+
+    public User getUserEmail(String email) {
         User user = null;
         String sql = "SELECT * FROM users WHERE email = ?";
         try {
@@ -136,7 +136,7 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
-    
+
     public void addUserLoginGG(User u) {
         String sql = "insert into [users] ([user_name], [password], [gender], [email], [role_id]) "
                 + "values(?,?,?,?,1)";
@@ -255,11 +255,10 @@ public class UserDAO extends DBContext {
 
     }
 
-    public void UpdateEmp(String username, String password, int gender, String email, String phone, int userid) {
+    public void UpdateEmp(String username, String password, String email, String phone, int userid) {
         String sql = "UPDATE [dbo].[users] "
                 + "   SET [user_name] = ?, "
                 + "      [password] = ?, "
-                + "      [gender] = ?, "
                 + "      [email] = ?, "
                 + "      [phone_number] = ? "
                 + " WHERE [user_id] = ? ";
@@ -267,10 +266,9 @@ public class UserDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, username);
             ps.setString(2, password);
-            ps.setInt(3, gender);
-            ps.setString(4, email);
-            ps.setString(5, phone);
-            ps.setInt(6, userid);
+            ps.setString(3, email);
+            ps.setString(4, phone);
+            ps.setInt(5, userid);
             ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -414,7 +412,7 @@ public class UserDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public UserDetail getUserDetail(String username) {
         UserDetail user = null;
         String sql = "SELECT * FROM users WHERE user_name = ?";
@@ -436,5 +434,179 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public void UpdateAcc(String username, String password, int roleid, String email, String phone, int userid) {
+        String sql = "UPDATE [dbo].[users] "
+                + "   SET [user_name] = ?, "
+                + "      [password] = ?, "
+                + "      [role_id] = ?, "
+                + "      [email] = ?, "
+                + "      [phone_number] = ? "
+                + " WHERE [user_id] = ? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setInt(3, roleid);
+            ps.setString(4, email);
+            ps.setString(5, phone);
+            ps.setInt(6, userid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public ArrayList<User> getAccount() {
+        ArrayList<User> listemp = new ArrayList<>();
+        String sql = "SELECT TOP (1000) u.[user_id]\n"
+                + "      ,u.[user_name]\n"
+                + "      ,u.[password]\n"
+                + "      ,u.[gender]\n"
+                + "      ,u.[email]\n"
+                + "      ,u.[phone_number]\n"
+                + "      ,u.[role_id]\n"
+                + "	  ,r.role_name\n"
+                + "  FROM [SWP391].[dbo].[users] u join dbo.roles r on u.role_id=r.role_id";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listemp.add(new User(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getString(8)));
+            }
+        } catch (Exception e) {
+        }
+        return listemp;
+    }
+
+    public void addAcc(String username, String password, int gender, String email, String phone, int roleid) {
+        String sql = "INSERT INTO [dbo].[users]\n"
+                + "           ([user_name]\n"
+                + "           ,[password]\n"
+                + "           ,[gender]\n"
+                + "           ,[email]\n"
+                + "           ,[phone_number]\n"
+                + "           ,[role_id])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setInt(3, gender);
+            ps.setString(4, email);
+            ps.setString(5, phone);
+            ps.setInt(6, roleid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public ArrayList<User> getAllRole() {
+        ArrayList<User> listRole = new ArrayList<>();
+        String sql = "SELECT TOP (1000) [role_id]\n"
+                + "      ,[role_name]\n"
+                + "  FROM [SWP391].[dbo].[roles]";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listRole.add(new User(rs.getInt("role_id"),
+                        rs.getString("role_name")));
+            }
+        } catch (Exception e) {
+        }
+        return listRole;
+    }
+
+    public ArrayList<User> getUserByRole(String roleid) {
+        ArrayList<User> listUser = new ArrayList<>();
+        String sql = "SELECT TOP (1000) u.[user_id] \n"
+                + "                     ,u.[user_name]\n"
+                + "                    ,u.[password]\n"
+                + "                  ,u.[gender]\n"
+                + "                    ,u.[email]\n"
+                + "                 ,u.[phone_number]\n"
+                + "                  ,u.[role_id]\n"
+                + "             	  ,r.role_name\n"
+                + "               FROM [SWP391].[dbo].[users] u join dbo.roles r on u.role_id=r.role_id\n"
+                + "             where u.role_id =?";
+        try {
+            int rid = Integer.parseInt(roleid);
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, rid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listUser.add(new User(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getString(8)));
+            }
+        } catch (Exception e) {
+        }
+        return listUser;
+    }
+
+    public void updateUserProfile(int gender, String email, String phone, String avatar, int userid) {
+        String sql = "UPDATE [dbo].[users] "
+                + "   SET [gender] = ?, "
+                + "       [email] = ?, "
+                + "      [phone_number] = ?, "
+                + "      [avatar] = ? "
+                + " WHERE [user_id] = ? ";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, gender);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, avatar);
+            ps.setInt(5, userid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public boolean checkEmailUpdate(String email, String idemp) {
+        String sql = "  SELECT * FROM [users] WHERE [email] = ? and user_id <> ? ";
+        int id = Integer.parseInt(idemp);
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setInt(2, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public boolean checkPhoneUpdate(String phone, String idemp) {
+        String sql = "  SELECT * FROM [users] WHERE [phone_number] = ? and user_id <> ? ";
+        int id = Integer.parseInt(idemp);
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, phone);
+            ps.setInt(2, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
     }
 }

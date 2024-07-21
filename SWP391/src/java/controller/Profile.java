@@ -4,10 +4,11 @@
  */
 
 package controller;
-
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +20,8 @@ import model.User;
  * @author Dell
  */
 public class Profile extends HttpServlet {
-   
+    UserDAO ud = new UserDAO();
+
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -69,7 +71,7 @@ public class Profile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-//        processRequest(request, response);
+ updateUserProfile(request, response);
         
     }
 
@@ -84,9 +86,48 @@ public class Profile extends HttpServlet {
 
     private void getProfile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        User u = (User)session.getAttribute("acc");
+          User u = (User) session.getAttribute("acc");
         session.setAttribute("acc", u);
         request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
     }
+ private void updateUserProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
 
+        String errorEmailUpdate = "";
+        String errorPhoneUpdate = "";
+        
+        String username = request.getParameter("username");
+        String gender = request.getParameter("gender");
+        String empemail = request.getParameter("email");
+        String empphone = request.getParameter("phone");
+        String id = request.getParameter("id");
+        String avt = request.getParameter("avatar");
+
+        if (ud.checkEmailUpdate(empemail, id)) {
+            errorEmailUpdate = "Email đã tồn tại";
+            request.setAttribute("errorEmailUpdate", errorEmailUpdate);
+        }
+        if (ud.checkPhoneUpdate(empphone, id)) {
+            errorPhoneUpdate = "Số điện thoại đã tồn tại";
+            request.setAttribute("errorPhoneUpdate", errorPhoneUpdate);
+        }
+
+        if (!errorEmailUpdate.isEmpty() || !errorPhoneUpdate.isEmpty()) {
+            request.setAttribute("id", id);
+            request.getRequestDispatcher("UpdateProfile.jsp").forward(request, response);
+        } else {
+            try {
+                int empid = Integer.parseInt(id);
+                int genderimp = Integer.parseInt(gender);
+                ud.updateUserProfile(genderimp, empemail, empphone, avt, empid); // Sử dụng phương thức đã được định nghĩa trong UserDAO
+                User u = (User) ud.getUser(username);
+                session.setAttribute("acc", u);
+                request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                request.setAttribute("error", "Có lỗi xảy ra trong quá trình cập nhật.");
+                request.getRequestDispatcher("UpdateProfile.jsp").forward(request, response);
+            }
+        }
+    }
 }

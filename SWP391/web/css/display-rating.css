@@ -1,0 +1,13 @@
+/* display-rating.css */
+.display-star-rating {
+    display: inline-block;
+}
+
+.display-star-rating span {
+    font-size: 2em;
+    color: gold;
+}
+
+.display-star-rating .unfilled {
+    color: #ddd;
+}

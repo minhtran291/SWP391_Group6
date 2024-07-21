@@ -108,6 +108,8 @@ public class Login extends HttpServlet {
                 response.sendRedirect("actionshop?action=dashBoard");
             } else if (acc.getRoleid() == 3) {
                 response.sendRedirect("actionshipper?action=homeShipper");
+            } else if (acc.getRoleid() == 4) {
+                response.sendRedirect("actionadmin?action=manageAcc");
             }
         }
     }

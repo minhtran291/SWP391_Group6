@@ -80,7 +80,21 @@ public class ImageDAO extends DBContext {
         }
         return null;
     }
-
+  public Image getImgbyImage(String image) {
+        String sql = "select top(1) image from dbo.image\n" +
+"                where food_id = ?\n" +
+"               order by image_id asc";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, image);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Image(rs.getInt(1), rs.getString(2), rs.getInt(3));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
     public static void main(String[] args) throws ClassNotFoundException {
         try {
             String username = "sa";

@@ -514,11 +514,13 @@ public class ActionShop extends HttpServlet {
     }
 
     public void updateStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String status = request.getParameter("status");
+        String idS = request.getParameter("id");
+        String shopNotes = request.getParameter("shopNotes");
         OrderDAO od = new OrderDAO();
-        od.updateStatus(Integer.parseInt(status), id);
-        response.sendRedirect("actionshop?action=order-detail&id=" + id + "&ostatus=" + status);
+        int id = Integer.parseInt(idS);
+        od.updateStatus(5, id, 2, shopNotes, 3);
+        getAllOrder(request, response);
+//        response.sendRedirect("actionshop?action=order-detail&id=" + id + "&ostatus=" + status);
     }
 
     private void getOrderDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -551,7 +553,9 @@ public class ActionShop extends HttpServlet {
 //            default:
 //                throw new AssertionError();
         }
-
+        ArrayList<OrderDetail> orderDetail = od.getOD(Integer.parseInt(id));
+        request.setAttribute("orderDetail", orderDetail);
+        pagingOrderDetail(request, response, 5, orderDetail);
         List<Food> list = od.GetOrderDetail(Integer.parseInt(id));
         request.setAttribute("address", address);
         request.setAttribute("list", list);
@@ -572,7 +576,48 @@ public class ActionShop extends HttpServlet {
         } else {
             request.setAttribute("list", null);
         }
+        pagingAllOrder(request, response, 10, list);
 
         request.getRequestDispatcher("/shop/order_manager.jsp").forward(request, response);
+    }
+    
+    private void pagingAllOrder(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, List<Order> listAllOrder) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<Order> allOrderOnCurrentPage = new ArrayList<>(listAllOrder.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listAllOrder.size())));
+
+        int totalPages = (int) Math.ceil((double) listAllOrder.size() / numberPerPage);
+
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("allOrderOnCurrentPage", allOrderOnCurrentPage);
+    }
+    
+    private void pagingOrderDetail(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, List<OrderDetail> listOrderDetail) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<OrderDetail> orderDetailOnCurrentPage = new ArrayList<>(listOrderDetail.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listOrderDetail.size())));
+
+        int totalPages = (int) Math.ceil((double) listOrderDetail.size() / numberPerPage);
+
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("orderDetailOnCurrentPage", orderDetailOnCurrentPage);
     }
 }
