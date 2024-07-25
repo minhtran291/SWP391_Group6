@@ -101,8 +101,8 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="d-flex justify-content-center mb-3">
-                                <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" 
-                                     alt="Hình ảnh đại diện" class="rounded-circle" style="width: 250px; height: 250px;">
+                                <img src="${sessionScope.acc.avatar}" 
+                                     alt="Hình ảnh đại diện" class="avatar img-circle img-thumbnail" style="width: 200px; height: 200px;">
                             </div>
                             <p class="text-center">Avatar</p>
                         </div>
@@ -198,7 +198,7 @@
             </div>
         </div>
 
-        <footer>
+<!--        <footer>
             <div class="bg-dark p-3">
                 <div class="container text-white">
                     <div class="row">
@@ -220,6 +220,6 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer>-->
     </body>
 </html>

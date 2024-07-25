@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="currentHour" value="<%= java.time.LocalTime.now().getHour() %>"/>
-<c:set var="isOpen" value="${currentHour ge 8 && currentHour lt 23}"/>
+<c:set var="isOpen" value="${currentHour ge 0 && currentHour lt 24}"/>
 <!DOCTYPE html>
 <html lang="vi">
 

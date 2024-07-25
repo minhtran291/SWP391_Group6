@@ -55,7 +55,7 @@
                     <!--                    có sự khác nhau trong narbar-nav tự css và sử dụng các class
                                         được định nghĩa sẵn trong bootstrap 5 như d-flex và flex-row-->
                     <li class="nav-item">
-                        <a class="nav-link" href="actioncustomer?action=getListFood">
+                        <a class="nav-link" href="home">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -67,11 +67,11 @@
                     <c:if test="${acc!=null}">
                         <form class="d-flex" action="actioncustomer" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                    style="width: 300px">
                             <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                                 <i class="fa fa-search text-body"></i>
-                            </button>
+                            </button>-->
 
                             <div class="dropdown">
                                 <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -89,7 +89,9 @@
                                             Đơn hàng
                                         </a>
                                     </li>
-                                    <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="managecomment?action=viewcomment">
                                             Xem lại bình luận
@@ -104,7 +106,7 @@
                             </div>
 
 
-                            <a class="btn btn-square bg-white rounded-circle cart" href="">
+                            <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
                                 <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
@@ -114,11 +116,11 @@
                     <c:if test="${acc==null}">
                         <form class="d-flex" action="actioncustomer" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                    style="width: 300px">
                             <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                                 <i class="fa fa-search text-body"></i>
-                            </button>
+                            </button>-->
                             <a class="btn btn-square bg-white rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>

@@ -99,16 +99,22 @@ public class CategoryServlet extends HttpServlet {
 
     private void insertCategory(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        HttpSession session = request.getSession();
         String name = request.getParameter("name");
         categoryDAO.addCategory(name);
+        ArrayList<Category> cList =(ArrayList) categoryDAO.getAllCategory();
+        session.setAttribute("cList", cList);
         response.sendRedirect("CategoryServlet?action=manageCategory");
     }
 
     private void updateCategory(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        HttpSession session = request.getSession();
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         categoryDAO.updateCategory(id, name);
+        ArrayList<Category> cList =(ArrayList) categoryDAO.getAllCategory();
+        session.setAttribute("cList", cList);
         response.sendRedirect("CategoryServlet?action=manageCategory");
     }
 

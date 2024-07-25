@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.DistrictDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import model.User;
 import dal.UserDAO;
+import dal.WardDAO;
 import jakarta.servlet.http.HttpSession;
+import model.District;
+import model.Ward;
 
 /**
  *
@@ -23,6 +27,8 @@ import jakarta.servlet.http.HttpSession;
 public class ActionAdmin extends HttpServlet {
 
     UserDAO ud = new UserDAO();
+    DistrictDAO dd = new DistrictDAO();
+    WardDAO wd = new WardDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -75,6 +81,24 @@ public class ActionAdmin extends HttpServlet {
                 searchByRole(request, response, 5);
                 request.getRequestDispatcher("admin/manageAccount.jsp").forward(request, response);
                 break;
+            case "districtManagement":
+                getAllDistrict(request, response, 5);
+                break;
+            case "wardManagement":
+                getAllWard(request, response, 5);
+                break;
+            case "deleteDistrict":
+                deleteDistrict(request, response, 5);
+                break;
+            case "unDeleteDistrict":
+                unDeleteDistrict(request, response, 5);
+                break;
+            case "deleteWard":
+                deleteWard(request, response, 5);
+                break;
+            case "unDeleteWard":
+                unDeleteWard(request, response, 5);
+                break;
         }
     }
 
@@ -97,11 +121,24 @@ public class ActionAdmin extends HttpServlet {
             case "updateAccount":
                 updateAccount(request, response, 5);
                 break;
+            case "addDistrict":
+                addDistrict(request, response, 5);
+                break;
+            case "updateDistrict":
+                updateDistrict(request, response, 5);
+                break;
+            case "addWard":
+                addWard(request, response, 5);
+                break;
+            case "updateWard":
+                updateWard(request, response, 5);
+                break;
+
         }
     }
 
     private void searchByRole(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
-         String roleid = request.getParameter("roleid");
+        String roleid = request.getParameter("roleid");
         ArrayList<User> listUserbyRole = new ArrayList<>();
         if (roleid.equalsIgnoreCase("all")) {
             listUserbyRole = ud.getAccount();
@@ -256,4 +293,153 @@ public class ActionAdmin extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void getAllDistrict(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        ArrayList<District> listDistrict = dd.getAllDistrictManager();
+        session.setAttribute("listDistrict", listDistrict);
+        pagingForDistrict(request, response, numberPerPage, listDistrict);
+        request.getRequestDispatcher("admin/manageDistrict.jsp").forward(request, response);
+    }
+
+    private void pagingForDistrict(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, ArrayList<District> listDistrict) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+        List<District> districtOnCurrentPage = new ArrayList<>(listDistrict.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listDistrict.size())));
+        int totalPages = (int) Math.ceil((double) listDistrict.size() / numberPerPage);
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("districtOnCurrentPage", districtOnCurrentPage);
+    }
+
+    private void getAllWard(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        ArrayList<District> listDistrict = dd.getAllDistrictCustomer();
+        ArrayList<Ward> listWard = wd.getAllWard();
+        session.setAttribute("listDistrict", listDistrict);
+        session.setAttribute("listWard", listWard);
+        pagingForWard(request, response, numberPerPage, listWard);
+        request.getRequestDispatcher("admin/manageWard.jsp").forward(request, response);
+    }
+
+    private void pagingForWard(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, ArrayList<Ward> listWard) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+        List<Ward> wardOnCurrentPage = new ArrayList<>(listWard.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listWard.size())));
+        int totalPages = (int) Math.ceil((double) listWard.size() / numberPerPage);
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("wardOnCurrentPage", wardOnCurrentPage);
+    }
+
+    private void addDistrict(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String errorDistrictName = "";
+        String districtName = request.getParameter("districtName");
+        if (!dd.checkDuplicateDistrict(districtName)) {
+            errorDistrictName = "Tên quận huyện đã có rồi";
+            request.setAttribute("errorDistrictName", errorDistrictName);
+        }
+        if (!errorDistrictName.isEmpty()) {
+            request.getRequestDispatcher("admin/manageDistrict.jsp").forward(request, response);
+        } else {
+            dd.addDistrict(districtName);
+            getAllDistrict(request, response, numberPerPage);
+        }
+    }
+
+    private void updateDistrict(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String errorDistrictNameUpdate = "";
+        String districtIdS = request.getParameter("districtId");
+        int districtId = Integer.parseInt(districtIdS);
+        String districtNameUpdate = request.getParameter("districtNameUpdate");
+        if (!dd.checkDuplicateDistrictUpdate(districtNameUpdate, districtId)) {
+            errorDistrictNameUpdate = "Tên quận huyện đã có rồi";
+            request.setAttribute("errorDistrictNameUpdate", errorDistrictNameUpdate);
+        }
+        if (!errorDistrictNameUpdate.isEmpty()) {
+            request.setAttribute("districtId", districtId);
+            request.getRequestDispatcher("admin/manageDistrict.jsp").forward(request, response);
+        } else {
+            dd.updateDistrict(districtNameUpdate, districtId);
+            getAllDistrict(request, response, numberPerPage);
+        }
+    }
+
+    private void deleteDistrict(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String districtIdS = request.getParameter("deleteId");
+        int districtId = Integer.parseInt(districtIdS);
+        dd.deleteDistrict(districtId, 0);
+        getAllDistrict(request, response, numberPerPage);
+    }
+
+    private void unDeleteDistrict(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String districtIdS = request.getParameter("deleteId");
+        int districtId = Integer.parseInt(districtIdS);
+        dd.deleteDistrict(districtId, 1);
+        getAllDistrict(request, response, numberPerPage);
+    }
+
+    private void deleteWard(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String wardIdS = request.getParameter("deleteId");
+        int wardId = Integer.parseInt(wardIdS);
+        wd.deleteWard(wardId, 0);
+        getAllWard(request, response, numberPerPage);
+    }
+
+    private void unDeleteWard(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String wardIdS = request.getParameter("deleteId");
+        int wardId = Integer.parseInt(wardIdS);
+        wd.deleteWard(wardId, 1);
+        getAllWard(request, response, numberPerPage);
+    }
+
+    private void addWard(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String errorWardName = "";
+        String wardName = request.getParameter("wardName");
+        String districtIdS = request.getParameter("district");
+        if (!wd.checkDuplicateWard(wardName)) {
+            errorWardName = "Tên xã phường đã có rồi";
+            request.setAttribute("errorWardName", errorWardName);
+        }
+        if (!errorWardName.isEmpty()) {
+            request.getRequestDispatcher("admin/manageWard.jsp").forward(request, response);
+        } else {
+            int districtId = Integer.parseInt(districtIdS);
+            wd.addWard(wardName, districtId);
+            getAllWard(request, response, numberPerPage);
+        }
+    }
+
+    private void updateWard(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        String errorWardNameUpdate = "";
+        String wardIdS = request.getParameter("wardId");
+        String wardName = request.getParameter("wardNameUpdate");
+        String districtUpdate = request.getParameter("districtUpdate");
+        int districtId = Integer.parseInt(districtUpdate);
+        int wardId = Integer.parseInt(wardIdS);
+        if (!wd.checkDuplicateWardUpdate(wardName, wardId)) {
+            errorWardNameUpdate = "Tên xã phường đã có rồi";
+            request.setAttribute("errorWardNameUpdate", errorWardNameUpdate);
+        }
+        if (!errorWardNameUpdate.isEmpty()) {
+            request.setAttribute("wardId", wardId);
+            request.getRequestDispatcher("admin/manageWard.jsp").forward(request, response);
+        } else {
+            wd.updateWard(wardName, wardId, districtId);
+            getAllWard(request, response, numberPerPage);
+        }
+    }
 }

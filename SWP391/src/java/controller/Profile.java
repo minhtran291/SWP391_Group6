@@ -13,15 +13,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 import model.User;
 
 /**
  *
  * @author Dell
  */
+@MultipartConfig
 public class Profile extends HttpServlet {
     UserDAO ud = new UserDAO();
-
+    private static final String UPLOAD_DIRECTORY = "img"; // Thay đổi đường dẫn theo yêu cầu
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -71,7 +75,7 @@ public class Profile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
- updateUserProfile(request, response);
+    updateUserProfile(request, response);
         
     }
 
@@ -86,48 +90,68 @@ public class Profile extends HttpServlet {
 
     private void getProfile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-          User u = (User) session.getAttribute("acc");
+        User u = (User) session.getAttribute("acc");
         session.setAttribute("acc", u);
         request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
     }
  private void updateUserProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+    HttpSession session = request.getSession();
 
-        String errorEmailUpdate = "";
-        String errorPhoneUpdate = "";
-        
-        String username = request.getParameter("username");
-        String gender = request.getParameter("gender");
-        String empemail = request.getParameter("email");
-        String empphone = request.getParameter("phone");
-        String id = request.getParameter("id");
-        String avt = request.getParameter("avatar");
+    String errorEmailUpdate = "";
+    String errorPhoneUpdate = "";
 
-        if (ud.checkEmailUpdate(empemail, id)) {
-            errorEmailUpdate = "Email đã tồn tại";
-            request.setAttribute("errorEmailUpdate", errorEmailUpdate);
-        }
-        if (ud.checkPhoneUpdate(empphone, id)) {
-            errorPhoneUpdate = "Số điện thoại đã tồn tại";
-            request.setAttribute("errorPhoneUpdate", errorPhoneUpdate);
-        }
+    String username = request.getParameter("username");
+    String gender = request.getParameter("gender");
+    String empemail = request.getParameter("email");
+    String empphone = request.getParameter("phone");
+    String id = request.getParameter("id");
+    String avt = null;
 
-        if (!errorEmailUpdate.isEmpty() || !errorPhoneUpdate.isEmpty()) {
-            request.setAttribute("id", id);
-            request.getRequestDispatcher("UpdateProfile.jsp").forward(request, response);
-        } else {
-            try {
-                int empid = Integer.parseInt(id);
-                int genderimp = Integer.parseInt(gender);
-                ud.updateUserProfile(genderimp, empemail, empphone, avt, empid); // Sử dụng phương thức đã được định nghĩa trong UserDAO
-                User u = (User) ud.getUser(username);
-                session.setAttribute("acc", u);
-                request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
-                request.setAttribute("error", "Có lỗi xảy ra trong quá trình cập nhật.");
-                request.getRequestDispatcher("UpdateProfile.jsp").forward(request, response);
-            }
-        }
+    // Kiểm tra lỗi email và số điện thoại
+    if (!ud.checkEmailUpdate(empemail, id)) {
+        errorEmailUpdate = "Email đã tồn tại";
+        request.setAttribute("errorEmailUpdate", errorEmailUpdate);
     }
+    if (!ud.checkPhoneUpdate(empphone, id)) {
+        errorPhoneUpdate = "Số điện thoại đã tồn tại";
+        request.setAttribute("errorPhoneUpdate", errorPhoneUpdate);
+    }
+
+    // Nếu có lỗi, quay lại trang cập nhật
+    if (!errorEmailUpdate.isEmpty() || !errorPhoneUpdate.isEmpty()) {
+        request.setAttribute("id", id);
+        request.getRequestDispatcher("UpdateProfile.jsp").forward(request, response);
+        return;
+    }
+
+    // Xử lý ảnh đại diện
+    Part filePart = request.getPart("avatar"); // Đảm bảo form có enctype="multipart/form-data"
+    if (filePart != null && filePart.getSize() > 0) {
+        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        String filePath = uploadPath + File.separator + fileName;
+        filePart.write(filePath);
+
+        avt = UPLOAD_DIRECTORY + "/" + fileName;
+    }
+
+    try {
+        int empid = Integer.parseInt(id);
+        int genderimp = Integer.parseInt(gender);
+        ud.updateUserProfile(genderimp, empemail, empphone, avt, empid); // Cập nhật thông tin người dùng
+        User u = (User) ud.getUser(username);
+        session.setAttribute("acc", u);
+        request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
+ // Redirect để cập nhật trang cá nhân
+    } catch (Exception e) {
+        e.printStackTrace();
+        request.setAttribute("error", "Có lỗi xảy ra trong quá trình cập nhật.");
+        request.getRequestDispatcher("UpdateProfile.jsp").forward(request, response);
+    }
+}
 }

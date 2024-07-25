@@ -6,7 +6,7 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <c:set var="currentHour" value="<%= java.time.LocalTime.now().getHour() %>"/>
-    <c:set var="isOpen" value="${currentHour ge 8 && currentHour lt 23}"/>
+    <c:set var="isOpen" value="${currentHour ge 0 && currentHour lt 24}"/>
     <head>
         <meta charset="utf-8">
         <title>Shop Detail</title>
@@ -100,6 +100,9 @@
             color: green;
             margin-top: 10px;
         }
+        .text-danger.strikethrough {
+            text-decoration: line-through;
+        }
     </style>
 </head>
 <body class="d-flex flex-column" style="min-height: 100vh;">
@@ -107,7 +110,7 @@
         <div class="container">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="actioncustomer?action=getListFood">
+                    <a class="nav-link" href="home">
                         <h1 class="fw-bold" style="font-family: Florence, cursive;
                             color: #33cc00">
                             F<span style="color: #ff6633">oo</span>dy
@@ -119,10 +122,10 @@
             <div>
                 <form class="d-flex" action="actioncustomer" method="get">
                     <input type="hidden" name="action" value="getFoodBySearch">
-                    <input class="form-control me-2 btn-spacing" type="text" placeholder="Tìm kiếm" name="search" style="width: 300px">
+<!--                    <input class="form-control me-2 btn-spacing" type="text" placeholder="Tìm kiếm" name="search" style="width: 300px">
                     <button class="btn btn-square bg-white rounded-circle btn-spacing" type="submit">
                         <i class="fa fa-search text-body"></i>
-                    </button>
+                    </button>-->
 
                     <div class="dropdown btn-spacing">
                         <button type="button" class="btn btn-square bg-white rounded-circle dropdown-toggle" data-bs-toggle="dropdown">
@@ -156,7 +159,7 @@
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
                     <c:if test="${sessionScope.acc.roleid==1}">
-                        <a class="breadcrumb-item text-dark" href="actioncustomer?action=getListFood">Trang chủ</a>
+                        <a class="breadcrumb-item text-dark" href="home">Trang chủ</a>
                     </c:if>
                     <c:if test="${sessionScope.acc.roleid==2}">
                         <a class="breadcrumb-item text-dark" href="actionshop?action=homeFood">Trang chủ</a>
@@ -212,13 +215,37 @@
                          </div>
                          <small class="pt-1">(99 Reviews)</small>
                      </div>-->
-                    <h3 class="font-weight-semi-bold mb-4"> <p> <span class="text-danger fw-bold">
+                    <c:if test="${detail.discountRate == 0}">
+                    <h3 class="font-weight-semi-bold mb-4"> 
+
+                        <p>Giá gốc:<span class="text-danger fw-bold">
                                 <fmt:formatNumber type="currency" 
                                                   currencyCode="VND"
                                                   maxFractionDigits="0"
-                                                  value="${detail.price}"></fmt:formatNumber>
-                                <!--<h4> <span>Giá bán: ${detail.price}">-->
-                            </span></p></h3>
+                                                  value="${detail.price}">
+                                </fmt:formatNumber>
+                            </span></p> 
+                    </h3>
+                    </c:if>
+                    <c:if test="${detail.discountRate != 0}">
+                    <h3 class="font-weight-semi-bold mb-4"> 
+                        
+                        <p>Giảm giá:<span class="text-danger fw-bold">
+                                <fmt:formatNumber type="currency" 
+                                                  currencyCode="VND"
+                                                  maxFractionDigits="0"
+                                                  value="${detail.price - detail.price*detail.discountRate/100}">
+                                </fmt:formatNumber>
+                            </span></p> 
+                        <p>Giá gốc: <span class="text-danger fw-bold strikethrough">
+                                <fmt:formatNumber type="currency" 
+                                                  currencyCode="VND"
+                                                  maxFractionDigits="0"
+                                                  value="${detail.price}" >
+                                </fmt:formatNumber>
+                            </span></p>
+                    </h3>
+                    </c:if>
 
                     <p class="mb-2">Số lượng: ${detail.stock}</p>
                     <p class="mb-2">Đã bán: ${detail.sold}</p>

@@ -82,74 +82,71 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
                                     <a href="blog" class="dropdown-item">Blog Grid</a>
-                                    <a href="bestsellers.jsp" class="dropdown-item">BestSeller</a>
-                                    <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
-                                    <a href="404.jsp" class="dropdown-item">404 Page</a>
                                     <a href="contact.jsp" class="dropdown-item">Liên Hệ</a>
                                 </div>
                             </div>
                             <c:if test="${acc!=null}">
-                            <form class="d-none d-lg-flex ms-2 align-items-center">
-                                <div class="input-group">
-                                    <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
-                                    <button class="btn btn-outline-success" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-
-
-
-                                    <div class="dropdown ">
-                                        <button type="button" class="btn-sm-square btn-transparent rounded-circle ms-3" 
-                                                data-bs-toggle="dropdown">
-                                            <i class="fa fa-user text-body "></i>
+                                <form class="d-none d-lg-flex ms-2 align-items-center">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                                        <button class="btn btn-outline-success" type="submit">
+                                            <i class="fa fa-search"></i>
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <a class="dropdown-item" href="profile">
-                                                    Hồ sơ
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="actioncustomer?action=history">
-                                                    Đơn hàng
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="managecomment?action=viewcomment">
-                                                    Xem lại bình luận
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="logout">
-                                                    Đăng xuất
-                                                </a>
-                                            </li>
 
-                                        </ul>
+
+
+                                        <div class="dropdown ">
+                                            <button type="button" class="btn-sm-square btn-transparent rounded-circle ms-3" 
+                                                    data-bs-toggle="dropdown">
+                                                <i class="fa fa-user text-body "></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    <a class="dropdown-item" href="profile">
+                                                        Hồ sơ
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                                        Đơn hàng
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                                        Xem lại bình luận
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="logout">
+                                                        Đăng xuất
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <a class="btn-sm-square btn-transparent rounded-circle ms-3" href="actioncustomer?action=cart">
+                                            <small class="fa fa-shopping-bag text-body"></small>
+                                        </a>
                                     </div>
-                                    <a class="btn-sm-square btn-transparent rounded-circle ms-3" href="customer/cart.jsp">
-                                        <small class="fa fa-shopping-bag text-body"></small>
-                                    </a>
-                                </div>
-                            </form>
+                                </form>
                             </c:if>
                             <!-- chua dang nhap -->    
-                    <c:if test="${acc==null}">
-                        <form class="d-none d-lg-flex ms-2 align-items-center">
-                                <div class="input-group">
-                            <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
-                                    <button class="btn btn-outline-success" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                            <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
-                                <i class="fa fa-user text-body"></i>
-                            </a>
-                            <a class="btn btn-square btn-transparent rounded-circle cart" href="actioncustomer?action=cart">
-                                <div class="cart-count">${count_cart}</div>
-                                <i class="fa fa-shopping-bag text-body"></i>
-                            </a>
-                        </form>
-                    </c:if>
+                            <c:if test="${acc==null}">
+                                <form class="d-none d-lg-flex ms-2 align-items-center">
+                                    <div class="input-group">
+
+                                        <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
+                                            <i class="fa fa-user text-body"></i>
+                                        </a>
+                                        <a class="btn btn-square btn-transparent rounded-circle cart" href="customer/cart.jsp">
+                                            <div class="cart-count">${count_cart}</div>
+                                            <i class="fa fa-shopping-bag text-body"></i>
+                                        </a>
+                                </form>
+                            </c:if>
 
                         </div>
                     </div>
@@ -179,7 +176,7 @@
             <div class="container">
                 <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                     <h1 class="display-5 mb-3">Liên Hệ</h1>
-                    
+
                 </div>
                 <div class="row g-5 justify-content-center">
                     <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
@@ -220,10 +217,10 @@
                                     </div>
                                 </div>
                                 <div class="form-floating">
-                                        <input type="text" id="phone" name="phone" class="form-control" value="${not empty param.phone ? param.phone : ''}" required>
-                                        <label for="email">Phone</label>
-                                    </div>
-                                
+                                    <input type="text" id="phone" name="phone" class="form-control" value="${not empty param.phone ? param.phone : ''}" required>
+                                    <label for="email">Phone</label>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <textarea name="message" id="message" class="form-control" cols="30" rows="8" required>${not empty param.message ? param.message : ''}</textarea>

@@ -98,16 +98,16 @@
 
         <div class="flex-grow-1">
 
-            <div class="d-flex bg-light mb-5">
+<!--            <div class="d-flex bg-light mb-5">
                 <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
+                            <a class="nav-link" href="#" style="font-size: 16px;">Trang chủ</a>
                         </li>
 
                     </ul>
                 </div>
-            </div>
+            </div>-->
 
             <h1 class="text-center m-3">Quản lý tài khoản</h1>
             <div class="d-flex mb-3">
@@ -216,7 +216,7 @@
                 <div class="dropdown ms-auto">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                             style="margin-right: 20px;">
-                       Vai trò</button>
+                        Vai trò</button>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item"
@@ -406,13 +406,26 @@
             <div class="offcanvas-body">
                 <p><a class="btn text-white btn-primary" 
                       href="actionadmin?action=manageAcc">Quản lí tài khoản</a></p>
-
+<!--                <p><a class="btn text-white btn-primary" 
+                      href="">Quản lí địa điểm giao nhận hàng</a></p>-->
+                <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                        Quản lí địa điểm giao nhận hàng
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="actionadmin?action=districtManagement">Quản lí quận, huyện</a></li>
+                        <li><a class="dropdown-item" href="actionadmin?action=wardManagement">Quản lí xã, phường</a></li>
+                    </ul>
+                </div>
             </div>
+
+
+
         </div>
-                                           <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center">
             <c:forEach var="p" begin="${1}" end="${totalPages}">
                 <li class="page-item">
-                    
+
                     <c:if test="${listUserbyRole != null}">
                         <a class="page-link ${p==n?"active":""}"  
                            href="actionadmin?action=searchByRole&&page=${p}&&roleid=${roleid}">${p}</a>

@@ -40,21 +40,18 @@
             .dropdown-item {
                 white-space: nowrap; /* Đảm bảo nội dung không bị cắt xuống dòng */
             }
-             .image {
-            width: 200px;
-            height: 100px;
-            overflow: hidden;
-       
-        }
+            .image {
+                width: 200px;
+                height: 100px;
+                overflow: hidden;
 
-        .image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Sử dụng cover để ảnh phủ đầy khung chứa mà không bị méo */
-        }
+            }
 
-
-      
+            .image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Sử dụng cover để ảnh phủ đầy khung chứa mà không bị méo */
+            }
         </style>
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
@@ -67,13 +64,13 @@
 
                     <li class="nav-item">
                         <c:if test="${sessionScope.acc.roleid==1}">
-                            <a class="nav-link" href="actioncustomer?action=getListFood">
+                            <a class="nav-link" href="home">
                                 <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                     F<span style="color: #ff6633">oo</span>dy
                                 </h1></a>
                             </c:if>
                             <c:if test="${sessionScope.acc.roleid==2}">
-                            <a class="nav-link" href="actionshop?action=homeFood">
+                            <a class="nav-link" href="home">
                                 <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                     F<span style="color: #ff6633">oo</span>dy
                                 </h1></a>
@@ -82,20 +79,20 @@
                 </ul>
 
                 <div style="margin-right: 20px">
-                    <form class="d-flex" action="actionshop?action=homeFood" method="get">
+                    <form class="d-flex" action="actionshop?action=dashboard" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
-                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                               style="width: 300px">
-                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                            <i class="fa fa-search text-body"></i>
-                        </button>
+                        <!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                       style="width: 300px">
+                                                <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                    <i class="fa fa-search text-body"></i>
+                                                </button>-->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
                                     data-bs-toggle="dropdown">
                                 <i class="fa fa-user text-body"></i>
                             </button>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end">
                                 <li >
                                     <c:if test="${sessionScope.acc.roleid==1}">
                                         <a class="dropdown-item" href="profile">
@@ -109,9 +106,14 @@
                                     </c:if>
 
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                        Đơn hàng
+                                    </a>
+                                </li>
                                 <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
                                 <li>
-                                    <a class="dropdown-item" href="managefavorite?action=viewfavorite">
+                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
                                         Xem lại bình luận
                                     </a>
                                 </li>
@@ -124,7 +126,7 @@
                         </div>
 
 
-                        <a class="btn btn-square bg-white rounded-circle" href="">
+                        <a class="btn btn-square bg-white rounded-circle" href="actioncustomer?action=cart">
                             <i class="fa fa-shopping-bag text-body"></i>
                         </a>
                     </form>
@@ -138,16 +140,16 @@
 
         <div class="flex-grow-1">
 
-            <div class="d-flex bg-light mb-5">
+<!--            <div class="d-flex bg-light mb-5">
                 <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
+                            <a class="nav-link" href="home" style="font-size: 16px;">Trang chủ</a>
                         </li>
 
                     </ul>
                 </div>
-            </div>
+            </div>-->
 
             <h1 class="text-center m-3">Sản phẩm đã lưu</h1>
 
@@ -158,17 +160,18 @@
 
                     <th>Tên</th>
                     <th>Ảnh</th>                   
-                    <th></th>
+                    <th>Xem chi tiết</th>
+                    <th>Tùy chọn</th>
                 </tr>
                 <c:forEach var="f" items="${FavoriteOnCurrentPage}">
                     <tr style="vertical-align: middle">
-             
+
                         <td>${f.foodName}</td>             
                         <td><img class=" image" src="${f.image}" alt="Image"></td>             
                         <td><a href="detail?action=detail&foodId=${f.foodId}">Chi tiết</a></td> 
 
                         <td>
-                           
+
                             <a class="btn btn-lg" 
                                href="managefavorite?action=deleteFood&&deleteId=${f.wishid}&&page=${n}"
                                onclick="return confirm('Bạn có chắc chắn muốn xóa không ?')">

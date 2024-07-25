@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.DistrictDAO;
 import dal.FoodDAO;
 import dal.OrderDAO;
 import dal.UserDAO;
@@ -20,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import model.Cart;
+import model.District;
 import model.Food;
 import model.User;
 
@@ -28,6 +30,8 @@ import model.User;
  * @author hieua
  */
 public class order extends HttpServlet {
+
+    private static DistrictDAO dd = new DistrictDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -82,6 +86,8 @@ public class order extends HttpServlet {
                 for (Food f : list) {
                     total += (f.getPrice() - (f.getPrice() * f.getDicountRate() / 100)) * f.getQuantity();
                 }
+                ArrayList<District> listDistrict = dd.getAllDistrictCustomer();
+                request.setAttribute("listDistrict", listDistrict);
                 session.setAttribute("total_s", total);
                 request.setAttribute("list", list);
                 request.setAttribute("user", acc);
@@ -114,9 +120,10 @@ public class order extends HttpServlet {
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
-            String address = request.getParameter("address");
             String district = request.getParameter("district");
-            address = (district + ", " + address);
+            String ward = request.getParameter("ward");
+            String apartmentNumber = request.getParameter("apartmentNumber");
+            String address = (district + ", " + ward + ", " + apartmentNumber);
             if (name == "") {
                 request.setAttribute("err", "Vui lòng nhập tên khách hàng");
             } else if (email == "") {
@@ -187,4 +194,11 @@ public class order extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    public static void main(String[] args) {
+        ArrayList<District> list = dd.getAllDistrictCustomer();
+        for (District district : list) {
+            System.out.println(district);
+        }
+    }
 }

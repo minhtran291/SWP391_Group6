@@ -19,7 +19,8 @@ public class User {
     private int roleid;
     private int orderNumber;
     private String rolename;
-private String avatar;
+    private String avatar;
+
     public User() {
     }
 
@@ -27,10 +28,8 @@ private String avatar;
         this.roleid = roleid;
         this.rolename = rolename;
     }
-    
-    
-    
-    public User(int userid, String username, String password, int gender, String email, String phone, int roleid,String rolename) {
+
+    public User(int userid, String username, String password, int gender, String email, String phone, int roleid, String rolename) {
         this.userid = userid;
         this.username = username;
         this.password = password;
@@ -51,9 +50,11 @@ private String avatar;
         this.phone = phone;
         this.roleid = roleid;
     }
-    
-    
 
+    public User(String avatar) {
+        this.avatar = avatar;
+    }
+    
     public User(String username, String password, int gender, String email, String phone) {
         this.username = username;
         this.password = password;

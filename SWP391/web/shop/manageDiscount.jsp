@@ -60,11 +60,11 @@
                 <div style="margin-right: 20px">
                     <form class="d-flex" action="actionshop" method="get">
                         <input type="hidden" name="action" value="getDiscountBySearch">
-                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+<!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                style="width: 300px">
                         <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                             <i class="fa fa-search text-body"></i>
-                        </button>
+                        </button>-->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -75,9 +75,7 @@
                                 <li>
                                     <a class="dropdown-item" href="actionshop?action=profile">Hồ sơ</a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item" href="managecomment?action=viewcomment">Xem lại bình luận</a>
-                                </li>
+
                                 <li>
                                     <a class="dropdown-item" href="logout">Đăng xuất</a>
                                 </li>

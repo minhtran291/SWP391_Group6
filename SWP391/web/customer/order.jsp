@@ -55,7 +55,7 @@
                     <!--                    có sự khác nhau trong narbar-nav tự css và sử dụng các class
                                         được định nghĩa sẵn trong bootstrap 5 như d-flex và flex-row-->
                     <li class="nav-item">
-                        <a class="nav-link" href="actioncustomer?action=getListFood">
+                        <a class="nav-link" href="home">
                             <h1 class="fw-bold" style="font-family: Florence, cursive; color: #33cc00">
                                 F<span style="color: #ff6633">oo</span>dy
                             </h1></a>
@@ -67,11 +67,11 @@
                     <c:if test="${acc!=null}">
                         <form class="d-flex" action="actioncustomer" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                    style="width: 300px">
                             <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                                 <i class="fa fa-search text-body"></i>
-                            </button>
+                            </button>-->
 
                             <div class="dropdown">
                                 <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -89,7 +89,9 @@
                                             Đơn hàng
                                         </a>
                                     </li>
-                                    <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="managecomment?action=viewcomment">
                                             Xem lại bình luận
@@ -104,7 +106,7 @@
                             </div>
 
 
-                            <a class="btn btn-square bg-white rounded-circle cart" href="">
+                            <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
                                 <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>
@@ -114,11 +116,11 @@
                     <c:if test="${acc==null}">
                         <form class="d-flex" action="actioncustomer" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                    style="width: 300px">
                             <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                                 <i class="fa fa-search text-body"></i>
-                            </button>
+                            </button>-->
                             <a class="btn btn-square bg-white rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>
@@ -160,7 +162,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input value="${user.username}" name="name" type="text" id="form3" class="form-control order-form-input" />
+                                        <input value="${user.username}" name="name" required="" type="text" id="form3" class="form-control order-form-input" />
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +173,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="text" id="form4" name="email" value="${user.email}" class="form-control order-form-input" />
+                                        <input type="text" id="form4" name="email" required="" value="${user.email}" class="form-control order-form-input" />
                                     </div>
                                 </div>
                             </div>
@@ -182,11 +184,11 @@
                                 </div>
                                 <div class="col-12">
                                     <div data-mdb-input-init class="form-outline datepicker" data-mdb-toggle-button="false">
-                                        <input type="text" id="form4" name="phone" value="${user.phone}" class="form-control order-form-input" />
+                                        <input type="tel" id="form4" required="" name="phone" value="${user.phone}" class="form-control order-form-input" />
                                     </div>
                                 </div>
                             </div>
-                            <c:if test="${address == null}">
+                            
 
 
                                 <div class="row mt-3 mx-4">
@@ -195,43 +197,83 @@
                                     </div>
                                     <div class="col-12">
                                         <div data-mdb-input-init class="form-outline">
-                                            <select name="district" id="form6" class="form-control order-form-input">
-                                                <option value="Ba Đình">Ba Đình</option>
-                                                <option value="Hoàn Kiếm">Hoàn Kiếm</option>
-                                                <option value="Tây Hồ">Tây Hồ</option>
-                                                <option value="Long Biên">Long Biên</option>
-                                                <option value="Cầu Giấy">Cầu Giấy</option>
-                                                <option value="Đống Đa">Đống Đa</option>
-                                                <option value="Hai Bà Trưng">Hai Bà Trưng</option>
-                                                <option value="Hoàng Mai">Hoàng Mai</option>
-                                                <option value="Thanh Xuân">Thanh Xuân</option>
-                                                <option value="Sóc Sơn">Sóc Sơn</option>
-                                                <option value="Đông Anh">Đông Anh</option>
-                                                <option value="Gia Lâm">Gia Lâm</option>
-                                                <option value="Nam Từ Liêm">Nam Từ Liêm</option>
-                                                <option value="Thanh Trì">Thanh Trì</option>
-                                                <option value="Bắc Từ Liêm">Bắc Từ Liêm</option>
-                                                <option value="Mê Linh">Mê Linh</option>
-                                                <option value="Hà Đông">Hà Đông</option>
-                                                <option value="Sơn Tây">Sơn Tây</option>
-                                                <option value="Ba Vì">Ba Vì</option>
-                                                <option value="Phúc Thọ">Phúc Thọ</option>
-                                                <option value="Đan Phượng">Đan Phượng</option>
-                                                <option value="Hoài Đức">Hoài Đức</option>
-                                                <option value="Quốc Oai">Quốc Oai</option>
-                                                <option value="Thạch Thất">Thạch Thất</option>
-                                                <option value="Chương Mỹ">Chương Mỹ</option>
-                                                <option value="Thanh Oai">Thanh Oai</option>
-                                                <option value="Thường Tín">Thường Tín</option>
-                                                <option value="Phú Xuyên">Phú Xuyên</option>
-                                                <option value="Ứng Hòa">Ứng Hòa</option>
-                                                <option value="Mỹ Đức">Mỹ Đức</option>
+                                            <!--                                            <select name="district" id="form6" class="form-control order-form-input">
+                                                                                            <option value="Ba Đình">Ba Đình</option>
+                                                                                            <option value="Hoàn Kiếm">Hoàn Kiếm</option>
+                                                                                            <option value="Tây Hồ">Tây Hồ</option>
+                                                                                            <option value="Long Biên">Long Biên</option>
+                                                                                            <option value="Cầu Giấy">Cầu Giấy</option>
+                                                                                            <option value="Đống Đa">Đống Đa</option>
+                                                                                            <option value="Hai Bà Trưng">Hai Bà Trưng</option>
+                                                                                            <option value="Hoàng Mai">Hoàng Mai</option>
+                                                                                            <option value="Thanh Xuân">Thanh Xuân</option>
+                                                                                            <option value="Sóc Sơn">Sóc Sơn</option>
+                                                                                            <option value="Đông Anh">Đông Anh</option>
+                                                                                            <option value="Gia Lâm">Gia Lâm</option>
+                                                                                            <option value="Nam Từ Liêm">Nam Từ Liêm</option>
+                                                                                            <option value="Thanh Trì">Thanh Trì</option>
+                                                                                            <option value="Bắc Từ Liêm">Bắc Từ Liêm</option>
+                                                                                            <option value="Mê Linh">Mê Linh</option>
+                                                                                            <option value="Hà Đông">Hà Đông</option>
+                                                                                            <option value="Sơn Tây">Sơn Tây</option>
+                                                                                            <option value="Ba Vì">Ba Vì</option>
+                                                                                            <option value="Phúc Thọ">Phúc Thọ</option>
+                                                                                            <option value="Đan Phượng">Đan Phượng</option>
+                                                                                            <option value="Hoài Đức">Hoài Đức</option>
+                                                                                            <option value="Quốc Oai">Quốc Oai</option>
+                                                                                            <option value="Thạch Thất">Thạch Thất</option>
+                                                                                            <option value="Chương Mỹ">Chương Mỹ</option>
+                                                                                            <option value="Thanh Oai">Thanh Oai</option>
+                                                                                            <option value="Thường Tín">Thường Tín</option>
+                                                                                            <option value="Phú Xuyên">Phú Xuyên</option>
+                                                                                            <option value="Ứng Hòa">Ứng Hòa</option>
+                                                                                            <option value="Mỹ Đức">Mỹ Đức</option>
+                                                                                        </select>-->
+                                            <select name="district" class="form-control order-form-input" onchange="fetchWards(this.value)" required="">
+                                                <option value="">
+                                                    Chọn Quận, huyện
+                                                </option>
+                                                <c:forEach var="d" items="${listDistrict}">
+                                                    <option value="${d.districtName}">
+                                                        ${d.districtName}
+                                                    </option>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                            </c:if>
-                            <div class="row mt-3 mx-4">
+
+                                <div class="row mt-3 mx-4">
+                                    <div class="col-12">
+                                        <label class="order-form-label">Phường/Xã</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <select name="ward" class="form-control order-form-input" id="wardSelect" required="">
+                                                <option value="">Chọn Phường, xã</option>
+                                                <c:forEach items="${listWard}" var="w">
+                                                    <option value="${w.wardName}">
+                                                        ${w.wardName}
+                                                    </option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3 mx-4">
+                                    <div class="col-12">
+                                        <label class="order-form-label">Số nhà</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <input min="1" max="300" class="form-control order-form-input" type="number" name="apartmentNumber" required="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            
+<!--                            <div class="row mt-3 mx-4">
                                 <div class="col-12">
                                     <label class="order-form-label">Địa chỉ</label>
                                 </div>
@@ -240,7 +282,7 @@
                                         <input name="address" type="text" id="form5" class="form-control order-form-input" />
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="row mt-3 mx-4">
                                 <div class="col-12">
                                     <label class="order-form-label">Chi tiết sản phẩm</label>
@@ -311,7 +353,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <button  type="submit" data-mdb-button-init id="btnSubmit" data-mdb-ripple-init class="btn btn-primary d-block mx-auto btn-submit">Thanh toán</button>
+                                        <button  type="submit" data-mdb-button-init id="btnSubmit" data-mdb-ripple-init class="btn btn-success d-block mx-auto btn-submit">Thanh toán</button>
                                     </div>
                                 </div>
                             </c:if>
@@ -322,5 +364,26 @@
         </div>
 
         <jsp:include page="../footer.jsp"></jsp:include>
+
+        <script>
+            function fetchWards(districtName) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "getward?district=" + districtName, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var wards = JSON.parse(xhr.responseText);
+                        var wardSelect = document.getElementById("wardSelect");
+                        wardSelect.innerHTML = "";
+                        wards.forEach(function (ward) {
+                            var option = document.createElement("option");
+                            option.value = ward.wardName;
+                            option.text = ward.wardName;
+                            wardSelect.add(option);
+                        });
+                    }
+                };
+                xhr.send();
+            }
+        </script>
     </body>
 </html>

@@ -98,10 +98,10 @@ public class ActionCustomer extends HttpServlet {
                 getAllFood(request, response, 8);
                 break;
             case "getFoodBySearch":
-                getFoodBySearch(request, response, 5);
+                getFoodBySearch(request, response, 8);
                 break;
             case "getFoodByCategory":
-                getFoodByCategory(request, response, 5);
+                getFoodByCategory(request, response, 8);
                 break;
             case "cart":
                 goToCart(request, response);

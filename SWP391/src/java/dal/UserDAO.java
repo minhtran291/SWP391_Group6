@@ -4,6 +4,8 @@
  */
 package dal;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,13 +29,16 @@ public class UserDAO extends DBContext {
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new User(rs.getInt(1),
+                User u = new User(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7));
+                u.setAvatar(rs.getString("avatar"));
+                return u;
+
             }
 
         } catch (SQLException e) {
@@ -167,6 +172,7 @@ public class UserDAO extends DBContext {
                 user.setEmail(resultSet.getString("email"));
                 user.setPhone(resultSet.getString("phone_number"));
                 user.setRoleid(resultSet.getInt("role_id"));
+                user.setAvatar(resultSet.getString("avatar"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,7 +220,7 @@ public class UserDAO extends DBContext {
 
     public ArrayList<User> getEmployee() {
         ArrayList<User> listemp = new ArrayList<>();
-        String sql = "select * from dbo.users where role_id=3";
+        String sql = "select * from users where role_id = 3";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -561,37 +567,46 @@ public class UserDAO extends DBContext {
 
     public void updateUserProfile(int gender, String email, String phone, String avatar, int userid) {
         String sql = "UPDATE [dbo].[users] "
-                + "   SET [gender] = ?, "
-                + "       [email] = ?, "
-                + "      [phone_number] = ?, "
-                + "      [avatar] = ? "
-                + " WHERE [user_id] = ? ";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+                + "SET [gender] = ?, "
+                + "[email] = ?, "
+                + "[phone_number] = ?, "
+                + "[avatar] = ? "
+                + "WHERE [user_id] = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, gender);
             ps.setString(2, email);
             ps.setString(3, phone);
             ps.setString(4, avatar);
             ps.setInt(5, userid);
+
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            // Ghi lỗi vào log
+            e.printStackTrace();
         }
     }
 
     public boolean checkEmailUpdate(String email, String idemp) {
-        String sql = "  SELECT * FROM [users] WHERE [email] = ? and user_id <> ? ";
-        int id = Integer.parseInt(idemp);
+        String sql = "SELECT * FROM [users] WHERE [email] = ? AND user_id <> ?";
+        int id;
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            id = Integer.parseInt(idemp);
+
+        } catch (NumberFormatException e) {
+            // Xử lý lỗi khi id không phải là số
+            return false;
+        }
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, email);
             ps.setInt(2, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return true;
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Nếu có kết quả, email đã tồn tại
             }
         } catch (SQLException e) {
+            e.printStackTrace(); // Ghi lỗi vào log
+            return false;
         }
-        return false;
     }
 
     public boolean checkPhoneUpdate(String phone, String idemp) {
@@ -608,5 +623,22 @@ public class UserDAO extends DBContext {
         } catch (SQLException e) {
         }
         return false;
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        try {
+            String username = "sa";
+            String password = "123";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP391";
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection connection = DriverManager.getConnection(url, username, password);
+            UserDAO ud = new UserDAO();
+            ArrayList<User> list = ud.getEmployee();
+            for (User user : list) {
+                System.out.println(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

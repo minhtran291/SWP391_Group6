@@ -22,7 +22,7 @@ import model.Food;
  * @author admin
  */
 public class BestSellersServlet extends HttpServlet {
-       private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private FoodDAO foodDAO;
 
     public void init() {

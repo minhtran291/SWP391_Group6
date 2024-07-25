@@ -192,6 +192,10 @@
         <servlet-name>ManageBlogServlet</servlet-name>
         <servlet-class>controller.ManageBlogServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetWard</servlet-name>
+        <servlet-class>controller.GetWard</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>
         <url-pattern>/actioncustomer</url-pattern>
@@ -343,5 +347,9 @@
     <servlet-mapping>
         <servlet-name>ManageBlogServlet</servlet-name>
         <url-pattern>/manageblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetWard</servlet-name>
+        <url-pattern>/getward</url-pattern>
     </servlet-mapping>
 </web-app>

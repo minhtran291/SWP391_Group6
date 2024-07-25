@@ -122,7 +122,7 @@
 
                                         </ul>
                                     </div>
-                                    <a class="btn-sm-square btn-transparent rounded-circle ms-3" href="customer/cart.jsp">
+                                    <a class="btn-sm-square btn-transparent rounded-circle ms-3" href="actioncustomer?action=cart">
                                         <small class="fa fa-shopping-bag text-body"></small>
                                     </a>
                                 </div>
@@ -139,7 +139,7 @@
                             <a class="btn btn-square btn-transparent rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>
-                            <a class="btn btn-square btn-transparent rounded-circle cart" href="actioncustomer?action=cart">
+                            <a class="btn btn-square btn-transparent rounded-circle cart" href="customer/cart.jsp">
                                 <div class="cart-count">${count_cart}</div>
                                 <i class="fa fa-shopping-bag text-body"></i>
                             </a>

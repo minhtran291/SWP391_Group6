@@ -64,11 +64,11 @@
                     <c:if test="${acc!=null}">
                         <form class="d-flex" action="actionshop" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                    style="width: 300px">
                             <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                                 <i class="fa fa-search text-body"></i>
-                            </button>
+                            </button>-->
 
 
                             <div class="dropdown">
@@ -87,11 +87,11 @@
                                             Đơn hàng
                                         </a>
                                     </li>-->
-                                    <li>
+<!--                                    <li>
                                         <a class="dropdown-item" href="managecomment?action=viewcomment">
                                             Xem lại bình luận
                                         </a>
-                                    </li>
+                                    </li>-->
                                     <li>
                                         <a class="dropdown-item" href="logout">
                                             Đăng xuất
@@ -100,9 +100,7 @@
                                 </ul>
                             </div>
 
-                            <a class="btn btn-square bg-white rounded-circle" href="">
-                                <i class="fa fa-shopping-bag text-body"></i>
-                            </a>
+                            
                         </form>
 
                     </c:if>
@@ -116,9 +114,9 @@
                 <h1 class="mb-3">Tổng quan</h1>
                 <div class="row justify-content-around mb-5">
                     <div class="col-md-2 shadow bg-white p-3">Số lượng sản phẩm: ${numberFood}</div>
-                    <div class="col-md-2 shadow bg-white p-3">Số lượng đơn hàng: ${numberOrder}</div>
+                    <div class="col-md-2 shadow bg-white p-3">Số lượng đơn hàng đang xử lý: ${numberOrder}</div>
                     <div class="col-md-2 shadow bg-white p-3">Số lượng khách hàng: ${numberUser}</div>
-                    <div class="col-md-2 shadow bg-white p-3">Lợi nhuận: <fmt:formatNumber type="currency" 
+                    <div class="col-md-2 shadow bg-white p-3">Tổng doanh thu: <fmt:formatNumber type="currency" 
                                       currencyCode="VND"
                                       maxFractionDigits="0"
                                       value="${profit}"/></div>
@@ -251,7 +249,7 @@
             </div>
         </div>
 
-        <footer>
+<!--        <footer>
             <div class="bg-dark">
                 <div class="container text-white">
                     <div class="row">
@@ -273,7 +271,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer>-->
 
         <script type="text/javascript">
             var chart = document.getElementById("sale-revenue").getContext("2d");

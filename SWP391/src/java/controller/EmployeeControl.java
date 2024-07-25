@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.UserDAO;
@@ -22,36 +21,39 @@ import model.User;
  * @author anhdo
  */
 public class EmployeeControl extends HttpServlet {
-    
+
     UserDAO ud = new UserDAO();
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EmployeeControl</title>");  
+            out.println("<title>Servlet EmployeeControl</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EmployeeControl at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet EmployeeControl at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -59,21 +61,22 @@ public class EmployeeControl extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String action = request.getParameter("action");
-        switch (action) {           
+        switch (action) {
             case "manageEmp":
                 getEmployee(request, response, 5);
                 request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
                 break;
             case "deleteEmp":
                 deleteEmployee(request, response, 5);
-                break;          
+                break;
         }
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -81,7 +84,7 @@ public class EmployeeControl extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String action = request.getParameter("action");
         switch (action) {
             case "addEmployee":
@@ -92,6 +95,7 @@ public class EmployeeControl extends HttpServlet {
                 break;
         }
     }
+
     private void addEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String errorName = "";
@@ -116,8 +120,7 @@ public class EmployeeControl extends HttpServlet {
             errorphone = "Số điện thoại đã tồn tại";
             request.setAttribute("errorphone", errorphone);
         }
-        
-        
+
         if (!errorName.isEmpty() || !errorEmail.isEmpty() || !errorphone.isEmpty()) {
             request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
         } else {
@@ -132,6 +135,7 @@ public class EmployeeControl extends HttpServlet {
             }
         }
     }
+
     private void updateEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
@@ -145,28 +149,27 @@ public class EmployeeControl extends HttpServlet {
         String empphone = request.getParameter("phone");
         String id = request.getParameter("id");
 
-        if (!ud.checkEmpNameUpdate(name,id)) {
+        if (!ud.checkEmpNameUpdate(name, id)) {
             errorNameUpdate = "Tên đăng nhập đã tồn tại";
             request.setAttribute("errorNameUpdate", errorNameUpdate);
         }
-        if (!ud.checkEmpEmailUpdate(empemail,id)) {
+        if (!ud.checkEmpEmailUpdate(empemail, id)) {
             errorEmailUpdate = "Email đã tồn tại";
             request.setAttribute("errorEmailUpdate", errorEmailUpdate);
         }
-        if (!ud.checkEmpPhoneUpdate(empphone,id)) {
+        if (!ud.checkEmpPhoneUpdate(empphone, id)) {
             errorphoneUpdate = "Số điện thoại đã tồn tại";
             request.setAttribute("errorphoneUpdate", errorphoneUpdate);
         }
-        
-        
+
         if (!errorNameUpdate.isEmpty() || !errorEmailUpdate.isEmpty() || !errorphoneUpdate.isEmpty()) {
             request.setAttribute("id", id);
             request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
         } else {
 
             try {
-                 int empid = Integer.parseInt(id);
-                ud.UpdateEmp(name, pass,  empemail, empphone, empid);
+                int empid = Integer.parseInt(id);
+                ud.UpdateEmp(name, pass, empemail, empphone, empid);
                 ArrayList<User> ulist = ud.getEmployee();
                 session.setAttribute("ulist", ulist);
                 getEmployee(request, response, numberPerPage);
@@ -175,7 +178,8 @@ public class EmployeeControl extends HttpServlet {
             }
         }
     }
-     private void deleteEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+
+    private void deleteEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String id = request.getParameter("deleteId");
         try {
@@ -189,17 +193,18 @@ public class EmployeeControl extends HttpServlet {
         }
 
     }
-    
+
     private void getEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
-  HttpSession session = request.getSession();
-        ArrayList<User> ulist = (ArrayList) session.getAttribute("ulist") == null ? ud.getEmployee() : (ArrayList) session.getAttribute("ulist");
+        HttpSession session = request.getSession();
+        ArrayList<User> ulist = ud.getEmployee();
         session.setAttribute("ulist", ulist);
         /* bat buoc phai set cac thuoc tinh ben tren theo dung thu tu va dat cai
             phan trang o cuoi vi khi vao phan trang se chuyen sang trang luon
          */
         pagingForEmp(request, response, numberPerPage, ulist);
 
-}
+    }
+
     private void pagingForEmp(HttpServletRequest request, HttpServletResponse response,
             int numberPerPage, ArrayList<User> listEmp) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -217,8 +222,9 @@ public class EmployeeControl extends HttpServlet {
         session.setAttribute("empOnCurrentPage", empOnCurrentPage);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

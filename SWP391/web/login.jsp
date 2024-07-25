@@ -52,7 +52,7 @@
                 </div>  
                 <div class="form-group">
                     <input name="password" type="password" value="${cookie.cpass.value}" 
-                           class="form-control" placeholder="Mật khẩu" required=""> 
+                           class="form-control" minlength="6" placeholder="Mật khẩu" required=""> 
                 </div>
                 <div class="mb-3">
                     <input type="checkbox" ${(cookie.cremem!=null?'checked':'')} name="remember" value="ON"/>Ghi nhớ đăng nhập

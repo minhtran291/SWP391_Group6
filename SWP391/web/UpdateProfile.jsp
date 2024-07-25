@@ -16,6 +16,7 @@
             .avatar {
                 width: 200px;
                 height: 200px;
+                object-fit: cover; /* Đảm bảo ảnh không bị méo */
             }
         </style>
     </head>
@@ -23,10 +24,21 @@
         <div class="container bootstrap snippets bootdey">
             <h1 class="text-primary">Chỉnh sửa hồ sơ</h1>
             <hr>
-            <div class="row">
-                <div class="col-md-9 personal-info">
-                    <h3>Thông tin cá nhân</h3>
-                    <form class="form-horizontal" role="form" id="profileForm" enctype="multipart/form-data">
+
+            <div class="col-md-9 personal-info">
+                <h3>Thông tin cá nhân</h3>
+                <!-- Thẻ form với enctype="multipart/form-data" để tải lên ảnh -->
+                <form class="form-horizontal" role="form" id="profileForm" action="profile" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <!-- Hiển thị hình ảnh hiện tại -->
+                                <img src="${sessionScope.acc.avatar}" class="avatar img-circle img-thumbnail" alt="avatar" id="currentAvatar">
+                                <h6>Upload a different photo...</h6>
+                                <!-- Cho phép tải lên ảnh mới -->
+                                <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                        </div>
                         <input type="hidden" name="id" value="${sessionScope.acc.userid}"/>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Tên đăng nhập:</label>
@@ -39,7 +51,7 @@
                             <div class="col-lg-8">
                                 <input class="form-control" name="email" type="text" value="${sessionScope.acc.email}">
                             </div>
-                            <h4>${errorEmailUpdate}</h4>
+                            <h5 class="text-danger">${errorEmailUpdate}</h5>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Giới tính:</label>
@@ -55,62 +67,30 @@
                             <div class="col-lg-8">
                                 <input class="form-control" name="phone" type="text" value="${sessionScope.acc.phone}">
                             </div>
-                            <h4>${errorPhoneUpdate}</h4>
+                            <h5 class="text-danger">${errorPhoneUpdate}</h5>
                         </div>
-
-<!--                        <div id="avatarPreview">
-                            <h3>Xem trước ảnh đại diện mới</h3>
-                            <img id="currentImage" src="${sessionScope.acc.avatar}" alt="Không thể tải ảnh" class="img-fluid d-block mx-auto">
-                        </div>
-                        <div class="mt-3 mb-3">-->
-<!--                            <input id="imageUrlInput" name="avatar" type="text" placeholder="Nhập địa chỉ ảnh" class="form-control" oninput="previewImageByUrl(event);" />
-                            <div id="imagePreview" class="mt-3">
-                                <img id="newImage" src="" alt="Ảnh xem trước" class="img-fluid d-block mx-auto" style="display:none;">
-                            </div>
-                        </div>-->
                         <div class="modal-footer justify-content-start">
-                            <button type="button" class="btn btn-success" onclick="saveProfile()">Lưu</button>
+                            <button type="submit" class="btn btn-success">Lưu</button>
                         </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
         <hr>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                function previewImageByUrl(event) {
-                                    var imageUrl = event.target.value;
-                                    var imageElement = document.getElementById('newImage');
+                                    function previewImage(event) {
+                                        var file = event.target.files[0];
+                                        var reader = new FileReader();
 
-                                    if (imageUrl) {
-                                        imageElement.src = imageUrl;
-                                        imageElement.style.display = 'block';
-                                    } else {
-                                        imageElement.style.display = 'none';
-                                    }
-                                }
-
-                                function saveProfile() {
-                                    var formData = new FormData(document.getElementById('profileForm'));
-
-                                    $.ajax({
-                                        url: 'profile', // The servlet URL to handle the form submission
-                                        type: 'POST',
-                                        data: formData,
-                                        processData: false,
-                                        contentType: false,
-                                        success: function (response) {
-                                            // Optionally, display a success message to the user
-                                            alert('Profile updated successfully!');
-                                            // Redirect to profile.jsp
-                                            window.location.href = 'profile';
-                                        },
-                                        error: function () {
-                                            // Optionally, display an error message to the user
-                                            alert('An error occurred while updating the profile.');
+                                        reader.onload = function (e) {
+                                            var imageElement = document.getElementById('currentAvatar');
+                                            imageElement.src = e.target.result;
                                         }
-                                    });
-                                }
+
+                                        if (file) {
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }
         </script>
     </body>
 </html>

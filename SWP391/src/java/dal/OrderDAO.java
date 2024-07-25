@@ -109,7 +109,7 @@ public class OrderDAO extends DBContext {
     
     public List<Order> getOrderAll() {
         List<Order> list = new ArrayList<>();
-        String sql = "select * from orders where status <> 1";
+        String sql = "select * from orders where status <> 1 order by order_id desc";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

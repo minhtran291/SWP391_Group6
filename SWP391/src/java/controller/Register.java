@@ -67,7 +67,7 @@ public class Register extends HttpServlet {
         //processRequest(request, response);
         HttpSession session = request.getSession();
         String account = request.getParameter("account");
-        String gender = request.getParameter("gender");
+        String genders = request.getParameter("gender");
         String password = request.getParameter("password");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
@@ -89,11 +89,12 @@ public class Register extends HttpServlet {
         if(!errorAccount.isEmpty() || !errorEmail.isEmpty() || !errorPhone.isEmpty()){
             request.getRequestDispatcher("register.jsp").forward(request, response);
         }else{
-            User u =new User(email, password, 0, email, phone);
+            int gender = Integer.parseInt(genders);
+            User u =new User(account, password, gender, email, phone);
             ud.addUser(u);
             session.setAttribute("acc", u);
 //            request.getRequestDispatcher("actioncustomer?action=getListFood").forward(request, response);
-            response.sendRedirect("actioncustomer?action=getListFood");
+            response.sendRedirect("home");
         }
     }
 

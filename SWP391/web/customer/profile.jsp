@@ -63,11 +63,11 @@
                 <div>
                     <form class="d-flex" action="actioncustomer" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
-                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+<!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                style="width: 300px">
                         <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                             <i class="fa fa-search text-body"></i>
-                        </button>
+                        </button>-->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -86,6 +86,9 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="managecomment?action=viewcomment">
                                         Xem lại bình luận
                                     </a>
@@ -100,7 +103,7 @@
 
 
                         <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                            <div class="cart-count">${count_cart}}</div>
+                            <div class="cart-count">${count_cart}</div>
                             <i class="fa fa-shopping-bag text-body"></i>
                         </a>
                     </form>

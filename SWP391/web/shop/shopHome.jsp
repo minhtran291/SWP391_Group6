@@ -149,10 +149,7 @@
                                                               value="${f.price - f.price * f.dicountRate/100}" >
                                             </fmt:formatNumber>
                                         </span></p>
-                                    <p>
-                                        Giá gốc:
-                                        
-                                        <span class="text-danger fw-bold strikethrough">
+                                    <p>Giá gốc: <span class="text-danger fw-bold strikethrough">
                                             <fmt:formatNumber type="currency" 
                                                               currencyCode="VND"
                                                               maxFractionDigits="0"

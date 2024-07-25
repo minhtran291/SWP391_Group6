@@ -60,7 +60,7 @@ public class Login extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        response.sendRedirect("login.jsp");
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     /**
@@ -103,7 +103,7 @@ public class Login extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("acc", acc);
             if (acc.getRoleid() == 1) {
-                response.sendRedirect("actioncustomer?action=getListFood");
+                response.sendRedirect("home");
             } else if (acc.getRoleid() == 2) {
                 response.sendRedirect("actionshop?action=dashBoard");
             } else if (acc.getRoleid() == 3) {
