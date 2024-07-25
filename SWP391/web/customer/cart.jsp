@@ -89,6 +89,7 @@
                                             Đơn hàng
                                         </a>
                                     </li>
+                                    <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
                                     <li>
                                         <a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a>
                                     </li>

@@ -50,6 +50,8 @@ public class User {
         this.phone = phone;
         this.roleid = roleid;
     }
+    
+    
 
     public User(String avatar) {
         this.avatar = avatar;

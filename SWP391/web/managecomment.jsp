@@ -94,6 +94,7 @@
                                     </c:if>
 
                                 </li>
+                                <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
                                 <li>
                                     <a class="dropdown-item" href="actioncustomer?action=history">
                                         Đơn hàng
