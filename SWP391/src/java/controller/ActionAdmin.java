@@ -74,8 +74,8 @@ public class ActionAdmin extends HttpServlet {
                 getAccount(request, response, 5);
                 request.getRequestDispatcher("admin/manageAccount.jsp").forward(request, response);
                 break;
-            case "deleteAcc":
-                deleteAccount(request, response, 5);
+            case "updatestatusAcc":
+                UpdateStatusAccount(request, response, 5);
                 break;
             case "searchByRole":
                 searchByRole(request, response, 5);
@@ -98,6 +98,9 @@ public class ActionAdmin extends HttpServlet {
                 break;
             case "unDeleteWard":
                 unDeleteWard(request, response, 5);
+                break;
+                 case "profile":
+                getProfile(request, response);
                 break;
         }
     }
@@ -227,7 +230,7 @@ public class ActionAdmin extends HttpServlet {
             try {
                 int roleidud = Integer.parseInt(roleid);
                 int empid = Integer.parseInt(id);
-                ud.UpdateAcc(name, pass, roleidud, empemail, empphone, empid);
+                ud.UpdateAcc( roleidud, empid);
 
                 ArrayList<User> listacc = ud.getAccount();
                 session.setAttribute("listacc", listacc);
@@ -237,20 +240,36 @@ public class ActionAdmin extends HttpServlet {
             }
         }
     }
-
-    private void deleteAccount(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+//    private void deleteAccount(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+//        HttpSession session = request.getSession();
+//        String id = request.getParameter("deleteId");
+//        try {
+//            int idemp = Integer.parseInt(id);
+//            ud.deleteEmp(idemp);
+//            ArrayList<User> listacc = ud.getAccount();
+//            session.setAttribute("listacc", listacc);
+//            getAccount(request, response, numberPerPage);
+//            request.getRequestDispatcher("admin/manageAccount.jsp").forward(request, response);
+//        } catch (Exception e) {
+//        }
+//    }
+     private void UpdateStatusAccount(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String id = request.getParameter("deleteId");
-        try {
+        String id =request.getParameter("Id");
+         String status = request.getParameter("status");
+       
+         try {
             int idemp = Integer.parseInt(id);
-            ud.deleteEmp(idemp);
+            int statusemp = Integer.parseInt(status);
+            
+            ud.updateStatusAccount(idemp, statusemp);
             ArrayList<User> listacc = ud.getAccount();
             session.setAttribute("listacc", listacc);
             getAccount(request, response, numberPerPage);
             request.getRequestDispatcher("admin/manageAccount.jsp").forward(request, response);
-        } catch (Exception e) {
-        }
-
+            } catch (Exception e) {
+            }
+       
     }
 
     private void getAccount(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
@@ -441,5 +460,11 @@ public class ActionAdmin extends HttpServlet {
             wd.updateWard(wardName, wardId, districtId);
             getAllWard(request, response, numberPerPage);
         }
+    }
+     private void getProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+        session.setAttribute("acc", u);
+        request.getRequestDispatcher("admin/profileAdmin.jsp").forward(request, response);
     }
 }

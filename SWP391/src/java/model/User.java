@@ -20,7 +20,7 @@ public class User {
     private int orderNumber;
     private String rolename;
     private String avatar;
-
+private int status;
     public User() {
     }
 
@@ -29,7 +29,7 @@ public class User {
         this.rolename = rolename;
     }
 
-    public User(int userid, String username, String password, int gender, String email, String phone, int roleid, String rolename) {
+    public User(int userid, String username, String password, int gender, String email, String phone, int roleid, String rolename, int status) {
         this.userid = userid;
         this.username = username;
         this.password = password;
@@ -37,11 +37,11 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.roleid = roleid;
-        this.orderNumber = orderNumber;
         this.rolename = rolename;
+        this.status = status;
     }
 
-    public User(int userid, String username, String password, int gender, String email, String phone, int roleid) {
+    public User(int userid, String username, String password, int gender, String email, String phone, int roleid,int status) {
         this.userid = userid;
         this.username = username;
         this.password = password;
@@ -49,6 +49,7 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.roleid = roleid;
+        this.status = status;
     }
     
     
@@ -161,6 +162,14 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
 //    @Override

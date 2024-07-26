@@ -50,8 +50,8 @@
                 </ul>
 
                 <div>
-                    <form class="d-flex" action="actionshop" method="get">
-                        
+                    <form class="d-flex" action="actionadmin" method="get">
+                       
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -60,7 +60,7 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="actionshop?action=profile">
+                                    <a class="dropdown-item" href="actionadmin?action=profile">
                                         Hồ sơ
                                     </a>
                                 </li>
@@ -69,7 +69,7 @@
                                                                         Đơn hàng
                                                                     </a>
                                                                 </li>-->
-                               
+                                
                                 <li>
                                     <a class="dropdown-item" href="logout">
                                         Đăng xuất
@@ -84,7 +84,30 @@
                 </div>
             </div>
         </nav>
+   <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
+            <div class="offcanvas-header">
+                <h1 class="offcanvas-title">Quản lí cửa hàng</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <p><a class="btn text-white btn-primary" 
+                      href="actionadmin?action=manageAcc">Quản lí tài khoản</a></p>
+<!--                <p><a class="btn text-white btn-primary" 
+                      href="">Quản lí địa điểm giao nhận hàng</a></p>-->
+                <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                        Quản lí địa điểm giao nhận hàng
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="actionadmin?action=districtManagement">Quản lí quận, huyện</a></li>
+                        <li><a class="dropdown-item" href="actionadmin?action=wardManagement">Quản lí xã, phường</a></li>
+                    </ul>
+                </div>
+            </div>
 
+
+
+        </div>
         <div class="flex-grow-1 mb-5">
             <div class="container">
                 <h1 class="text-center mt-3">Thông tin người dùng</h1>
@@ -142,14 +165,19 @@
                                            value="${sessionScope.acc.getRoleidString()}">
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-center">
-                                    <a class="btn btn-success" href="actionshop?action=changepass">Thay đổi mặt khẩu</a>
+                                    <a class="btn btn-success" href="actionadmin?action=changepass">Thay đổi mặt khẩu</a>
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">
                                 <!--<button class="btn btn-primary w-25">Cập nhật</button>-->
                                 <a class="btn btn-primary w-25" href="UpdateProfile.jsp">Cập Nhật</a>
                             </div>
+                                
                         </div>
+                                <div class="row d-flex justify-content-md-start">
+                                <!--<button class="btn btn-primary w-25">Cập nhật</button>-->
+                                <a class="btn btn-primary w-25" href="actionadmin?action=manageAcc">Quay lại</a>
+                            </div>
                     </div>
                 </form>
             </div>
@@ -166,28 +194,7 @@
 
         </div>
 
-        <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
-            <div class="offcanvas-header">
-                <h1 class="offcanvas-title">Quản lí cửa hàng</h1>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-            </div>
-            <div class="offcanvas-body">
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="discount?action=list">Quản lí giảm giá</a></p>
-                <p><a class="btn text-white btn-primary" 
-                      href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
-            </div>
-        </div>
+       
 
 <!--        <footer>
             <div class="bg-dark p-3">

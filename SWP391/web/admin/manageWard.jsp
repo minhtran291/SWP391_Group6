@@ -71,9 +71,17 @@
                                 <i class="fa fa-user text-body"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-
-
-
+                                <li>
+                                    <a class="dropdown-item" href="actionadmin?action=profile">
+                                        Hồ sơ
+                                    </a>
+                                </li>
+                                <!--                                <li>
+                                                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                        Đơn hàng
+                                                                    </a>
+                                                                </li>-->
+                                
                                 <li>
                                     <a class="dropdown-item" href="logout">
                                         Đăng xuất

@@ -272,13 +272,13 @@
                         <input type="hidden" name="foodname" class="far fa-heart" value="${detail.foodName}">
                         <input type="hidden" name="image" class="far fa-heart" value="${img1.image}">
                         <c:if test="${sessionScope.acc==null}">
-                            <a href="login" class="btn btn-outline-dark btn-square" > <i class="far fa-heart">
+                            <a href="login" class="btn btn-outline-dark btn-square" > <i class="far fa-heart" >
 
                                 </i>  </a>
                             </c:if>
                             <c:if test="${sessionScope.acc!=null}">
 
-                            <button type="submit" class="btn btn-outline-dark btn-square" ><i class="far fa-heart"></i></button>
+                                <button type="submit" class="btn btn-outline-dark btn-square" ><i class="far fa-heart" ></i></button>
 
                         </c:if> 
 
@@ -391,8 +391,7 @@
                                 <img class="img-fluid w-100" src="${s.image}" alt="">
                             </div>
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href="detail?action=detail&foodId=${s.foodId}"><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="detail?action=detail&foodId=${s.foodId}"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">

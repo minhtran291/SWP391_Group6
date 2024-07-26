@@ -4,17 +4,18 @@
  */
 package controller;
 
-import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import model.User;
+import dal.UserDAO;
+import jakarta.servlet.http.HttpSession;
+
 
 /**
  *
@@ -41,10 +42,10 @@ public class EmployeeControl extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EmployeeControl</title>");
+            out.println("<title>Servlet ActionAdmin</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EmployeeControl at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ActionAdmin at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,12 +69,12 @@ public class EmployeeControl extends HttpServlet {
                 getEmployee(request, response, 5);
                 request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
                 break;
-            case "deleteEmp":
-                deleteEmployee(request, response, 5);
+            case "updatestatusEmp":
+                UpdateStatusEmp(request, response, 5);
                 break;
-        }
+           
     }
-
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -88,15 +89,19 @@ public class EmployeeControl extends HttpServlet {
         String action = request.getParameter("action");
         switch (action) {
             case "addEmployee":
-                addEmployee(request, response, 5);
+                AddEmployee(request, response, 5);
                 break;
             case "updateEmployee":
-                updateEmployee(request, response, 5);
+                UpdateEmployee(request, response, 5);
                 break;
+            
+
         }
     }
 
-    private void addEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+  
+
+    private void AddEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPageEmp) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String errorName = "";
         String errorEmail = "";
@@ -107,6 +112,7 @@ public class EmployeeControl extends HttpServlet {
         String gender = request.getParameter("gender");
         String empemail = request.getParameter("email");
         String empphone = request.getParameter("phone");
+       
 
         if (!ud.checkEmpName(name)) {
             errorName = "Tên đăng nhập đã tồn tại";
@@ -125,18 +131,19 @@ public class EmployeeControl extends HttpServlet {
             request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
         } else {
             try {
+                
                 int genderimp = Integer.parseInt(gender);
                 ud.addEmp(name, pass, genderimp, empemail, empphone);
-                ArrayList<User> ulist = ud.getEmployee();
-                session.setAttribute("ulist", ulist);
-                getEmployee(request, response, numberPerPage);
+                ArrayList<User> listemp = ud.getEmployee();
+                session.setAttribute("listemp", listemp);
+                getEmployee(request, response, numberPerPageEmp);
                 request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
             } catch (Exception e) {
             }
         }
     }
 
-    private void updateEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+    private void UpdateEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPageEmp) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
         String errorNameUpdate = "";
@@ -148,6 +155,7 @@ public class EmployeeControl extends HttpServlet {
         String empemail = request.getParameter("email");
         String empphone = request.getParameter("phone");
         String id = request.getParameter("id");
+        String roleid = request.getParameter("roleid");
 
         if (!ud.checkEmpNameUpdate(name, id)) {
             errorNameUpdate = "Tên đăng nhập đã tồn tại";
@@ -168,58 +176,78 @@ public class EmployeeControl extends HttpServlet {
         } else {
 
             try {
+                int roleidud = Integer.parseInt(roleid);
                 int empid = Integer.parseInt(id);
-                ud.UpdateEmp(name, pass, empemail, empphone, empid);
-                ArrayList<User> ulist = ud.getEmployee();
-                session.setAttribute("ulist", ulist);
-                getEmployee(request, response, numberPerPage);
+                ud.UpdateEmp( roleidud,  empid);
+
+                ArrayList<User> listemp = ud.getEmployee();
+                session.setAttribute("listemp", listemp);
+                getEmployee(request, response, numberPerPageEmp);
                 request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
             } catch (Exception e) {
             }
         }
     }
-
-    private void deleteEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+//    private void deleteAccount(HttpServletRequest request, HttpServletResponse response, int numberPerPageEmp) throws ServletException, IOException {
+//        HttpSession session = request.getSession();
+//        String id = request.getParameter("deleteId");
+//        try {
+//            int idemp = Integer.parseInt(id);
+//            ud.deleteEmp(idemp);
+//            ArrayList<User> listemp = ud.getEmployee();
+//            session.setAttribute("listemp", listemp);
+//            getEmployee(request, response, numberPerPageEmp);
+//            request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
+//        } catch (Exception e) {
+//        }
+//    }
+     private void UpdateStatusEmp(HttpServletRequest request, HttpServletResponse response, int numberPerPageEmp) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String id = request.getParameter("deleteId");
-        try {
+        String id =request.getParameter("Id");
+         String status = request.getParameter("status");
+       
+         try {
             int idemp = Integer.parseInt(id);
-            ud.deleteEmp(idemp);
-            ArrayList<User> ulist = ud.getEmployee();
-            session.setAttribute("ulist", ulist);
-            getEmployee(request, response, numberPerPage);
+            int statusemp = Integer.parseInt(status);
+            
+            ud.updateStatusEmp(idemp, statusemp);
+            ArrayList<User> listemp = ud.getEmployee();
+            session.setAttribute("listemp", listemp);
+            getEmployee(request, response, numberPerPageEmp);
             request.getRequestDispatcher("shop/manageEmployee.jsp").forward(request, response);
-        } catch (Exception e) {
-        }
-
+            } catch (Exception e) {
+            }
+       
     }
 
-    private void getEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+    private void getEmployee(HttpServletRequest request, HttpServletResponse response, int numberPerPageEmp) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        ArrayList<User> ulist = ud.getEmployee();
-        session.setAttribute("ulist", ulist);
+        ArrayList<User> listemp = (ArrayList) session.getAttribute("listemp") == null ? ud.getEmployee() : (ArrayList) session.getAttribute("listemp");
+        ArrayList<User> listrole = (ArrayList) session.getAttribute("listrole") == null ? ud.getRoleforShop() : (ArrayList) session.getAttribute("listrole");
+        session.setAttribute("listemp", listemp);
+        session.setAttribute("listrole", listrole);
         /* bat buoc phai set cac thuoc tinh ben tren theo dung thu tu va dat cai
             phan trang o cuoi vi khi vao phan trang se chuyen sang trang luon
          */
-        pagingForEmp(request, response, numberPerPage, ulist);
+        pagingForEmp(request, response, numberPerPageEmp, listemp);
 
     }
 
     private void pagingForEmp(HttpServletRequest request, HttpServletResponse response,
-            int numberPerPage, ArrayList<User> listEmp) throws ServletException, IOException {
+            int numberPerPageEmp, ArrayList<User> listAccEmp) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int currentPage = 1;
+        int currentPageEmp = 1;
         if (request.getParameter("page") != null) {
-            currentPage = Integer.parseInt(request.getParameter("page"));
+            currentPageEmp = Integer.parseInt(request.getParameter("page"));
         }
-        List<User> empOnCurrentPage = new ArrayList<>(listEmp.subList(
-                (currentPage - 1) * numberPerPage,
-                Math.min(currentPage * numberPerPage,
-                        listEmp.size())));
-        int totalPages = (int) Math.ceil((double) listEmp.size() / numberPerPage);
-        session.setAttribute("currentPage", currentPage);
-        session.setAttribute("totalPages", totalPages);
-        session.setAttribute("empOnCurrentPage", empOnCurrentPage);
+        List<User> employeeOnCurrentPage = new ArrayList<>(listAccEmp.subList(
+                (currentPageEmp - 1) * numberPerPageEmp,
+                Math.min(currentPageEmp * numberPerPageEmp,
+                        listAccEmp.size())));
+        int totalPagesEmp = (int) Math.ceil((double) listAccEmp.size() / numberPerPageEmp);
+        session.setAttribute("currentPageEmp", currentPageEmp);
+        session.setAttribute("totalPagesEmp", totalPagesEmp);
+        session.setAttribute("employeeOnCurrentPage", employeeOnCurrentPage);
     }
 
     /**
@@ -231,5 +259,8 @@ public class EmployeeControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+   
+
 
 }
