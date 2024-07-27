@@ -4,7 +4,7 @@
  */
 
 package controller;
-import dal.FoodDAO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,9 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author admin
+ * @author Dell
  */
-public class DeleteCategory extends HttpServlet {
+public class UpdateProfile extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +33,10 @@ public class DeleteCategory extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteFoodServlet</title>");  
+            out.println("<title>Servlet UpdateProfile</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteFoodServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateProfile at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,12 +53,8 @@ public class DeleteCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int foodId = Integer.parseInt(request.getParameter("foodId"));
-
-        FoodDAO foodDAO = new FoodDAO();
-//        foodDAO.deleteFood(foodId);
-        
-        response.sendRedirect("actionshop?action=manageFood");
+//        processRequest(request, response);
+        request.getRequestDispatcher("UpdateProfile.jsp").forward(request, response);
     } 
 
     /** 

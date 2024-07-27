@@ -64,11 +64,11 @@
                     <c:if test="${acc!=null}">
                         <form class="d-flex" action="actionshop" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                   style="width: 300px">
-                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                <i class="fa fa-search text-body"></i>
-                            </button>-->
+                            <!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                               style="width: 300px">
+                                                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                            <i class="fa fa-search text-body"></i>
+                                                        </button>-->
 
 
                             <div class="dropdown">
@@ -82,16 +82,16 @@
                                             Hồ sơ
                                         </a>
                                     </li>
-<!--                                    <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Đơn hàng
-                                        </a>
-                                    </li>-->
-<!--                                    <li>
-                                        <a class="dropdown-item" href="managecomment?action=viewcomment">
-                                            Xem lại bình luận
-                                        </a>
-                                    </li>-->
+                                    <!--                                    <li>
+                                                                            <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                                Đơn hàng
+                                                                            </a>
+                                                                        </li>-->
+                                    <!--                                    <li>
+                                                                            <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                                                                Xem lại bình luận
+                                                                            </a>
+                                                                        </li>-->
                                     <li>
                                         <a class="dropdown-item" href="logout">
                                             Đăng xuất
@@ -100,7 +100,7 @@
                                 </ul>
                             </div>
 
-                            
+
                         </form>
 
                     </c:if>
@@ -122,7 +122,7 @@
                                       value="${profit}"/></div>
                 </div>
 
-                <div class="border border-3 rounded p-3 mb-5">
+<!--                <div class="border border-3 rounded p-3 mb-5">
                     <h4>Xác nhận đơn hàng</h4>
                     <c:if test="${listOrderConfirm == null}">
                         Chưa có đơn hàng cần xác nhận
@@ -144,7 +144,7 @@
                                     <td>${l.id}</td>
                                     <td>${l.users.username}</td>
                                     <td>${l.users.phone}</td>
-                                    <!--<td>${l.id}</td>-->
+                                    <td>${l.id}</td>
                                     <td><fmt:formatNumber type="currency" 
                                                       currencyCode="VND"
                                                       maxFractionDigits="0"
@@ -186,7 +186,8 @@
                             </c:forEach>
                         </table>
                     </c:if>
-                </div>
+                </div>-->
+                
                 <div class="row">
                     <div class="col-md-6">
                         <h3>Các món ăn sắp hết hàng</h3>
@@ -215,6 +216,11 @@
                     <div class="col-md-6">
                         <div class="border border-3 rounded p-3 mb-3">
                             <h4 class="mb-3">Biểu đồ doanh thu theo tháng</h4>
+                            <form action="actionshop" method="get">
+                                <input type="hidden" name="action" value="dashBoard" />
+                                <input type="number" name="year" min="2020" max="2024">
+                                <input type="submit" value="Nhập năm">
+                            </form>
                             <canvas id="sale-revenue"></canvas>
                         </div>
                     </div>
@@ -237,10 +243,12 @@
                 <p><a class="btn text-white btn-primary" 
                       href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
-                  <p><a class="btn text-white btn-primary" 
+                <p><a class="btn text-white btn-primary" 
                       href="discount?action=list">Quản lí giảm giá</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="manageblog">Quản lí Blog</a></p>
@@ -249,40 +257,39 @@
             </div>
         </div>
 
-<!--        <footer>
-            <div class="bg-dark">
-                <div class="container text-white">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Liên hệ</h4>
-                            <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
-                            <p>Email: minh291@gmail.com</p>
-                            <p>Số điện thoại: 0123456789</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Liên kết</h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Trang chủ</a></li>
-                                <li><a href="#">Giới thiệu</a></li>
-                                <li><a href="#">Sản phẩm</a></li>
-                                <li><a href="#">Liên hệ</a></li>
-                            </ul>
+        <!--        <footer>
+                    <div class="bg-dark">
+                        <div class="container text-white">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Liên hệ</h4>
+                                    <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
+                                    <p>Email: minh291@gmail.com</p>
+                                    <p>Số điện thoại: 0123456789</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Liên kết</h4>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Trang chủ</a></li>
+                                        <li><a href="#">Giới thiệu</a></li>
+                                        <li><a href="#">Sản phẩm</a></li>
+                                        <li><a href="#">Liên hệ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </footer>-->
+                </footer>-->
 
         <script type="text/javascript">
             var chart = document.getElementById("sale-revenue").getContext("2d");
             var myChart = new Chart(chart, {
                 type: "bar",
                 data: {
-                    labels: ["Tháng 1", "Tháng 6"],
+                    labels: ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"],
                     datasets: [{
                             label: "Doanh thu",
-                            data: [${requestScope.month6}],
-                            backgroundColor: "rgba(0, 156, 255, .5)",
+                            data: ${listTotalPrice},
                             backgroundColor: "rgba(0, 156, 255, .5)"
                         }
                     ]

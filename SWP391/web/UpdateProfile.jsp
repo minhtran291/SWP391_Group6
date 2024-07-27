@@ -34,7 +34,7 @@
                             <div class="text-center">
                                 <!-- Hiển thị hình ảnh hiện tại -->
                                 <img src="${sessionScope.acc.avatar}" class="avatar img-circle img-thumbnail" alt="avatar" id="currentAvatar">
-                                <h6>Upload a different photo...</h6>
+                                <h6>Chọn một hình ảnh khác</h6>
                                 <!-- Cho phép tải lên ảnh mới -->
                                 <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*" onchange="previewImage(event)">
                             </div>

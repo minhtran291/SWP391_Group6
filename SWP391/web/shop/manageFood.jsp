@@ -14,8 +14,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/dd760d7b93.js" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- de su dung cho cai doan javascript de mo cai modal -->
+        
         <title>Quản lí sản phẩm</title>
         <style>
             .navbar-nav {
@@ -39,6 +39,14 @@
 
             .dropdown-item {
                 white-space: nowrap; /* Đảm bảo nội dung không bị cắt xuống dòng */
+            }
+            #fileLabel {
+                cursor: pointer;
+                transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển màu mượt mà */
+            }
+
+            #fileLabel:hover {
+                background-color: #e0e0e0; /* Màu nền xám khi di chuột qua */
             }
         </style>
     </head>
@@ -65,12 +73,12 @@
 
                 <div style="margin-right: 20px">
                     <form class="d-flex" action="actionshop" method="get">
-                        <input type="hidden" name="action" value="getFoodBySearch">
-<!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                               style="width: 300px">-->
-<!--                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                        <input type="hidden" name="action" value="manageGetFoodBySearch">
+                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                               style="width: 300px">
+                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                             <i class="fa fa-search text-body"></i>
-                        </button>-->
+                        </button>
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -145,10 +153,11 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 
-                            <form action="actionshop" method="post">
-                                <input type="hidden" name="action" value="addFood">
-                                <input type="hidden" name="page" value="${n}">
-                                <div class="modal-body">
+                            <div class="modal-body">
+                                <form action="actionshop" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="action" value="addFood">
+                                    <input type="hidden" name="page" value="${n}">
+
                                     <b>Tên món ăn:</b>
                                     <input type="text"
                                            class="form-control"
@@ -159,8 +168,8 @@
                                     <b>Giá:</b>
                                     <input type="number"
                                            class="form-control"
-                                           step="1000"
                                            required=""
+                                           min="1000"
                                            name="price"
                                            >
                                     <h5 class="text-danger">${requestScope.errorPrice}</h5>
@@ -168,6 +177,7 @@
                                     <input type="number"
                                            class="form-control"
                                            required=""
+                                           min="1"
                                            name="stock"
                                            >
                                     <h5 class="text-danger">${requestScope.errorStock}</h5>
@@ -185,18 +195,23 @@
                                            name="description"
                                            >
                                     <b>Hình ảnh:</b>
-                                    <input type="text"
-                                           class="form-control"
+                                    <input type="file"
+                                           class="form-control mb-3"
                                            required=""
                                            name="image"
-                                           >
-                                </div>
+                                           accept=".jpg, .jpeg, .png, .gif"
+                                           id="fileInputAdd">
+                                    <div>
+                                        <img id="imagePreviewAdd" src="" alt="" style="max-width: 100%; height: auto; max-height: 300px; object-fit: contain;" />
+                                    </div>
 
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-success">Lưu</button>
-                                </div>
-                            </form>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                        <button type="submit" class="btn btn-success">Lưu</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -287,7 +302,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">    
-                                            <form action="actionshop" method="post">
+                                            <form action="actionshop" method="post" enctype="multipart/form-data">
                                                 <input type="hidden" name="action" value="updateFood">
                                                 <input type="hidden" name="page" value="${n}">
 
@@ -311,7 +326,9 @@
                                                        class="form-control"
                                                        value="<fmt:formatNumber groupingUsed="false" 
                                                                          value="${f.price}"/>"
+                                                       required=""
                                                        name="price"
+                                                       min="1000"
                                                        >
                                                 <h5 class="text-danger">${requestScope.errorPriceUpdate}</h5>
                                                 <b>Số lượng tồn kho:</b>
@@ -320,6 +337,7 @@
                                                        value="${f.stock}"
                                                        required=""
                                                        name="stock"
+                                                       min="1"
                                                        >
                                                 <h5 class="text-danger">${requestScope.errorStockUpdate}</h5>
                                                 <b>Thể loại:</b>
@@ -346,20 +364,31 @@
                                                        name="description"
                                                        >
                                                 <b>Hình ảnh:</b>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       value="${f.image}"
-                                                       required=""
+                                                <!--                                                <div class="custom-file-upload" id="fileUploadArea">-->
+                                                <label class="form-control mb-3" for="fileInputUpdate" id="fileLabel">Chọn hình ảnh mới</label>
+                                                <input type="file"
+                                                       class="form-control mb-3"
                                                        name="image"
+                                                       accept=".jpg, .jpeg, .png, .gif"
+                                                       id="fileInputUpdate"
+                                                       style="display: none;"
                                                        >
-                                                <b>Số lượng đã bán:</b>
-                                                <input type="number"
-                                                       class="form-control"
-                                                       value="${f.sold}"
-                                                       required=""
-                                                       step="1"
-                                                       name="sold"
-                                                       >
+                                                <!--</div>-->
+                                                <input type="hidden" name="imageOld" value="${f.image}">
+                                                <div>
+                                                    <img id="imagePreviewUpdate" src="${f.image}" style="max-width: 100%; height: auto; max-height: 300px; object-fit: contain;" />
+                                                </div>
+                                                <!--                                                <div>
+                                                                                                    <img id="imagePreviewUpdate" src="" alt="" style="max-width: 100%; height: auto; max-height: 300px; object-fit: contain;" />
+                                                                                                </div>-->
+                                                <!--                                                <b>Số lượng đã bán:</b>
+                                                                                                <input type="number"
+                                                                                                       class="form-control"
+                                                                                                       value="${f.sold}"
+                                                                                                       required=""
+                                                                                                       step="1"
+                                                                                                       name="sold"
+                                                                                                       >-->
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
@@ -370,11 +399,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-lg" 
-                               href="actionshop?action=deleteFood&&deleteId=${f.foodId}&&page=${n}"
-                               onclick="return confirm('Bạn có chắc chắn muốn xóa không món ăn ${f.foodId} ?')">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </a>
+                            <c:if test="${f.foodDelete == 1}">
+                                <a class="btn btn-lg btn-danger" 
+                                   href="actionshop?action=deleteFood&&deleteId=${f.foodId}&&page=${n}&&foodDelete=0"
+                                   onclick="return confirm('Bạn có chắc chắn muốn ẩn món ăn ${f.foodId} ?')">
+                                    Ẩn
+                                </a>
+                            </c:if>
+                            <c:if test="${f.foodDelete == 0}">
+                                <a class="btn btn-lg btn-danger" 
+                                   href="actionshop?action=deleteFood&&deleteId=${f.foodId}&&page=${n}&&foodDelete=1"
+                                   onclick="return confirm('Bạn có chắc chắn muốn hiện món ăn ${f.foodId} ?')">
+                                    Hiện
+                                </a>
+                            </c:if>
                         </td>
                     </c:forEach>
             </table>
@@ -394,6 +432,8 @@
                 <p><a class="btn text-white btn-primary" 
                       href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
@@ -409,60 +449,111 @@
 
         <ul class="pagination justify-content-center">
             <c:if test="${totalPages > 1}">
+                <!-- Trang đầu tiên -->
                 <li class="page-item">
-                    <a class="page-link ${1==currentPage?'active':''}" 
-                       href="actionshop?action=manageFood&&page=1">1</a>
+                    <c:if test="${listSearch != null}">
+                        <a class="page-link ${1==currentPage?'active':''}" 
+                           href="actionshop?action=manageGetFoodBySearch&&page=1&&search=${search}">1</a>
+                    </c:if>
+                    <c:if test="${listFoodByCategory != null}">
+                        <a class="page-link ${1==currentPage?'active':''}" 
+                           href="actionshop?action=manageGetFoodByCategory&&page=1&&cid=${cid}">1</a>
+                    </c:if>
+                    <c:if test="${listSort != null}">
+                        <a class="page-link ${1==currentPage?'active':''}" 
+                           href="actionshop?action=manageSort&&page=1&&type=${type}">1</a>
+                    </c:if>
+                    <c:if test="${listFoodByCategory == null && listSearch == null && listSort == null}">
+                        <a class="page-link ${1==currentPage?'active':''}" 
+                           href="actionshop?action=manageFood&&page=1">1</a>
+                    </c:if>
                 </li>
+
+                <!-- Dấu ba chấm nếu cần -->
                 <c:if test="${currentPage > 3}">
                     <li class="page-item">
                         <span class="page-link">...</span>
                     </li>
                 </c:if>
+
+                <!-- Các trang gần trang hiện tại -->
                 <c:forEach var="p" begin="${currentPage-1}" end="${currentPage+1}">
                     <c:if test="${p > 1 && p < totalPages}">
                         <li class="page-item">
-                            <a class="page-link ${p==currentPage?'active':''}" 
-                               href="actionshop?action=manageFood&&page=${p}">${p}</a>
+                            <c:if test="${listSearch != null}">
+                                <a class="page-link ${p==currentPage?'active':''}" 
+                                   href="actionshop?action=manageGetFoodBySearch&&page=${p}&&search=${search}">${p}</a>
+                            </c:if>
+                            <c:if test="${listFoodByCategory != null}">
+                                <a class="page-link ${p==currentPage?'active':''}" 
+                                   href="actionshop?action=manageGetFoodByCategory&&page=${p}&&cid=${cid}">${p}</a>
+                            </c:if>
+                            <c:if test="${listSort != null}">
+                                <a class="page-link ${p==currentPage?'active':''}" 
+                                   href="actionshop?action=manageSort&&page=${p}&&type=${type}">${p}</a>
+                            </c:if>
+                            <c:if test="${listFoodByCategory == null && listSearch == null && listSort == null}">
+                                <a class="page-link ${p==currentPage?'active':''}" 
+                                   href="actionshop?action=manageFood&&page=${p}">${p}</a>
+                            </c:if>
                         </li>
                     </c:if>
                 </c:forEach>
+
+                <!-- Dấu ba chấm nếu cần -->
                 <c:if test="${currentPage < totalPages - 2}">
                     <li class="page-item">
                         <span class="page-link">...</span>
                     </li>
                 </c:if>
+
+                <!-- Trang cuối cùng -->
                 <li class="page-item">
-                    <a class="page-link ${totalPages==currentPage?'active':''}" 
-                       href="actionshop?action=manageFood&&page=${totalPages}">${totalPages}</a>
+                    <c:if test="${listSearch != null}">
+                        <a class="page-link ${totalPages==currentPage?'active':''}" 
+                           href="actionshop?action=manageGetFoodBySearch&&page=${totalPages}&&search=${search}">${totalPages}</a>
+                    </c:if>
+                    <c:if test="${listFoodByCategory != null}">
+                        <a class="page-link ${totalPages==currentPage?'active':''}" 
+                           href="actionshop?action=manageGetFoodByCategory&&page=${totalPages}&&cid=${cid}">${totalPages}</a>
+                    </c:if>
+                    <c:if test="${listSort != null}">
+                        <a class="page-link ${totalPages==currentPage?'active':''}" 
+                           href="actionshop?action=manageSort&&page=${totalPages}&&type=${type}">${totalPages}</a>
+                    </c:if>
+                    <c:if test="${listFoodByCategory == null && listSearch == null && listSort == null}">
+                        <a class="page-link ${totalPages==currentPage?'active':''}" 
+                           href="actionshop?action=manageFood&&page=${totalPages}">${totalPages}</a>
+                    </c:if>
                 </li>
             </c:if>
         </ul>
 
 
 
-<!--        <footer>
-            <div class="bg-dark p-3">
-                <div class="container text-white">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Liên hệ</h4>
-                            <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
-                            <p>Email: minh291@gmail.com</p>
-                            <p>Số điện thoại: 0123456789</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Liên kết</h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Trang chủ</a></li>
-                                <li><a href="#">Giới thiệu</a></li>
-                                <li><a href="#">Sản phẩm</a></li>
-                                <li><a href="#">Liên hệ</a></li>
-                            </ul>
+        <!--        <footer>
+                    <div class="bg-dark p-3">
+                        <div class="container text-white">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Liên hệ</h4>
+                                    <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
+                                    <p>Email: minh291@gmail.com</p>
+                                    <p>Số điện thoại: 0123456789</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Liên kết</h4>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Trang chủ</a></li>
+                                        <li><a href="#">Giới thiệu</a></li>
+                                        <li><a href="#">Sản phẩm</a></li>
+                                        <li><a href="#">Liên hệ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </footer>-->
+                </footer>-->
 
 
         <script>
@@ -482,6 +573,60 @@
                     $('#updateFood${id}').modal('show');
                 });
             }
+            // doan nay cho xem trc hinh anh sau khi chon
+            document.getElementById('fileInputAdd').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    // Tạo URL tạm thời cho tệp hình ảnh
+                    const url = URL.createObjectURL(file);
+
+                    // Cập nhật thuộc tính src của thẻ img
+                    const imgElement = document.getElementById('imagePreviewAdd');
+                    imgElement.src = url;
+
+                    // Hiển thị thẻ img và thiết lập thuộc tính alt
+                    imgElement.style.display = 'block';
+                    imgElement.alt = file.name;  // Cập nhật thuộc tính alt để chứa tên file
+
+                    // Giải phóng URL khi không còn sử dụng
+                    imgElement.onload = function () {
+                        URL.revokeObjectURL(url);
+                    };
+                } else {
+                    // Nếu không có file, ẩn hình ảnh
+                    const imgElement = document.getElementById('imagePreviewAdd');
+                    imgElement.src = '';
+                    imgElement.alt = 'Image Preview';
+                    imgElement.style.display = 'none';  // Ẩn thẻ img nếu không có file
+                }
+            });
+
+            document.getElementById('fileInputUpdate').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    // Tạo URL tạm thời cho tệp hình ảnh
+                    const url = URL.createObjectURL(file);
+
+                    // Cập nhật thuộc tính src của thẻ img
+                    const imgElement = document.getElementById('imagePreviewUpdate');
+                    imgElement.src = url;
+
+                    // Hiển thị thẻ img và thiết lập thuộc tính alt
+                    imgElement.style.display = 'block';
+                    imgElement.alt = file.name;  // Cập nhật thuộc tính alt để chứa tên file
+
+                    // Giải phóng URL khi không còn sử dụng
+                    imgElement.onload = function () {
+                        URL.revokeObjectURL(url);
+                    };
+                } else {
+                    // Nếu không có file, ẩn hình ảnh
+                    const imgElement = document.getElementById('imagePreviewUpdate');
+                    imgElement.src = '';
+                    imgElement.alt = 'Image Preview';
+                    imgElement.style.display = 'none';  // Ẩn thẻ img nếu không có file
+                }
+            });
         </script>
     </body>
 </html>

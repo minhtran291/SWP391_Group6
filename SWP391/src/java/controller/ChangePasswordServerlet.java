@@ -63,7 +63,7 @@ public class ChangePasswordServerlet extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("acc");
         session.setAttribute("acc", u);
-        request.getRequestDispatcher("/customer/changepass.jsp").forward(request, response);
+        request.getRequestDispatcher("changepass.jsp").forward(request, response);
     }
 
     /**
@@ -94,8 +94,15 @@ public class ChangePasswordServerlet extends HttpServlet {
 
         } else {
             ud.updatePassword(u, newPassword);
-            request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
-
+            if(u.getRoleid() == 1){
+                request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
+            }else if(u.getRoleid() == 2){
+                request.getRequestDispatcher("/shop/profileShop.jsp").forward(request, response);
+            }else if(u.getRoleid() == 3){
+                request.getRequestDispatcher("/shipper/profileShipper.jsp").forward(request, response);
+            }else if(u.getRoleid() == 4){
+//                request.getRequestDispatcher("/admin/").forward(request, response);
+            }
         }
 
     }

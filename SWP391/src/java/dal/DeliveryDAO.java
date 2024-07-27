@@ -40,22 +40,7 @@ public class DeliveryDAO extends DBContext {
                 + "JOIN "
                 + "    delivery d ON o.order_id = d.order_id "
                 + "WHERE "
-                + "    o.status != 1 "
-                + "ORDER BY "
-                + "    CASE "
-                + "        WHEN o.status = 2 AND d.user_name IS NULL THEN 0 "
-                + "        WHEN o.status = 2 THEN 1 "
-                + "        WHEN o.status IN (3, 4, 5) THEN 2 "
-                + "        ELSE 3 "
-                + "    END, "
-                + "    CASE "
-                + "        WHEN o.status = 2 THEN o.order_id "
-                + "        ELSE NULL "
-                + "    END, "
-                + "    CASE "
-                + "        WHEN o.status IN (3, 4, 5) THEN o.order_id "
-                + "        ELSE NULL "
-                + "    END DESC;";
+                + "    o.status in (2,3)";
 
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -95,7 +80,7 @@ public class DeliveryDAO extends DBContext {
                 + "LEFT JOIN ( "
                 + "    SELECT COALESCE(COUNT(o.user_name), 0) AS quantity, d.user_name "
                 + "    FROM delivery d "
-                + "    LEFT JOIN orders o ON o.order_id = d.order_id AND o.status IN (1, 2) "
+                + "    LEFT JOIN orders o ON o.order_id = d.order_id AND o.status IN (2, 3) "
                 + "    WHERE d.user_name IS NOT NULL "
                 + "    GROUP BY d.user_name "
                 + ") AS sub ON u.user_name = sub.user_name "
@@ -111,14 +96,14 @@ public class DeliveryDAO extends DBContext {
         }
         return numberOrder;
     }
-    
-    public Delivery getDeliveryByOrderId(int orderId){
+
+    public Delivery getDeliveryByOrderId(int orderId) {
         String sql = "select delivery_location from delivery where order_id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, orderId);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 Delivery d = new Delivery(rs.getString("delivery_location"));
                 return d;
             }

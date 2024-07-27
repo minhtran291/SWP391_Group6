@@ -122,10 +122,10 @@
             <div>
                 <form class="d-flex" action="actioncustomer" method="get">
                     <input type="hidden" name="action" value="getFoodBySearch">
-<!--                    <input class="form-control me-2 btn-spacing" type="text" placeholder="Tìm kiếm" name="search" style="width: 300px">
-                    <button class="btn btn-square bg-white rounded-circle btn-spacing" type="submit">
-                        <i class="fa fa-search text-body"></i>
-                    </button>-->
+                    <!--                    <input class="form-control me-2 btn-spacing" type="text" placeholder="Tìm kiếm" name="search" style="width: 300px">
+                                        <button class="btn btn-square bg-white rounded-circle btn-spacing" type="submit">
+                                            <i class="fa fa-search text-body"></i>
+                                        </button>-->
 
                     <div class="dropdown btn-spacing">
                         <button type="button" class="btn btn-square bg-white rounded-circle dropdown-toggle" data-bs-toggle="dropdown">
@@ -133,6 +133,11 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="profile">Hồ sơ</a></li>
+                            <li>
+                                <a class="dropdown-item" href="actioncustomer?action=getListFood">
+                                    Danh sách sản phẩm
+                                </a>
+                            </li>
                             <li><a class="dropdown-item" href="actioncustomer?action=history">Đơn hàng</a></li>
                             <li><a class="dropdown-item" href="managecomment?action=viewcomment">Xem lại bình luận</a></li>
                             <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
@@ -216,35 +221,35 @@
                          <small class="pt-1">(99 Reviews)</small>
                      </div>-->
                     <c:if test="${detail.discountRate == 0}">
-                    <h3 class="font-weight-semi-bold mb-4"> 
+                        <h3 class="font-weight-semi-bold mb-4"> 
 
-                        <p>Giá gốc:<span class="text-danger fw-bold">
-                                <fmt:formatNumber type="currency" 
-                                                  currencyCode="VND"
-                                                  maxFractionDigits="0"
-                                                  value="${detail.price}">
-                                </fmt:formatNumber>
-                            </span></p> 
-                    </h3>
+                            <p>Giá gốc:<span class="text-danger fw-bold">
+                                    <fmt:formatNumber type="currency" 
+                                                      currencyCode="VND"
+                                                      maxFractionDigits="0"
+                                                      value="${detail.price}">
+                                    </fmt:formatNumber>
+                                </span></p> 
+                        </h3>
                     </c:if>
                     <c:if test="${detail.discountRate != 0}">
-                    <h3 class="font-weight-semi-bold mb-4"> 
-                        
-                        <p>Giảm giá:<span class="text-danger fw-bold">
-                                <fmt:formatNumber type="currency" 
-                                                  currencyCode="VND"
-                                                  maxFractionDigits="0"
-                                                  value="${detail.price - detail.price*detail.discountRate/100}">
-                                </fmt:formatNumber>
-                            </span></p> 
-                        <p>Giá gốc: <span class="text-danger fw-bold strikethrough">
-                                <fmt:formatNumber type="currency" 
-                                                  currencyCode="VND"
-                                                  maxFractionDigits="0"
-                                                  value="${detail.price}" >
-                                </fmt:formatNumber>
-                            </span></p>
-                    </h3>
+                        <h3 class="font-weight-semi-bold mb-4"> 
+
+                            <p>Giảm giá:<span class="text-danger fw-bold">
+                                    <fmt:formatNumber type="currency" 
+                                                      currencyCode="VND"
+                                                      maxFractionDigits="0"
+                                                      value="${detail.price - detail.price*detail.discountRate/100}">
+                                    </fmt:formatNumber>
+                                </span></p> 
+                            <p>Giá gốc: <span class="text-danger fw-bold strikethrough">
+                                    <fmt:formatNumber type="currency" 
+                                                      currencyCode="VND"
+                                                      maxFractionDigits="0"
+                                                      value="${detail.price}" >
+                                    </fmt:formatNumber>
+                                </span></p>
+                        </h3>
                     </c:if>
 
                     <p class="mb-2">Số lượng: ${detail.stock}</p>

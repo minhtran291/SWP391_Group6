@@ -22,7 +22,7 @@ public class Food {
     private Category categoryId;
     private String image;
     private int dicountRate;
-
+    private int foodDelete;
     private int quantity;
 
     public Food() {
@@ -59,7 +59,7 @@ public class Food {
         this.image = image;
     }
 
-    public Food(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image, int discountRate) {
+    public Food(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image, int discountRate, int foodDelete) {
         this.foodId = foodId;
         this.foodName = foodName;
         this.price = price;
@@ -70,6 +70,20 @@ public class Food {
         this.categoryId = categoryId;
         this.image = image;
         this.dicountRate = discountRate;
+        this.foodDelete = foodDelete;
+    }
+    
+    public Food(int foodId, String foodName, double price, int stock, Date createDate, String description, int sold, Category categoryId, String image, int foodDelete) {
+        this.foodId = foodId;
+        this.foodName = foodName;
+        this.price = price;
+        this.stock = stock;
+        this.createDate = createDate;
+        this.description = description;
+        this.sold = sold;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.foodDelete = foodDelete;
     }
 
     public int getFoodId() {
@@ -160,6 +174,16 @@ public class Food {
         this.dicountRate = dicountRate;
     }
 
+    public int getFoodDelete() {
+        return foodDelete;
+    }
+
+    public void setFoodDelete(int foodDelete) {
+        this.foodDelete = foodDelete;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "Food{"
@@ -174,6 +198,7 @@ public class Food {
                 + ", image='" + image + '\''
                 + ", discountRate=" + dicountRate
                 + ", quantity=" + quantity
+                + ", foodDelete=" + foodDelete
                 + '}';
     }
 

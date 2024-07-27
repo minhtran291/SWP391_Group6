@@ -73,11 +73,11 @@
                     <c:if test="${acc!=null}">
                         <form class="d-flex" action="" method="">
                             <input type="hidden" name="action" value="getFoodBySearch">
-<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                   style="width: 300px">
-                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                <i class="fa fa-search text-body"></i>
-                            </button>-->
+                            <!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                               style="width: 300px">
+                                                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                            <i class="fa fa-search text-body"></i>
+                                                        </button>-->
 
                             <div class="dropdown">
                                 <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -86,7 +86,7 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="profile">
+                                        <a class="dropdown-item" href="actionshop?action=profile">
                                             Hồ sơ
                                         </a>
                                     </li>
@@ -95,7 +95,7 @@
                                                                                 Đơn hàng
                                                                             </a>
                                                                         </li>-->
-                                    
+
                                     <li>
                                         <a class="dropdown-item" href="logout">
                                             Đăng xuất
@@ -115,11 +115,11 @@
                     <c:if test="${acc==null}">
                         <form class="d-flex" action="actioncustomer" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                   style="width: 300px">
-                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                <i class="fa fa-search text-body"></i>
-                            </button>-->
+                            <!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                               style="width: 300px">
+                                                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                            <i class="fa fa-search text-body"></i>
+                                                        </button>-->
                             <a class="btn btn-square bg-white rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>
@@ -216,6 +216,8 @@
                       href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 

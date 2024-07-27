@@ -1,6 +1,6 @@
 <%-- 
-    Document   : profile
-    Created on : May 27, 2024, 11:15:12 AM
+    Document   : profileShipper
+    Created on : Jul 27, 2024, 3:14:06 PM
     Author     : Dell
 --%>
 
@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="vi">
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,22 +30,6 @@
             .dropdown-item {
                 white-space: nowrap; /* Đảm bảo nội dung không bị cắt xuống dòng */
             }
-            .cart{
-                position: relative;
-            }
-            .cart-count{
-                background-color: orange;
-                position: absolute;
-                top: -8px;
-                right: -5px;
-                color: white;
-                width: 20px;
-                border-radius: 50%;
-                height: 20px;
-                line-height: 20px;
-                text-align: center;
-            }
-
         </style>
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
@@ -63,41 +47,28 @@
                 <div>
                     <form class="d-flex" action="actioncustomer" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
-                        <!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                                       style="width: 300px">
-                                                <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                                    <i class="fa fa-search text-body"></i>
-                                                </button>-->
+<!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                               style="width: 300px">
+                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                            <i class="fa fa-search text-body"></i>
+                        </button>-->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
                                     data-bs-toggle="dropdown">
                                 <i class="fa fa-user text-body"></i>
                             </button>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="profile">
                                         Hồ sơ
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="actioncustomer?action=getListFood">
-                                        Danh sách sản phẩm
+                                    <a class="dropdown-item" href="actionshipper?action=homeShipper">
+                                        Danh sách giao hàng
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item" href="actioncustomer?action=history">
-                                        Đơn hàng
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
-                                        Xem lại bình luận
-                                    </a>
-                                </li>                                    
                                 <li>
                                     <a class="dropdown-item" href="logout">
                                         Đăng xuất
@@ -105,12 +76,7 @@
                                 </li>
                             </ul>
                         </div>
-
-
-                        <a class="btn btn-square bg-white rounded-circle cart" href="actioncustomer?action=cart">
-                            <div class="cart-count">${count_cart}</div>
-                            <i class="fa fa-shopping-bag text-body"></i>
-                        </a>
+                        
                     </form>
                 </div>
             </div>
@@ -184,41 +150,6 @@
                     </div>
                 </form>
             </div>
-
-            <!--            <div class="container mt-5">
-                            <form action="UploadServlet" method="post" enctype="multipart/form-data">
-                                <div class="mb-3">
-                                    <input type="file" class="form-control w-25" id="file" name="file" accept="image/*" required
-                                           value="">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Tải lên</button>
-                            </form>
-                        </div>-->
-
         </div>
-
-        <footer>
-            <div class="bg-dark p-3">
-                <div class="container text-white">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Liên hệ</h4>
-                            <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
-                            <p>Email: minh291@gmail.com</p>
-                            <p>Số điện thoại: 0123456789</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Liên kết</h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Trang chủ</a></li>
-                                <li><a href="#">Giới thiệu</a></li>
-                                <li><a href="#">Sản phẩm</a></li>
-                                <li><a href="#">Liên hệ</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </body>
 </html>

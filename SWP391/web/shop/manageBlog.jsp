@@ -257,29 +257,32 @@
 
             <!-- Offcanvas menu -->
             <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
-                <div class="offcanvas-header">
-                    <h1 class="offcanvas-title">Quản lí cửa hàng</h1>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <p><a class="btn text-white btn-primary" 
-                          href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
-                    <p><a class="btn text-white btn-primary" 
-                          href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
-                    <p><a class="btn text-white btn-primary" 
-                          href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
-                    <p><a class="btn text-white btn-primary" 
-                          href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
-                    <p><a class="btn text-white btn-primary" 
-                          href="employee?action=manageEmp">Quản lí nhân viên</a></p>
-                    <p><a class="btn text-white btn-primary" 
-                          href="discount?action=list">Quản lí giảm giá</a></p>
-                    <p><a class="btn text-white btn-primary" 
-                          href="manageblog">Quản lí Blog</a></p>
-                    <p><a class="btn text-white btn-primary" 
-                          href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
-                </div>
+            <div class="offcanvas-header">
+                <h1 class="offcanvas-title">Quản lí cửa hàng</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
             </div>
+            <div class="offcanvas-body">
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=dashBoard">Bảng diều khiển</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="employee?action=manageEmp">Quản lí nhân viên</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="discount?action=list">Quản lí giảm giá</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="manageblog">Quản lí Blog</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
+            </div>
+        </div>
+            
             <c:set var="n" value="${currentPage}"/>
             <ul class="pagination justify-content-center">
                 <c:forEach var="p" begin="${1}" end="${totalPages}">

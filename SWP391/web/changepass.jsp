@@ -22,7 +22,7 @@
     <body>
         <div class="container">
             <h2>Đổi Mật Khẩu</h2>
-            <form action="actionshop?action=changepass" method="post">
+            <form action="changepass" method="post">
                 <div class="form-group">
                     <label for="currentPassword">Mật khẩu cũ</label>
                     <input type="password" class="form-control" id="currentPassword" name="currentPassword" required minlength="6">

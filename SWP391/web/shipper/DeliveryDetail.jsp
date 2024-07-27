@@ -65,11 +65,11 @@
                     <c:if test="${acc!=null}">
                         <form class="d-flex" action="" method="get">
                             <input type="hidden" name="action" value="">
-<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                   style="width: 300px">
-                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                <i class="fa fa-search text-body"></i>
-                            </button>-->
+                            <!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                               style="width: 300px">
+                                                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                            <i class="fa fa-search text-body"></i>
+                                                        </button>-->
                             <!--                            <a class="btn btn-square bg-white rounded-circle me-2" href="">
                                                             <i class="fa fa-user text-body"></i>
                                                         </a>-->
@@ -82,8 +82,13 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="">
+                                        <a class="dropdown-item" href="profile">
                                             Hồ sơ
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="actionshipper?action=homeShipper">
+                                            Danh sách giao hàng
                                         </a>
                                     </li>
                                     <li>
@@ -167,7 +172,7 @@
             </c:forEach>
         </ul>  
 
-        <footer>
+<!--        <footer>
             <div class="bg-dark p-3">
                 <div class="container text-white">
                     <div class="row">
@@ -189,6 +194,6 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer>-->
     </body>
 </html>

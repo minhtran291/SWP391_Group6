@@ -206,6 +206,8 @@
                 <p><a class="btn text-white btn-primary" 
                       href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
@@ -217,6 +219,7 @@
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
             </div>
         </div>
+                                
         <c:set var="n" value="${currentPage}"/>
         <ul class="pagination justify-content-center">
             <c:forEach var="p" begin="${1}" end="${totalPages}">

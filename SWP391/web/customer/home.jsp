@@ -94,6 +94,11 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a class="dropdown-item" href="actioncustomer?action=getListFood">
+                                            Danh sách sản phẩm
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="actioncustomer?action=history">
                                             Đơn hàng
                                         </a>

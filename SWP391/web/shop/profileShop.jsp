@@ -52,11 +52,11 @@
                 <div>
                     <form class="d-flex" action="actionshop" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
-                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+<!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
                                style="width: 300px">
                         <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
                             <i class="fa fa-search text-body"></i>
-                        </button>
+                        </button>-->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -74,11 +74,11 @@
                                                                         Đơn hàng
                                                                     </a>
                                                                 </li>-->
-                                <li>
+<!--                                <li>
                                     <a class="dropdown-item" href="managecomment?action=viewcomment">
                                         Xem lại bình luận
                                     </a>
-                                </li>
+                                </li>-->
                                 <li>
                                     <a class="dropdown-item" href="logout">
                                         Đăng xuất
@@ -156,7 +156,7 @@
                             </div>
                             <div class="row d-flex justify-content-center">
                                 <!--<button class="btn btn-primary w-25">Cập nhật</button>-->
-                                <a class="btn btn-primary w-25" href="UpdateProfile.jsp">Cập Nhật</a>
+                                <a class="btn btn-primary w-25" href="updateprofile">Cập Nhật</a>
                             </div>
                         </div>
                     </div>
@@ -188,11 +188,15 @@
                 <p><a class="btn text-white btn-primary" 
                       href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="discount?action=list">Quản lí giảm giá</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="manageblog">Quản lí Blog</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
             </div>

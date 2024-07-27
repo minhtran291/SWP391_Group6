@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.CategoryDAO;
@@ -24,7 +23,6 @@ import model.Category;
 public class CategoryServlet extends HttpServlet {
 
     private CategoryDAO categoryDAO;
-    
 
     @Override
     public void init() {
@@ -80,8 +78,32 @@ public class CategoryServlet extends HttpServlet {
     private void listCategory(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Category> listCategory = categoryDAO.getCategoryManagerment();
+        pagingListCategory(request, response, 5, listCategory);
         request.setAttribute("categoryList", listCategory);
         request.getRequestDispatcher("shop/manageCategory.jsp").forward(request, response);
+    }
+
+    private void pagingListCategory(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, List<Category> listCategory) throws ServletException, IOException {
+//        if (listOrderConfirm == null) {
+//            return;
+//        }
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<Category> categoryOnCurrentPage = new ArrayList<>(listCategory.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listCategory.size())));
+
+        int totalPages = (int) Math.ceil((double) listCategory.size() / numberPerPage);
+
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("categoryOnCurrentPage", categoryOnCurrentPage);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
@@ -98,23 +120,39 @@ public class CategoryServlet extends HttpServlet {
     }
 
     private void insertCategory(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         HttpSession session = request.getSession();
         String name = request.getParameter("name");
+        String errorCategoryName = "";
+        if(!categoryDAO.checkCategoryName(name)){
+            errorCategoryName = "Tên thể loại đã có rồi";
+            request.setAttribute("errorCategoryName", errorCategoryName);
+            request.getRequestDispatcher("shop/manageCategory.jsp").forward(request, response);
+        }
+        
         categoryDAO.addCategory(name);
-        ArrayList<Category> cList =(ArrayList) categoryDAO.getAllCategory();
-        session.setAttribute("cList", cList);
+//        ArrayList<Category> cList = (ArrayList) categoryDAO.getAllCategory();
+//        session.setAttribute("cList", cList);
+        listCategory(request, response);
         response.sendRedirect("CategoryServlet?action=manageCategory");
     }
 
     private void updateCategory(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         HttpSession session = request.getSession();
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
+        String errorCategoryNameUpdate = "";
+        if(!categoryDAO.checkCategoryNameUpdate(name, id)){
+            errorCategoryNameUpdate = "Tên thể loại đã có rồi";
+            request.setAttribute("id", id);
+            request.setAttribute("errorCategoryNameUpdate", errorCategoryNameUpdate);
+            request.getRequestDispatcher("shop/manageCategory.jsp").forward(request, response);
+        }
         categoryDAO.updateCategory(id, name);
-        ArrayList<Category> cList =(ArrayList) categoryDAO.getAllCategory();
-        session.setAttribute("cList", cList);
+//        ArrayList<Category> cList = (ArrayList) categoryDAO.getAllCategory();
+//        session.setAttribute("cList", cList);
+        listCategory(request, response);
         response.sendRedirect("CategoryServlet?action=manageCategory");
     }
 
@@ -123,8 +161,8 @@ public class CategoryServlet extends HttpServlet {
         HttpSession session = request.getSession();
         int id = Integer.parseInt(request.getParameter("id"));
         int status = Integer.parseInt(request.getParameter("status"));
-        categoryDAO.updateCategoryStatus(id,status);
-        ArrayList<Category> cList =(ArrayList) categoryDAO.getAllCategory();
+        categoryDAO.updateCategoryStatus(id, status);
+        ArrayList<Category> cList = (ArrayList) categoryDAO.getAllCategory();
         session.setAttribute("cList", cList);
         request.getRequestDispatcher("CategoryServlet?action=manageCategory").forward(request, response);
     }

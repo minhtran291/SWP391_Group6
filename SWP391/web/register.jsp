@@ -51,15 +51,11 @@
 
                                                     </div>
                                                 </div>
-
-
-
-
-
                                                 <div class="mb-4 pb-2">
                                                     <div class="form-outline">
                                                         <label class="" for="form3Examplev4">Mật khẩu </label>
-                                                        <input name="password" minlength="6" required style="border: solid #ebebeb 3px; width: 400px; border-radius: 30px" type="password" id="form3Examplev4" class="form-control form-control-lg" />
+                                                        <input name="password" minlength="8" required style="border: solid #ebebeb 3px; width: 400px; border-radius: 30px" type="password" id="form3Examplev4" class="form-control form-control-lg"
+                                                               pattern="(?=.*[a-zA-Z])(?=.*\d).{8,}" title="Mật khẩu phải có 8 ký tự, ít nhất 1 ký tự số"/>
 
                                                     </div>
                                                 </div>
@@ -97,10 +93,11 @@
                                                 <div class="mb-4 pb-2">
                                                     <div class="form-outline form-white">
                                                         <label class="" for="form3Examplea2">Số điện thoại</label>
-                                                        <input name="phone" pattern="[0-9]{10}" required style="border: solid white 1px; width: 400px; border-radius: 30px" type="tel" id="form3Examplea2" class="form-control form-control-lg" />
+                                                        <input name="phone" pattern="[0-9]{10}" required style="border: solid white 1px; width: 400px; border-radius: 30px" type="tel" id="form3Examplea2" class="form-control form-control-lg" 
+                                                               title="Số điện thoại phải có 10 chữ số"/>
                                                         <h5 style="color: red">
-                                                                ${errorPhone}
-                                                            </h5>
+                                                            ${errorPhone}
+                                                        </h5>
                                                     </div>
                                                 </div>
 
@@ -108,7 +105,7 @@
 
                                                 </div>
 
-                                                
+
 
                                                 <div class="mb-4 pb-2">
 
@@ -130,20 +127,21 @@
                                                 <div class="mb-4">
                                                     <div class="form-outline form-white">
                                                         <label class="" for="form3Examplea9">Email</label>
-                                                        <input name="email" required style="border: solid white 1px; width: 400px; border-radius: 30px" type="email" id="form3Examplea9" class="form-control form-control-lg" />
+                                                        <input name="email" required style="border: solid white 1px; width: 400px; border-radius: 30px" type="email" id="form3Examplea9" class="form-control form-control-lg" 
+                                                               pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" title="Hãy nhập đúng địa chỉ email hợp lệ ví dụ foody@gmail.com"/>
                                                         <h5 style="color: red">
-                                                                ${errorEmail}
-                                                            </h5>
+                                                            ${errorEmail}
+                                                        </h5>
                                                     </div>
                                                     <div><label class="text-danger" for="form3Examplea9">${requestScope.mess}</label></div>
                                                 </div>
 
-                                                <div class="form-check d-flex justify-content-start mb-4 pb-3">
+<!--                                                <div class="form-check d-flex justify-content-start mb-4 pb-3">
                                                     <input required class="form-check-input me-3" type="checkbox" value="" id="form2Example3c" />
                                                     <label class="form-check-label text-white" for="form2Example3">
                                                         Tôi đồng ý với các <a href="#!" class="text-white"><u>Điều khoản và Điều kiện</u></a> của trang web.
                                                     </label>
-                                                </div>
+                                                </div>-->
 
                                                 <button type="submit" class="btn btn-light btn-lg"
                                                         data-mdb-ripple-color="dark">Đăng ký</button>

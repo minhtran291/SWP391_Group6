@@ -67,11 +67,11 @@
                     <c:if test="${acc!=null}">
                         <form class="d-flex" action="actioncustomer" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                   style="width: 300px">
-                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                <i class="fa fa-search text-body"></i>
-                            </button>-->
+                            <!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                               style="width: 300px">
+                                                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                            <i class="fa fa-search text-body"></i>
+                                                        </button>-->
 
                             <div class="dropdown">
                                 <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -82,6 +82,11 @@
                                     <li>
                                         <a class="dropdown-item" href="profile">
                                             Hồ sơ
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="actioncustomer?action=getListFood">
+                                            Danh sách sản phẩm
                                         </a>
                                     </li>
                                     <li>
@@ -114,11 +119,11 @@
                     <c:if test="${acc==null}">
                         <form class="d-flex" action="actioncustomer" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                   style="width: 300px">
-                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                <i class="fa fa-search text-body"></i>
-                            </button>-->
+                            <!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                               style="width: 300px">
+                                                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                            <i class="fa fa-search text-body"></i>
+                                                        </button>-->
                             <a class="btn btn-square bg-white rounded-circle me-2" href="login">
                                 <i class="fa fa-user text-body"></i>
                             </a>

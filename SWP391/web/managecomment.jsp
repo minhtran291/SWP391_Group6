@@ -69,11 +69,11 @@
                 <div style="margin-right: 20px">
                     <form class="d-flex" action="actionshop?action=homeFood" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
-<!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                               style="width: 300px">
-                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                            <i class="fa fa-search text-body"></i>
-                        </button>-->
+                        <!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                       style="width: 300px">
+                                                <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                    <i class="fa fa-search text-body"></i>
+                                                </button>-->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -94,7 +94,11 @@
                                     </c:if>
 
                                 </li>
-                                <li><a class="dropdown-item" href="managefavorite?action=viewfavorite">Sản phẩm đã lưu</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="actioncustomer?action=getListFood">
+                                        Danh sách sản phẩm
+                                    </a>
+                                </li>
                                 <li>
                                     <a class="dropdown-item" href="actioncustomer?action=history">
                                         Đơn hàng
@@ -129,16 +133,16 @@
 
         <div class="flex-grow-1">
 
-<!--            <div class="d-flex bg-light mb-5">
-                <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>-->
+            <!--            <div class="d-flex bg-light mb-5">
+                            <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
+                                    </li>
+            
+                                </ul>
+                            </div>
+                        </div>-->
 
             <h1 class="text-center m-3">Lich sử bình luận</h1>
 

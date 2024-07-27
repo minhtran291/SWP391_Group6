@@ -225,7 +225,7 @@
                                     <i class="fa fa-user text-body"></i>
                                 </a>
                                 <a class="btn btn-square btn-transparent rounded-circle cart" href="customer/cart.jsp">
-                                    <div class="cart-count">${count_cart}</div>
+                                    <div class="cart-count"></div>
                                     <i class="fa fa-shopping-bag text-body"></i>
                                 </a>
                         </form>
@@ -449,11 +449,6 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                     &copy; <a href="#">Your Site Name</a>, All Right Reserved.
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                    Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                    <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
                 </div>
             </div>
         </div>

@@ -213,7 +213,7 @@ public class DiscountServlet extends HttpServlet {
             java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
             Discount discount = new Discount(fid, percentage, sqlStartDate, sqlEndDate);
             discountDAO.addDiscount(discount);
-            ArrayList<Food> fList = fd.getAllFood();
+            ArrayList<Food> fList = fd.getAllFoodCustomer();
             HttpSession session = request.getSession();
             session.setAttribute("fList", fList);
             listDiscounts(request, response);
@@ -283,7 +283,7 @@ public class DiscountServlet extends HttpServlet {
             java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
             Discount discount = new Discount(fid, percentage, sqlStartDate, sqlEndDate);
             discountDAO.updateDiscount(discount);
-            ArrayList<Food> fList = fd.getAllFood();
+            ArrayList<Food> fList = fd.getAllFoodCustomer();
             HttpSession session = request.getSession();
             session.setAttribute("fList", fList);
             listDiscounts(request, response);
@@ -294,7 +294,7 @@ public class DiscountServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("discountId"));
         discountDAO.deleteDiscount(id);
-        ArrayList<Food> fList = fd.getAllFood();
+        ArrayList<Food> fList = fd.getAllFoodCustomer();
         HttpSession session = request.getSession();
         session.setAttribute("fList", fList);
         listDiscounts(request, response);

@@ -12,10 +12,14 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import model.Category;
@@ -26,12 +30,15 @@ import model.Order;
 import model.OrderDetail;
 import model.User;
 
+@MultipartConfig(maxFileSize = 16177216)
+
 /**
  *
  * @author Dell
  */
 public class ActionShop extends HttpServlet {
 
+    private static final String UPLOAD_DIRECTORY = "img";
     CategoryDAO cd = new CategoryDAO();
     FoodDAO fd = new FoodDAO();
     UserDAO ud = new UserDAO();
@@ -141,8 +148,11 @@ public class ActionShop extends HttpServlet {
                 break;
             case "update-status":
                 updateStatus(request, response);
+                break;
+            case "confirmOrder":
+                confirmOrder(request, response, 5);
+                break;
         }
-
     }
 
     /**
@@ -186,8 +196,10 @@ public class ActionShop extends HttpServlet {
     private void getAllFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        ArrayList<Food> fList = (ArrayList) session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList) session.getAttribute("fList");
-        ArrayList<Category> cList = (ArrayList) session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList) session.getAttribute("cList");
+//        ArrayList<Food> fList = (ArrayList) session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList) session.getAttribute("fList");
+//        ArrayList<Category> cList = (ArrayList) session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList) session.getAttribute("cList");
+        ArrayList<Food> fList = fd.getAllFoodManager();
+        ArrayList<Category> cList = cd.getAllCategory();
         session.setAttribute("fList", fList);
         session.setAttribute("cList", cList);
         /* bat buoc phai set cac thuoc tinh ben tren theo dung thu tu va dat cai
@@ -239,13 +251,24 @@ public class ActionShop extends HttpServlet {
         String errorName = "";
         String errorPrice = "";
         String errorStock = "";
-
+        
+        
         String nameS = request.getParameter("name");
         String priceS = request.getParameter("price");
         String stockS = request.getParameter("stock");
         String cidS = request.getParameter("cid");
         String descriptionS = request.getParameter("description");
-        String imageS = request.getParameter("image");
+        Part imageS = request.getPart("image");
+        String image = null;
+        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+        String fileName = Paths.get(imageS.getSubmittedFileName()).getFileName().toString();
+        String filePath = uploadPath + File.separator + fileName;
+        imageS.write(filePath);
+        image = UPLOAD_DIRECTORY + "/" + fileName;
 
         if (!fd.checkFoodName(nameS)) {
             errorName = "Tên món ăn đã có rồi";
@@ -266,9 +289,9 @@ public class ActionShop extends HttpServlet {
                 int price = Integer.parseInt(priceS);
                 int stock = Integer.parseInt(stockS);
                 int cid = Integer.parseInt(cidS);
-                fd.addFood(nameS, price, stock, cid, descriptionS, imageS);
-                ArrayList<Food> fList = fd.getAllFood();
-                session.setAttribute("fList", fList);
+                fd.addFood(nameS, price, stock, cid, descriptionS, image);
+//                ArrayList<Food> fList = fd.getAllFood();
+//                session.setAttribute("fList", fList);
                 getAllFood(request, response, numberPerPage);
                 request.getRequestDispatcher("shop/manageFood.jsp").forward(request, response);
             } catch (Exception e) {
@@ -289,8 +312,24 @@ public class ActionShop extends HttpServlet {
         String stockS = request.getParameter("stock");
         String cidS = request.getParameter("cidUpdate");
         String descriptionS = request.getParameter("description");
-        String imageS = request.getParameter("image");
-        String soldS = request.getParameter("sold");
+//        String imageS = request.getParameter("image");
+//        String soldS = request.getParameter("sold");
+
+        Part imageS = request.getPart("image");
+        String image = request.getParameter("imageOld");
+
+        if (imageS != null && imageS.getSize() > 0) {
+            String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String fileName = Paths.get(imageS.getSubmittedFileName()).getFileName().toString();
+            String filePath = uploadPath + File.separator + fileName;
+            imageS.write(filePath);
+            image = UPLOAD_DIRECTORY + "/" + fileName;
+        }
 
         if (!fd.checkFoodName(nameS, idS)) {
             errorNameUpdate = "Tên món ăn đã có rồi";
@@ -314,11 +353,11 @@ public class ActionShop extends HttpServlet {
                 int price = Integer.parseInt(priceS);
                 int stock = Integer.parseInt(stockS);
                 int cid = Integer.parseInt(cidS);
-                int sold = Integer.parseInt(soldS);
-                fd.updateFood(id, nameS, price, stock, cid, descriptionS, imageS, sold);
+//                int sold = Integer.parseInt(soldS);
+                fd.updateFood(id, nameS, price, stock, cid, descriptionS, image);
 
-                ArrayList<Food> fList = fd.getAllFood();
-                session.setAttribute("fList", fList);
+//                ArrayList<Food> fList = fd.getAllFood();
+//                session.setAttribute("fList", fList);
                 getAllFood(request, response, numberPerPage);
                 request.getRequestDispatcher("shop/manageFood.jsp").forward(request, response);
             } catch (Exception e) {
@@ -329,11 +368,13 @@ public class ActionShop extends HttpServlet {
     private void deleteFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String idS = request.getParameter("deleteId");
+        String foodDeleteS = request.getParameter("foodDelete");
         try {
             int id = Integer.parseInt(idS);
-            fd.deleteFood(id);
-            ArrayList<Food> fList = fd.getAllFood();
-            session.setAttribute("fList", fList);
+            int foodDelete = Integer.parseInt(foodDeleteS);
+            fd.deleteFood(id, foodDelete);
+//            ArrayList<Food> fList = fd.getAllFood();
+//            session.setAttribute("fList", fList);
             getAllFood(request, response, numberPerPage);
             request.getRequestDispatcher("shop/manageFood.jsp").forward(request, response);
         } catch (Exception e) {
@@ -343,7 +384,7 @@ public class ActionShop extends HttpServlet {
 
     private void getFoodBySearch(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         String search = request.getParameter("search");
-        ArrayList<Food> listSearch = fd.getFoodBySearch(search);
+        ArrayList<Food> listSearch = fd.getFoodBySearchManage(search);
         request.setAttribute("listSearch", listSearch);
         request.setAttribute("search", search);
         pagingForFood(request, response, numberPerPage, listSearch);
@@ -353,9 +394,9 @@ public class ActionShop extends HttpServlet {
         String categoryId = request.getParameter("cid");
         ArrayList<Food> listFoodByCategory = new ArrayList<>();
         if (categoryId.equalsIgnoreCase("all")) {
-            listFoodByCategory = fd.getAllFood();
+            listFoodByCategory = fd.getAllFoodManager();
         } else {
-            listFoodByCategory = fd.getFoodByCategory(categoryId);
+            listFoodByCategory = fd.getFoodByCategoryManage(categoryId);
         }
         request.setAttribute("listFoodByCategory", listFoodByCategory);
         request.setAttribute("cid", categoryId);
@@ -401,7 +442,7 @@ public class ActionShop extends HttpServlet {
 
     private void getFoodBySort(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         String type = request.getParameter("type");
-        ArrayList<Food> listSort = fd.sort(type);
+        ArrayList<Food> listSort = fd.sortManage(type);
         request.setAttribute("listSort", listSort);
         request.setAttribute("type", type);
         pagingForFood(request, response, numberPerPage, listSort);
@@ -413,7 +454,7 @@ public class ActionShop extends HttpServlet {
         ArrayList<User> listEmployee = dd.getOrderNumber();
         session.setAttribute("listEmployee", listEmployee);
         if (listDelivery.isEmpty()) {
-            request.setAttribute("mess", "Không có dữ liệu!");
+            request.setAttribute("mess", "Chưa có đơn hàng cần giao");
         }
         pagingForOrderDivision(request, response, i, listDelivery);
         //request.setAttribute("listDelivery", listDelivery);
@@ -458,9 +499,15 @@ public class ActionShop extends HttpServlet {
         int numberFood = fd.getNumberFood();
         int numberUser = ud.getNumberCustomer();
         double profit = od.getTotalProfit();
-        double month6 = od.getTotalByMonth(6);
+        String yearS = request.getParameter("year");
+        int year;
+        if (yearS == null) {
+            yearS = "2024";
+        } 
+        year = Integer.parseInt(yearS);
+        List<Double> listTotalPrice = od.getTotalByMonth(year);
         request.setAttribute("foodOutOfStock", foodOutOfStock);
-        request.setAttribute("month6", month6);
+        request.setAttribute("listTotalPrice", listTotalPrice);
         request.setAttribute("numberOrder", numberOrder);
         request.setAttribute("numberFood", numberFood);
         request.setAttribute("numberUser", numberUser);
@@ -476,7 +523,8 @@ public class ActionShop extends HttpServlet {
 
         int orderId = Integer.parseInt(orderIdS);
         od.updateStatusConfirm(orderId, shipperNotesS);
-        getDashBoard(request, response);
+//        getDashBoard(request, response);
+        confirmOrder(request, response, 5);
     }
 
     private void od(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -516,7 +564,7 @@ public class ActionShop extends HttpServlet {
     public void updateStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idS = request.getParameter("id");
         String shopNotes = request.getParameter("shopNotes");
-        OrderDAO od = new OrderDAO();
+//        OrderDAO od = new OrderDAO();
         int id = Integer.parseInt(idS);
         od.updateStatus(5, id, 2, shopNotes, 3);
         getAllOrder(request, response);
@@ -580,7 +628,7 @@ public class ActionShop extends HttpServlet {
 
         request.getRequestDispatcher("/shop/order_manager.jsp").forward(request, response);
     }
-    
+
     private void pagingAllOrder(HttpServletRequest request, HttpServletResponse response,
             int numberPerPage, List<Order> listAllOrder) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -600,7 +648,7 @@ public class ActionShop extends HttpServlet {
         session.setAttribute("totalPages", totalPages);
         session.setAttribute("allOrderOnCurrentPage", allOrderOnCurrentPage);
     }
-    
+
     private void pagingOrderDetail(HttpServletRequest request, HttpServletResponse response,
             int numberPerPage, List<OrderDetail> listOrderDetail) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -619,5 +667,34 @@ public class ActionShop extends HttpServlet {
         session.setAttribute("currentPage", currentPage);
         session.setAttribute("totalPages", totalPages);
         session.setAttribute("orderDetailOnCurrentPage", orderDetailOnCurrentPage);
+    }
+
+    private void confirmOrder(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+        ArrayList<Order> listOrderConfirm = od.getOrderConfirm();
+        pagingConfirmOrder(request, response, numberPerPage, listOrderConfirm);
+        request.getRequestDispatcher("shop/confirmOrderManage.jsp").forward(request, response);
+    }
+
+    private void pagingConfirmOrder(HttpServletRequest request, HttpServletResponse response,
+            int numberPerPage, ArrayList<Order> listOrderConfirm) throws ServletException, IOException {
+        if (listOrderConfirm == null) {
+            return;
+        }
+        HttpSession session = request.getSession();
+        int currentPage = 1;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<Order> orderConfirmOnCurrentPage = new ArrayList<>(listOrderConfirm.subList(
+                (currentPage - 1) * numberPerPage,
+                Math.min(currentPage * numberPerPage,
+                        listOrderConfirm.size())));
+
+        int totalPages = (int) Math.ceil((double) listOrderConfirm.size() / numberPerPage);
+
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("totalPages", totalPages);
+        session.setAttribute("orderConfirmOnCurrentPage", orderConfirmOnCurrentPage);
     }
 }

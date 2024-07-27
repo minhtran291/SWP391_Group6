@@ -120,10 +120,12 @@ public class ActionShipper extends HttpServlet {
         if (statusS.equalsIgnoreCase("done")) {
             od.updateStatus(4, 2, orderId, shipperNotesS);
             od.updateDeliveryDate(orderId);
+            od.updateFood(orderId, "done");
         }
         if (statusS.equalsIgnoreCase("break")) {
             od.updateStatus(5, 3, orderId, shipperNotesS);
             od.updateDeliveryDate(orderId);
+            od.updateFood(orderId, "break");
         }
         getHomeShipper(request, response);
     }

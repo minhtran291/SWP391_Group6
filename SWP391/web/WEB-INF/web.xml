@@ -196,6 +196,10 @@
         <servlet-name>GetWard</servlet-name>
         <servlet-class>controller.GetWard</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateProfile</servlet-name>
+        <servlet-class>controller.UpdateProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ActionCustomer</servlet-name>
         <url-pattern>/actioncustomer</url-pattern>
@@ -351,5 +355,9 @@
     <servlet-mapping>
         <servlet-name>GetWard</servlet-name>
         <url-pattern>/getward</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProfile</servlet-name>
+        <url-pattern>/updateprofile</url-pattern>
     </servlet-mapping>
 </web-app>

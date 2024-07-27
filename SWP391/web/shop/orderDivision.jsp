@@ -60,11 +60,11 @@
                     <c:if test="${acc!=null}">
                         <form class="d-flex" action="actionshop" method="get">
                             <input type="hidden" name="action" value="getFoodBySearch">
-<!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                                   style="width: 300px">-->
-<!--                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                                <i class="fa fa-search text-body"></i>
-                            </button>-->
+                            <!--                            <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                               style="width: 300px">-->
+                            <!--                            <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                            <i class="fa fa-search text-body"></i>
+                                                        </button>-->
                             <!--                            <a class="btn btn-square bg-white rounded-circle me-2" href="">
                                                             <i class="fa fa-user text-body"></i>
                                                         </a>-->
@@ -81,16 +81,16 @@
                                             Hồ sơ
                                         </a>
                                     </li>
-<!--                                    <li>
-                                        <a class="dropdown-item" href="actioncustomer?action=history">
-                                            Đơn hàng
-                                        </a>
-                                    </li>-->
-<!--                                    <li>
-                                        <a class="dropdown-item" href="managecomment?action=viewcomment">
-                                            Xem lại bình luận
-                                        </a>
-                                    </li>-->
+                                    <!--                                    <li>
+                                                                            <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                                Đơn hàng
+                                                                            </a>
+                                                                        </li>-->
+                                    <!--                                    <li>
+                                                                            <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                                                                Xem lại bình luận
+                                                                            </a>
+                                                                        </li>-->
                                     <li>
                                         <a class="dropdown-item" href="logout">
                                             Đăng xuất
@@ -208,11 +208,15 @@
                 <p><a class="btn text-white btn-primary" 
                       href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="employee?action=manageEmp">Quản lí nhân viên</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="discount?action=list">Quản lí giảm giá</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="manageblog">Quản lí Blog</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=orderDivision">Phân đơn hàng</a></p>
             </div>
@@ -227,29 +231,70 @@
             </c:forEach>
         </ul>
 
-<!--        <footer>
-            <div class="bg-dark">
-                <div class="container text-white">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Liên hệ</h4>
-                            <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
-                            <p>Email: minh291@gmail.com</p>
-                            <p>Số điện thoại: 0123456789</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Liên kết</h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Trang chủ</a></li>
-                                <li><a href="#">Giới thiệu</a></li>
-                                <li><a href="#">Sản phẩm</a></li>
-                                <li><a href="#">Liên hệ</a></li>
-                            </ul>
+<!--        <ul class="pagination justify-content-center">
+            <c:if test="${totalPages > 1}">
+                 Trang đầu tiên 
+                <li class="page-item">
+                    <a class="page-link ${1==n?'active':''}" 
+                       href="actionshop?action=orderDivision&&page=1">1</a>
+                </li>
+
+                 Dấu ba chấm nếu cần 
+                <c:if test="${n > 3}">
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                </c:if>
+
+                 Các trang gần trang hiện tại 
+                <c:forEach var="p" begin="${n-1}" end="${n+1}">
+                    <c:if test="${p > 1 && p < totalPages}">
+                        <li class="page-item">
+                            <a class="page-link ${p==n?'active':''}" 
+                               href="actionshop?action=orderDivision&&page=${p}">${p}</a>
+                        </li>
+                    </c:if>
+                </c:forEach>
+
+                 Dấu ba chấm nếu cần 
+                <c:if test="${n < totalPages - 2}">
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                </c:if>
+
+                 Trang cuối cùng 
+                <li class="page-item">
+                    <a class="page-link ${totalPages==n?'active':''}" 
+                       href="actionshop?action=orderDivision&&page=${totalPages}">${totalPages}</a>
+                </li>
+            </c:if>
+        </ul>-->
+
+
+        <!--        <footer>
+                    <div class="bg-dark">
+                        <div class="container text-white">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Liên hệ</h4>
+                                    <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
+                                    <p>Email: minh291@gmail.com</p>
+                                    <p>Số điện thoại: 0123456789</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Liên kết</h4>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Trang chủ</a></li>
+                                        <li><a href="#">Giới thiệu</a></li>
+                                        <li><a href="#">Sản phẩm</a></li>
+                                        <li><a href="#">Liên hệ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </footer>-->
+                </footer>-->
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {

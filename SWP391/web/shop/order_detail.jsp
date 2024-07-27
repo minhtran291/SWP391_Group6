@@ -86,7 +86,7 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="profile">
+                                        <a class="dropdown-item" href="actionshop?action=profile">
                                             Hồ sơ
                                         </a>
                                     </li>
@@ -206,6 +206,8 @@
                       href="actionshop?action=manageFood">Quản lí sản phẩm</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
+                <p><a class="btn text-white btn-primary" 
+                      href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 
                       href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                 <p><a class="btn text-white btn-primary" 

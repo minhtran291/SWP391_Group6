@@ -278,8 +278,10 @@ public class ActionCustomer extends HttpServlet {
 
     private void getAllFood(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        ArrayList<Food> fList = (ArrayList) session.getAttribute("fList") == null ? fd.getAllFood() : (ArrayList) session.getAttribute("fList");
-        ArrayList<Category> cList = (ArrayList) session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList) session.getAttribute("cList");
+        //ArrayList<Food> fList = (ArrayList) session.getAttribute("fList") == null ? fd.getAllFoodCustomer(): (ArrayList) session.getAttribute("fList");
+        //ArrayList<Category> cList = (ArrayList) session.getAttribute("cList") == null ? cd.getAllCategory() : (ArrayList) session.getAttribute("cList");
+        ArrayList<Food> fList = fd.getAllFoodCustomer();
+        ArrayList<Category> cList = cd.getAllCategory();
         // ko phan phai lan dau tien chay ko can get all nua chi goi du lieu ve
         session.setAttribute("fList", fList);
         session.setAttribute("cList", cList);

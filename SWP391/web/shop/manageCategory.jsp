@@ -60,11 +60,11 @@
                 <div style="margin-right: 20px">
                     <form class="d-flex" action="actionshop?action=homeFood" method="get">
                         <input type="hidden" name="action" value="getFoodBySearch">
-<!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
-                               style="width: 300px">
-                        <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
-                            <i class="fa fa-search text-body"></i>
-                        </button>-->
+                        <!--                        <input class="form-control me-2" type="text" placeholder="Tìm kiếm" name="search"
+                                                       style="width: 300px">
+                                                <button class="btn btn-square bg-white rounded-circle me-2" type="submit">
+                                                    <i class="fa fa-search text-body"></i>
+                                                </button>-->
 
                         <div class="dropdown">
                             <button type="button" class="btn btn-square bg-white rounded-circle me-2 dropdown-toggle" 
@@ -73,7 +73,7 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li >
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="actionshop?action=profile">
                                         Hồ sơ
                                     </a>
                                 </li>
@@ -82,11 +82,11 @@
                                                                         Đơn hàng
                                                                     </a>
                                                                 </li>-->
-<!--                                <li>
-                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
-                                        Xem lại bình luận
-                                    </a>
-                                </li>-->
+                                <!--                                <li>
+                                                                    <a class="dropdown-item" href="managecomment?action=viewcomment">
+                                                                        Xem lại bình luận
+                                                                    </a>
+                                                                </li>-->
                                 <li>
                                     <a class="dropdown-item" href="logout">
                                         Đăng xuất
@@ -107,25 +107,25 @@
 
         <div class="flex-grow-1">
 
-<!--            <div class="d-flex bg-light mb-5">
-                <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
-                                Thể loại</button>
-                            <ul class="dropdown-menu">
-                                <c:forEach var="c" items="${categoryList}">
-                                    <li><a class="dropdown-item" 
-                                           href="actionshop?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
-                                    </c:forEach>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>-->
+            <!--            <div class="d-flex bg-light mb-5">
+                            <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="actionshop?action=homeFood" style="font-size: 16px;">Trang chủ</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
+                                            Thể loại</button>
+                                        <ul class="dropdown-menu">
+            <c:forEach var="c" items="${categoryList}">
+                <li><a class="dropdown-item" 
+                       href="actionshop?action=getFoodByCategory&&cid=${c.category_id}">${c.category_name}</a></li>
+            </c:forEach>
+    </ul>
+</li>
+</ul>
+</div>
+</div>-->
 
             <div class="flex-grow-1">
                 <h1 class="text-center m-3">Quản lý thể loại sản phẩm</h1>
@@ -145,8 +145,10 @@
                             <div class="modal-body">
                                 <form action="CategoryServlet" method="post">
                                     <div class="mb-3">
+                                        <input type="hidden" name="page" value="${n}">
                                         <label for="name" class="form-label">Tên thể loại</label>
                                         <input type="text" class="form-control" id="name" name="name" required>
+                                        <h5 class="text-danger">${requestScope.errorCategoryName}</h5>
                                     </div>
                                     <button type="submit" class="btn btn-primary" name="action" value="insert">Lưu</button>
                                 </form>
@@ -163,7 +165,7 @@
 
                     </tr>
                     <!-- Iterate through categories -->
-                    <c:forEach var="c" items="${categoryList}">
+                    <c:forEach var="c" items="${categoryOnCurrentPage}">
                         <tr>
                             <td>${c.category_id}</td>
                             <td>${c.category_name}</td>
@@ -183,8 +185,10 @@
                                             <div class="modal-body">
                                                 <form action="CategoryServlet" method="post">
                                                     <div class="mb-3">
+                                                        <input type="hidden" name="page" value="${n}">
                                                         <label for="name${c.category_id}" class="form-label">Tên thể loại</label>
                                                         <input type="text" class="form-control" id="name${c.category_id}" name="name" value="${c.category_name}" required>
+                                                        <h5 class="text-danger">${requestScope.errorCategoryNameUpdate}</h5>
                                                     </div>
                                                     <input type="hidden" name="id" value="${c.category_id}">
                                                     <button type="submit" class="btn btn-primary" name="action" value="update">Lưu</button>
@@ -196,12 +200,12 @@
 
 
                                 <c:if test="${c.status==1}">
-                                    <a class="btn btn-danger" href="CategoryServlet?action=updateStatus&id=${c.category_id}&status=0" >
+                                    <a class="btn btn-danger" href="CategoryServlet?action=updateStatus&id=${c.category_id}&status=0&&page=${n}" >
                                         Ẩn
                                     </a>
                                 </c:if>
                                 <c:if test="${c.status==0}">
-                                    <a class="btn btn-danger" href="CategoryServlet?action=updateStatus&id=${c.category_id}&status=1" >
+                                    <a class="btn btn-danger" href="CategoryServlet?action=updateStatus&id=${c.category_id}&status=1&&page=${n}" >
                                         Hiện
                                     </a>
                                 </c:if>
@@ -223,6 +227,8 @@
                     <p><a class="btn text-white btn-primary" 
                           href="CategoryServlet?action=manageCategory">Quản lí thể loại sản phẩm</a></p>
                     <p><a class="btn text-white btn-primary" 
+                          href="actionshop?action=confirmOrder">Xác nhận đơn hàng</a></p>
+                    <p><a class="btn text-white btn-primary" 
                           href="actionshop?action=all-order">Quản lí đơn hàng</a></p>
                     <p><a class="btn text-white btn-primary" 
                           href="employee?action=manageEmp">Quản lí nhân viên</a></p>
@@ -235,52 +241,59 @@
                 </div>
             </div>
 
-            <!-- Pagination -->
             <!--            <ul class="pagination justify-content-center">
-                             Pagination logic here 
             <c:forEach var="p" begin="${1}" end="${totalPages}">
-                <li class="page-item ${p == currentPage ? 'active' : ''}">
+                <li class="page-item ${p==n?"active":""}">
                     <a class="page-link" href="CategoryServlet?action=list&page=${p}">${p}</a>
                 </li>
             </c:forEach>
         </ul>-->
 
-<!--            <footer>
-                 Footer content here 
-                <div class="bg-dark p-3">
-                    <div class="container text-white">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h4>Liên hệ</h4>
-                                <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
-                                <p>Email: minh291@gmail.com</p>
-                                <p>Số điện thoại: 0123456789</p>
+            <ul class="pagination justify-content-center">
+                <c:forEach var="p" begin="${1}" end="${totalPages}">
+                    <li class="page-item">
+                        <a class="page-link ${p==n?"active":""}"  
+                           href="CategoryServlet?action=list&&page=${p}">${p}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+
+            <!--            <footer>
+                             Footer content here 
+                            <div class="bg-dark p-3">
+                                <div class="container text-white">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4>Liên hệ</h4>
+                                            <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
+                                            <p>Email: minh291@gmail.com</p>
+                                            <p>Số điện thoại: 0123456789</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Liên kết</h4>
+                                            <ul class="list-unstyled">
+                                                <li><a href="#">Trang chủ</a></li>
+                                                <li><a href="#">Giới thiệu</a></li>
+                                                <li><a href="#">Sản phẩm</a></li>
+                                                <li><a href="#">Liên hệ</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <h4>Liên kết</h4>
-                                <ul class="list-unstyled">
-                                    <li><a href="#">Trang chủ</a></li>
-                                    <li><a href="#">Giới thiệu</a></li>
-                                    <li><a href="#">Sản phẩm</a></li>
-                                    <li><a href="#">Liên hệ</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>-->
+                        </footer>-->
 
             <script>
                 // JavaScript logic here
-                var errorName = "${requestScope.errorName}";
-                if (errorName && errorName.trim() !== "") {
+                var errorName = "${requestScope.errorCategoryName}";
+                if (errorName.trim() !== "") {
                     $(document).ready(function () {
                         $('#addCategory').modal('show');
                     });
                 }
 
-                var errorNameUpdate = "${requestScope.errorNameUpdate}";
-                if (errorNameUpdate && errorNameUpdate.trim() !== "") {
+                var errorNameUpdate = "${requestScope.errorCategoryNameUpdate}";
+                if (errorNameUpdate.trim() !== "") {
                     $(document).ready(function () {
                         $('#updateCategory${id}').modal('show');
                     });
