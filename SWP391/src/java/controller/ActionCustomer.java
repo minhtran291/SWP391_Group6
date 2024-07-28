@@ -356,7 +356,7 @@ public class ActionCustomer extends HttpServlet {
     }
 
     private void getFoodBySearch(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
-        String search = request.getParameter("search");
+        String search = request.getParameter("search").trim();
         ArrayList<Food> listSearch = fd.getFoodBySearch(search);
         request.setAttribute("listSearch", listSearch);
         request.setAttribute("search", search);

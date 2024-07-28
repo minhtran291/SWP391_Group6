@@ -4,7 +4,9 @@
  */
 package controller;
 
-import dal.UserDAO;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import dal.CommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +14,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import model.User;
 
 /**
  *
- * @author phamc
+ * @author Dell
  */
-public class ChangePasswordServerlet extends HttpServlet {
+public class RatingStar extends HttpServlet {
 
-    UserDAO ud = new UserDAO();
+    CommentDAO cd = new CommentDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +42,10 @@ public class ChangePasswordServerlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePasswordServerlet</title>");
+            out.println("<title>Servlet RatingStar</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ChangePasswordServerlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RatingStar at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,10 +63,18 @@ public class ChangePasswordServerlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//        processRequest(request, response);
         HttpSession session = request.getSession();
+        String foodId = request.getParameter("foodId");
+        int fId = Integer.parseInt(foodId);
         User u = (User) session.getAttribute("acc");
-        session.setAttribute("acc", u);
-        request.getRequestDispatcher("changepass.jsp").forward(request, response);
+        int rating = cd.getRatingbyFoodID(fId, u.getUsername());
+
+        JsonObject responseJson = new JsonObject();
+        responseJson.addProperty("rating", rating);
+
+        response.setContentType("application/json");
+        response.getWriter().write(responseJson.toString());
     }
 
     /**
@@ -77,34 +88,30 @@ public class ChangePasswordServerlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String currentPassword = request.getParameter("currentPassword");
-        String newPassword = request.getParameter("newPassword");
-        String confirmPassword = request.getParameter("confirmPassword");
-
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("acc");
-
-        if (!currentPassword.equals(u.getPassword())) {
-            request.setAttribute("message", "Mật khẩu cũ không chính xác");
-            request.getRequestDispatcher("changepass.jsp").forward(request, response);
-
-        } else if (!newPassword.equals(confirmPassword)) {
-            request.setAttribute("message", "Mật khẩu mới và xác nhận mật khẩu không khớp");
-            request.getRequestDispatcher("changepass.jsp").forward(request, response);
-
-        } else {
-            ud.updatePassword(u, newPassword);
-            if(u.getRoleid() == 1){
-                request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
-            }else if(u.getRoleid() == 2){
-                request.getRequestDispatcher("/shop/profileShop.jsp").forward(request, response);
-            }else if(u.getRoleid() == 3){
-                request.getRequestDispatcher("/shipper/profileShipper.jsp").forward(request, response);
-            }else if(u.getRoleid() == 4){
-                request.getRequestDispatcher("/admin/profileAdmin.jsp").forward(request, response);
-            }
+        BufferedReader reader = request.getReader();
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
         }
 
+        // Phân tích dữ liệu JSON
+        String requestBody = sb.toString();
+        JsonObject jsonObject = JsonParser.parseString(requestBody).getAsJsonObject();
+        int foodId = jsonObject.get("foodId").getAsInt();
+        String username = jsonObject.get("username").getAsString();
+        int rating = jsonObject.get("rating").getAsInt();
+
+        // Lưu đánh giá
+//        RatingDAO ratingDAO = new RatingDAO();
+        cd.addRating(foodId, username, rating);
+
+        // Gửi phản hồi
+        JsonObject responseJson = new JsonObject();
+        responseJson.addProperty("message", "Đánh giá đã được lưu thành công");
+
+        response.setContentType("application/json");
+        response.getWriter().write(responseJson.toString());
     }
 
     /**

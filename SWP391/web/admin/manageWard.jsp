@@ -71,9 +71,17 @@
                                 <i class="fa fa-user text-body"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-
-
-
+                                <li>
+                                    <a class="dropdown-item" href="actionadmin?action=profile">
+                                        Hồ sơ
+                                    </a>
+                                </li>
+                                <!--                                <li>
+                                                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                        Đơn hàng
+                                                                    </a>
+                                                                </li>-->
+                                
                                 <li>
                                     <a class="dropdown-item" href="logout">
                                         Đăng xuất
@@ -225,6 +233,8 @@
             </div>
             <div class="offcanvas-body">
                 <p><a class="btn text-white btn-primary" 
+                      href="actionadmin?action=dashboard">Bảng điều khiển</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionadmin?action=manageAcc">Quản lí tài khoản</a></p>
                 <!--                <p><a class="btn text-white btn-primary" 
                                       href="">Quản lí địa điểm giao nhận hàng</a></p>-->
@@ -249,7 +259,7 @@
             </c:forEach>
         </ul>
 
-        <footer>
+<!--        <footer>
             <div class="bg-dark p-3">
                 <div class="container text-white">
                     <div class="row">
@@ -271,7 +281,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer>-->
 
         <script>
             var errorWardName = "${requestScope.errorWardName}";

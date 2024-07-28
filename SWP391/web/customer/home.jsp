@@ -153,9 +153,9 @@
             <div class="d-flex bg-light mb-5">
                 <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" href="actioncustomer?action=getListFood" style="font-size: 16px;">Trang chủ</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item dropdown">
                             <button type="button" class="btn text-secondary dropdown-toggle" data-bs-toggle="dropdown"">
                                 Thể loại</button>
@@ -186,10 +186,10 @@
                                        href="actioncustomer?action=homeSort&&type=7">Số lượng đã bán nhiều</a></li>
                                 <li><a class="dropdown-item ${type eq "8"?"active":""}" 
                                        href="actioncustomer?action=homeSort&&type=8">Số lượng đã bán ít</a></li>
-                                <li><a class="dropdown-item ${type eq "9"?"active":""}" 
+<!--                                <li><a class="dropdown-item ${type eq "9"?"active":""}" 
                                        href="actioncustomer?action=homeSort&&type=9">Số lượng tồn kho nhiều</a></li>
                                 <li><a class="dropdown-item ${type eq "10"?"active":""}" 
-                                       href="actioncustomer?action=homeSort&&type=10">Số lượng tồn kho ít</a></li>
+                                       href="actioncustomer?action=homeSort&&type=10">Số lượng tồn kho ít</a></li>-->
                             </ul>
                         </li>
                     </ul>

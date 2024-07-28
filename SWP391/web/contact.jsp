@@ -88,10 +88,10 @@
                             <c:if test="${acc!=null}">
                                 <form class="d-none d-lg-flex ms-2 align-items-center">
                                     <div class="input-group">
-                                        <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
-                                        <button class="btn btn-outline-success" type="submit">
-                                            <i class="fa fa-search"></i>
-                                        </button>
+                                        <!--                                        <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                                                                                <button class="btn btn-outline-success" type="submit">
+                                                                                    <i class="fa fa-search"></i>
+                                                                                </button>-->
 
 
 
@@ -142,7 +142,7 @@
                                             <i class="fa fa-user text-body"></i>
                                         </a>
                                         <a class="btn btn-square btn-transparent rounded-circle cart" href="customer/cart.jsp">
-                                            <div class="cart-count">${count_cart}</div>
+                                            <div class="cart-count"></div>
                                             <i class="fa fa-shopping-bag text-body"></i>
                                         </a>
                                 </form>
@@ -181,19 +181,13 @@
                 <div class="row g-5 justify-content-center">
                     <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="bg-primary text-white d-flex flex-column justify-content-center h-100 p-5">
-                            <h5 class="text-white">Call Us</h5>
+                            <h5 class="text-white">Số điện thoại</h5>
                             <p class="mb-5"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                            <h5 class="text-white">Email Us</h5>
+                            <h5 class="text-white">Email</h5>
                             <p class="mb-5"><i class="fa fa-envelope me-3"></i>foody@gmail.com</p>
-                            <h5 class="text-white">Office Address</h5>
+                            <h5 class="text-white">Địa chỉ</h5>
                             <p class="mb-5"><i class="fa fa-map-marker-alt me-3"></i>Thạch Hòa, Thạch Thất, Hà Nội</p>
-                            <h5 class="text-white">Follow Us</h5>
-                            <div class="d-flex pt-2">
-                                <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
-                                <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
-                            </div>
+
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
@@ -207,28 +201,28 @@
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="text" id="name" name="name" class="form-control" value="${not empty param.name ? param.name : ''}" required>
-                                        <label for="name">Your Name</label>
+                                        <label for="name">Họ và tên</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
                                         <input type="email" id="email" name="email" class="form-control" value="${not empty param.email ? param.email : ''}" required>
-                                        <label for="email">Your Email</label>
+                                        <label for="email">Email</label>
                                     </div>
                                 </div>
                                 <div class="form-floating">
                                     <input type="text" id="phone" name="phone" class="form-control" value="${not empty param.phone ? param.phone : ''}" required>
-                                    <label for="email">Phone</label>
+                                    <label for="email">Số điện thoại</label>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <textarea name="message" id="message" class="form-control" cols="30" rows="8" required>${not empty param.message ? param.message : ''}</textarea>
-                                        <label for="message">Message</label>
+                                        <label for="message">Lời nhắn</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <input type="submit" value="Send Message" class="btn btn-primary text-white font-weight-bold">
+                                    <input type="submit" value="Gửi" class="btn btn-primary text-white font-weight-bold">
                                 </div>
                             </div>
                         </form>
@@ -242,7 +236,7 @@
         <!-- Google Map Start -->
         <div class="container-xxl px-0 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -6px;">
             <iframe class="w-100" style="height: 450px;"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5267.2598336501305!2d105.52461126331079!3d21.012064055357843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abc60e7d3f19%3A0x2be9d7d0b5abcbf4!2sFPT%20University!5e0!3m2!1sen!2s!4v1722061231461!5m2!1sen!2s"
                     frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
         </div>
         <!-- Google Map End -->
@@ -276,31 +270,32 @@
                         <a class="btn btn-link" href="">Terms & Condition</a>
                         <a class="btn btn-link" href="">Support</a>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h4 class="text-light mb-4">Newsletter</h4>
-                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                        <div class="position-relative mx-auto" style="max-width: 400px;">
-                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                        </div>
-                    </div>
+                    <!--                <div class="col-lg-3 col-md-6">
+                                        <h4 class="text-light mb-4">Newsletter</h4>
+                                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                                        <div class="position-relative mx-auto" style="max-width: 400px;">
+                                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                                        </div>
+                                    </div>-->
                 </div>
             </div>
-            <div class="container-fluid copyright">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+            <!--        <div class="container-fluid copyright">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                                    &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                                </div>
+                                <div class="col-md-6 text-center text-md-end">
+                                    /*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/
+                                    Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                                    <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6 text-center text-md-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                            <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    </div>-->
         </div>
+        <!-- Footer End -->
         <!-- Footer End -->
 
 

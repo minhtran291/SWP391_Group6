@@ -19,6 +19,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 /**
  *
@@ -107,20 +108,16 @@ public class ContactServlet extends HttpServlet {
             MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(user));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            msg.setSubject("Contact Form Submission from " + name);
+            msg.setSubject(MimeUtility.encodeText("Contact Form Submission from " + name, "UTF-8", null));
             msg.setText("Name: " + name + "\nPhone: " + phone + "\nEmail: " + email + "\n\nMessage:\n" + message, "UTF-8");
-
 
             Transport.send(msg);
 
-
-            request.setAttribute("message", "Thank you for contacting us! Your message has been sent.");
-
+            request.setAttribute("message", "Cảm ơn bạn đã liên hệ với chúng tôi! Tin nhắn của bạn đã được gửi.");
         } catch (MessagingException e) {
             e.printStackTrace();
-            request.setAttribute("message", "There was an error sending your message. Please try again later.");
+            request.setAttribute("message", "Đã xảy ra lỗi khi gửi tin nhắn của bạn. Vui lòng thử lại sau.");
         }
-
 
         request.getRequestDispatcher("contact.jsp").forward(request, response);
     

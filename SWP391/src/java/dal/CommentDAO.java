@@ -136,22 +136,11 @@ public class CommentDAO extends DBContext {
         }
     }
 
-    public void addRating(String foodId, String name, int rating) {
-        String sql = "INSERT INTO [dbo].[rating]\n"
-                + "           ([food_id]\n"
-                + "           ,[user_name]\n"
-                + "           ,[rating]\n"
-                + "           ,[created_date])\n"
-                + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,getDate())\n"
-                + "\n"
-                + "";
+    public void addRating(int foodId, String name, int rating) {
+        String sql = "insert into rating ([food_id], [user_name], [rating], [created_date]) values (?,?,?,getDate())";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, foodId);
+            ps.setInt(1, foodId);
             ps.setString(2, name);
             ps.setInt(3, rating);
             ps.executeUpdate();
@@ -159,21 +148,20 @@ public class CommentDAO extends DBContext {
         }
     }
 
-    public Comment getRatingbyFoodID(String foodId) {
-        String sql = "SELECT TOP (1000) [rating_id], [rating]\n"
-                + "      \n"
-                + "  FROM [SWP391].[dbo].[rating]"
-                + " where food_id = ? ";
+    public int getRatingbyFoodID(int foodId, String username) {
+        String sql = "select * from rating where food_id = ? and user_name = ?";
+        int rating;
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, foodId);
+            ps.setInt(1, foodId);
+            ps.setString(2, username);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return new Comment(rs.getInt("rating_id"),
-                        rs.getInt("rating"));
+            if (rs.next()) {
+                rating = rs.getInt("rating");
+                return rating;
             }
         } catch (Exception e) {
         }
-        return null;
+        return 0;
     }
 }

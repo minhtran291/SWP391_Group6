@@ -12,7 +12,7 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Foody - Organic Food Website Template</title>
+        <title>Foody - Organic Food Website</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -88,10 +88,10 @@
                             <c:if test="${acc!=null}">
                                 <form class="d-none d-lg-flex ms-2 align-items-center">
                                     <div class="input-group">
-                                        <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+<!--                                        <input type="text" class="form-control border-1" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
                                         <button class="btn btn-outline-success" type="submit">
                                             <i class="fa fa-search"></i>
-                                        </button>
+                                        </button>-->
 
 
 
@@ -142,7 +142,7 @@
                                             <i class="fa fa-user text-body"></i>
                                         </a>
                                         <a class="btn btn-square btn-transparent rounded-circle cart" href="customer/cart.jsp">
-                                            <div class="cart-count">${count_cart}</div>
+                                            <div class="cart-count"></div>
                                             <i class="fa fa-shopping-bag text-body"></i>
                                         </a>
                                 </form>
@@ -270,30 +270,30 @@
                     <a class="btn btn-link" href="">Terms & Condition</a>
                     <a class="btn btn-link" href="">Support</a>
                 </div>
-                <div class="col-lg-3 col-md-6">
+<!--                <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Newsletter</h4>
                     <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                     <div class="position-relative mx-auto" style="max-width: 400px;">
                         <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                         <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
-        <div class="container-fluid copyright">
+<!--        <div class="container-fluid copyright">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                         &copy; <a href="#">Your Site Name</a>, All Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        /*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/
                         Designed By <a href="https://htmlcodex.com">HTML Codex</a>
                         <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
     <!-- Footer End -->
 

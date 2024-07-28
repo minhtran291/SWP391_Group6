@@ -99,6 +99,9 @@ public class Login extends HttpServlet {
         if (acc == null) {
             request.setAttribute("mess", "Tên đăng nhập hoặc mật khẩu không chính xác!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else if (acc.getStatus() == 0) {
+            request.setAttribute("mess", "Tài khoản của bạn đã bị khóa");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("acc", acc);
@@ -109,7 +112,7 @@ public class Login extends HttpServlet {
             } else if (acc.getRoleid() == 3) {
                 response.sendRedirect("actionshipper?action=homeShipper");
             } else if (acc.getRoleid() == 4) {
-                response.sendRedirect("actionadmin?action=manageAcc");
+                response.sendRedirect("actionadmin?action=dashboard");
             }
         }
     }

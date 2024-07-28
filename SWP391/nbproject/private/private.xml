@@ -13,18 +13,27 @@
             <file>file:/D:/PRJ_SWP391/SWP391/web/customer/cart.jsp</file>
             <file>file:/D:/PRJ_SWP391/SWP391/web/detail.jsp</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/D:/SWP391/Code_fix/SWP391_Group6/SWP391/web/admin/manageAccount.jsp</file>
+            <file>file:/D:/SWP391/Code_fix/SWP391_Group6/SWP391/web/shop/profileShop.jsp</file>
+            <file>file:/D:/SWP391/Code_fix/SWP391_Group6/SWP391/web/shop/manageEmployee.jsp</file>
+            <file>file:/D:/SWP391/Code_fix/SWP391_Group6/SWP391/web/admin/profileAdmin.jsp</file>
+            <file>file:/D:/SWP391/Code_fix/SWP391_Group6/SWP391/web/detail.jsp</file>
+        </group>
         <group name="newGroup2">
             <file>file:/D:/CuongNew/SWP391/web/detail.jsp</file>
-            <file>file:/D:/CuongNew/SWP391/web/customer/home.jsp</file>
-            <file>file:/D:/CuongNew/SWP391/web/customer/order.jsp</file>
-            <file>file:/D:/CuongNew/SWP391/web/myfavorite.jsp</file>
+            <file>file:/D:/CuongNew/SWP391/src/java/controller/ActionCustomer.java</file>
             <file>file:/D:/CuongNew/SWP391/src/java/controller/ChangePasswordServerlet.java</file>
-            <file>file:/D:/CuongNew/SWP391/web/managecomment.jsp</file>
-            <file>file:/D:/CuongNew/SWP391/web/customer/cart.jsp</file>
-            <file>file:/D:/CuongNew/SWP391/src/java/controller/ActionShop.java</file>
+            <file>file:/D:/CuongNew/SWP391/src/java/controller/Login.java</file>
             <file>file:/D:/CuongNew/SWP391/src/java/controller/Profile.java</file>
-            <file>file:/D:/CuongNew/SWP391/web/customer/historyDetail.jsp</file>
+            <file>file:/D:/CuongNew/SWP391/web/customer/home.jsp</file>
+            <file>file:/D:/CuongNew/SWP391/web/WEB-INF/web.xml</file>
+            <file>file:/D:/CuongNew/SWP391/web/blog.jsp</file>
+            <file>file:/D:/CuongNew/SWP391/web/about.jsp</file>
+            <file>file:/D:/CuongNew/SWP391/web/home.jsp</file>
+            <file>file:/D:/CuongNew/SWP391/src/java/controller/Register.java</file>
+            <file>file:/D:/CuongNew/SWP391/web/contact.jsp</file>
+            <file>file:/D:/CuongNew/SWP391/web/customer/profile.jsp</file>
         </group>
     </open-files>
 </project-private>

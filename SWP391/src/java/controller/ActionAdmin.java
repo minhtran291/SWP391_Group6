@@ -5,6 +5,8 @@
 package controller;
 
 import dal.DistrictDAO;
+import dal.FoodDAO;
+import dal.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,6 +20,8 @@ import dal.UserDAO;
 import dal.WardDAO;
 import jakarta.servlet.http.HttpSession;
 import model.District;
+import model.Food;
+import model.Order;
 import model.Ward;
 
 /**
@@ -29,6 +33,8 @@ public class ActionAdmin extends HttpServlet {
     UserDAO ud = new UserDAO();
     DistrictDAO dd = new DistrictDAO();
     WardDAO wd = new WardDAO();
+    FoodDAO fd = new FoodDAO();
+    OrderDAO od = new OrderDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,8 +80,8 @@ public class ActionAdmin extends HttpServlet {
                 getAccount(request, response, 5);
                 request.getRequestDispatcher("admin/manageAccount.jsp").forward(request, response);
                 break;
-            case "deleteAcc":
-                deleteAccount(request, response, 5);
+            case "updatestatusAcc":
+                UpdateStatusAccount(request, response, 5);
                 break;
             case "searchByRole":
                 searchByRole(request, response, 5);
@@ -98,6 +104,12 @@ public class ActionAdmin extends HttpServlet {
                 break;
             case "unDeleteWard":
                 unDeleteWard(request, response, 5);
+                break;
+            case "profile":
+                getProfile(request, response);
+                break;
+            case "dashboard":
+                getDashBoard(request, response);
                 break;
         }
     }
@@ -227,7 +239,7 @@ public class ActionAdmin extends HttpServlet {
             try {
                 int roleidud = Integer.parseInt(roleid);
                 int empid = Integer.parseInt(id);
-                ud.UpdateAcc(name, pass, roleidud, empemail, empphone, empid);
+                ud.UpdateAcc(roleidud, empid);
 
                 ArrayList<User> listacc = ud.getAccount();
                 session.setAttribute("listacc", listacc);
@@ -237,13 +249,30 @@ public class ActionAdmin extends HttpServlet {
             }
         }
     }
+//    private void deleteAccount(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+//        HttpSession session = request.getSession();
+//        String id = request.getParameter("deleteId");
+//        try {
+//            int idemp = Integer.parseInt(id);
+//            ud.deleteEmp(idemp);
+//            ArrayList<User> listacc = ud.getAccount();
+//            session.setAttribute("listacc", listacc);
+//            getAccount(request, response, numberPerPage);
+//            request.getRequestDispatcher("admin/manageAccount.jsp").forward(request, response);
+//        } catch (Exception e) {
+//        }
+//    }
 
-    private void deleteAccount(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
+    private void UpdateStatusAccount(HttpServletRequest request, HttpServletResponse response, int numberPerPage) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String id = request.getParameter("deleteId");
+        String id = request.getParameter("Id");
+        String status = request.getParameter("status");
+
         try {
             int idemp = Integer.parseInt(id);
-            ud.deleteEmp(idemp);
+            int statusemp = Integer.parseInt(status);
+
+            ud.updateStatusAccount(idemp, statusemp);
             ArrayList<User> listacc = ud.getAccount();
             session.setAttribute("listacc", listacc);
             getAccount(request, response, numberPerPage);
@@ -441,5 +470,36 @@ public class ActionAdmin extends HttpServlet {
             wd.updateWard(wardName, wardId, districtId);
             getAllWard(request, response, numberPerPage);
         }
+    }
+
+    private void getProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+        session.setAttribute("acc", u);
+        request.getRequestDispatcher("admin/profileAdmin.jsp").forward(request, response);
+    }
+
+    private void getDashBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<Order> listOrderConfirm = od.getOrderConfirm();
+        ArrayList<Food> foodOutOfStock = fd.foodOutOfStock();
+        int numberOrder = od.getNumberOrder();
+        int numberFood = fd.getNumberFood();
+        int numberUser = ud.getNumberCustomer();
+        double profit = od.getTotalProfit();
+        String yearS = request.getParameter("year");
+        int year;
+        if (yearS == null) {
+            yearS = "2024";
+        } 
+        year = Integer.parseInt(yearS);
+        List<Double> listTotalPrice = od.getTotalByMonth(year);
+        request.setAttribute("foodOutOfStock", foodOutOfStock);
+        request.setAttribute("listTotalPrice", listTotalPrice);
+        request.setAttribute("numberOrder", numberOrder);
+        request.setAttribute("numberFood", numberFood);
+        request.setAttribute("numberUser", numberUser);
+        request.setAttribute("profit", profit);
+        request.setAttribute("listOrderConfirm", listOrderConfirm);
+        request.getRequestDispatcher("admin/dashboardAdmin.jsp").forward(request, response);
     }
 }

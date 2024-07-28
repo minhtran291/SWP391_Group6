@@ -19,10 +19,10 @@ import model.Image;
 public class ImageDAO extends DBContext {
 
     public Image getImgbyFoodId1(String foodIid) {
-        String sql = "select top(1) *\n"
-                + "from dbo.image\n"
-                + "where food_id = ?\n"
-                + "order by image_id asc";
+        String sql = "  select top (1) i.image_id, f.image, f.food_id\n"
+                + "  from food f\n"
+                + "  join image i on f.food_id = i.food_id\n"
+                + "  where i.food_id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, foodIid);
@@ -80,10 +80,11 @@ public class ImageDAO extends DBContext {
         }
         return null;
     }
-  public Image getImgbyImage(String image) {
-        String sql = "select top(1) image from dbo.image\n" +
-"                where food_id = ?\n" +
-"               order by image_id asc";
+
+    public Image getImgbyImage(String image) {
+        String sql = "select top(1) image from dbo.image\n"
+                + "                where food_id = ?\n"
+                + "               order by image_id asc";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, image);
@@ -95,6 +96,7 @@ public class ImageDAO extends DBContext {
         }
         return null;
     }
+
     public static void main(String[] args) throws ClassNotFoundException {
         try {
             String username = "sa";

@@ -15,7 +15,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/dd760d7b93.js" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- de su dung cho cai doan javascript de mo cai modal -->
-        
+
         <title>Quản lí sản phẩm</title>
         <style>
             .navbar-nav {
@@ -365,18 +365,19 @@
                                                        >
                                                 <b>Hình ảnh:</b>
                                                 <!--                                                <div class="custom-file-upload" id="fileUploadArea">-->
-                                                <label class="form-control mb-3" for="fileInputUpdate" id="fileLabel">Chọn hình ảnh mới</label>
+                                                <label class="form-control mb-3" for="fileInputUpdate${f.foodId}" id="fileLabel">Chọn hình ảnh mới</label>
                                                 <input type="file"
-                                                       class="form-control mb-3"
+                                                       class="form-control mb-3 fileInputUpdate"
                                                        name="image"
                                                        accept=".jpg, .jpeg, .png, .gif"
-                                                       id="fileInputUpdate"
+                                                       id="fileInputUpdate${f.foodId}"
+                                                       data-food-id="${f.foodId}"
                                                        style="display: none;"
                                                        >
                                                 <!--</div>-->
                                                 <input type="hidden" name="imageOld" value="${f.image}">
                                                 <div>
-                                                    <img id="imagePreviewUpdate" src="${f.image}" style="max-width: 100%; height: auto; max-height: 300px; object-fit: contain;" />
+                                                    <img id="imagePreviewUpdate${f.foodId}" src="${f.image}" style="max-width: 100%; height: auto; max-height: 300px; object-fit: contain;" />
                                                 </div>
                                                 <!--                                                <div>
                                                                                                     <img id="imagePreviewUpdate" src="" alt="" style="max-width: 100%; height: auto; max-height: 300px; object-fit: contain;" />
@@ -601,31 +602,26 @@
                 }
             });
 
-            document.getElementById('fileInputUpdate').addEventListener('change', function (event) {
-                const file = event.target.files[0];
-                if (file) {
-                    // Tạo URL tạm thời cho tệp hình ảnh
-                    const url = URL.createObjectURL(file);
+            document.querySelectorAll('.fileInputUpdate').forEach(input => {
+                input.addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    const foodId = event.target.dataset.foodId;
+                    const imgElement = document.getElementById('imagePreviewUpdate' + foodId);
 
-                    // Cập nhật thuộc tính src của thẻ img
-                    const imgElement = document.getElementById('imagePreviewUpdate');
-                    imgElement.src = url;
-
-                    // Hiển thị thẻ img và thiết lập thuộc tính alt
-                    imgElement.style.display = 'block';
-                    imgElement.alt = file.name;  // Cập nhật thuộc tính alt để chứa tên file
-
-                    // Giải phóng URL khi không còn sử dụng
-                    imgElement.onload = function () {
-                        URL.revokeObjectURL(url);
-                    };
-                } else {
-                    // Nếu không có file, ẩn hình ảnh
-                    const imgElement = document.getElementById('imagePreviewUpdate');
-                    imgElement.src = '';
-                    imgElement.alt = 'Image Preview';
-                    imgElement.style.display = 'none';  // Ẩn thẻ img nếu không có file
-                }
+                    if (file) {
+                        const url = URL.createObjectURL(file);
+                        imgElement.src = url;
+                        imgElement.style.display = 'block';
+                        imgElement.alt = file.name;
+                        imgElement.onload = function () {
+                            URL.revokeObjectURL(url);
+                        };
+                    } else {
+                        imgElement.src = '';
+                        imgElement.alt = 'Image Preview';
+                        imgElement.style.display = 'none';
+                    }
+                });
             });
         </script>
     </body>

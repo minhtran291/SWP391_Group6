@@ -115,6 +115,7 @@ public class DiscountServlet extends HttpServlet {
     private void listDiscounts(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ArrayList<Discount> discounts = discountDAO.getAllDiscounts();
+        discountDAO.removeExpiredDiscounts();
         pagingForDiscount(request, response, 6, discounts);
         request.setAttribute("discounts", discounts);
         request.getRequestDispatcher("shop/manageDiscount.jsp").forward(request, response);

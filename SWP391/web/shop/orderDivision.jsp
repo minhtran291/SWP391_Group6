@@ -112,86 +112,92 @@
 
             <h1 class="text-center m-3">Phân đơn hàng</h1>
 
-            <table class="table text-center">
-                <tr>
-                    <!--                    <th>Mã giao hàng</th>-->
-                    <th>Mã đơn hàng</th>
-                    <th>Người giao hàng</th>
-                    <th>Địa chỉ giao hàng</th>
-                    <!--                    <th>Ngày giao hàng</th>-->
-                    <!--                    <th>Thời gian giao hàng</th>-->
-                    <th>Chi tiết</th>
-                    <th>Tùy chọn</th>
-                </tr>
-                <c:forEach var="d" items="${deliveryOnCurrentPage}">
-                    <tr style="vertical-align: middle">
-<!--                        <td>${d.id}</td>-->
-                        <td>${d.orderID.id}</td>
-                        <c:if test="${d.userName == null}">
-                            <td>Chưa có</td>
-                        </c:if>
-                        <c:if test="${d.userName != null}">
-                            <td>${d.userName.username}</td>
-                        </c:if>
-                        <td>${d.deliveryLocation}</td>
-<!--                        <td><fmt:formatDate value="${d.deliveryDate}" pattern="dd-MM-yyyy"/></td>
-                        <td><fmt:formatDate value="${d.deliveryTime}" pattern="HH:mm"/></td>-->
-                        <td><a href="actionshop?action=od&orderId=${d.orderID.id}">Xem chi tiết</a></td>
-                        <td>
-                            <c:if test="${d.status == 2 || d.status == 3}">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#chooseEmployee${d.id}"
-                                        style="margin-left: 20px;">
-                                    Chọn người giao hàng
-                                </button>
-                                <div class="modal fade text-start" id="chooseEmployee${d.id}">
-                                    <div class="modal-dialog modal-dialog-scrollable">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Danh sách người giao hàng</h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="actionshop" method="post">
-                                                    <input type="hidden" name="action" value="chooseEmployee"/>
-                                                    <input type="hidden" name="orderId" value="${d.orderID.id}"/>
-                                                    <input type="hidden" name="deliveryID" value="${d.id}"/>
-                                                    <table class="table text-center">
-                                                        <tr>
-                                                            <td>Tên người giao hàng</td>
-                                                            <td>Số lượng đơn hàng</td>
-                                                            <td>Lựa chọn</td>
-                                                        </tr>
-                                                        <c:forEach var="e" items="${listEmployee}">
-                                                            <tr>
-                                                                <td>${e.username}</td>
-                                                                <td>${e.orderNumber}</td>
-                                                                <td><input type="radio" name="employee" value="${e.username}" 
-                                                                           style="cursor: pointer"
-                                                                           ${d.userName.username == e.username?'checked data-waschecked="true"':""}/></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </table>
+            <c:if test="${empty deliveryOnCurrentPage}">
+                <h4 class="text-center mt-5">${mess}</h4>
+            </c:if>
 
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-                                                        <button type="submit" class="btn btn-success" id="submitButton${d.id}">Chọn</button>
-                                                    </div>
-                                                </form>
+            <c:if test="${!empty deliveryOnCurrentPage}">
+                <table class="table text-center">
+                    <tr>
+                        <!--                    <th>Mã giao hàng</th>-->
+                        <th>Mã đơn hàng</th>
+                        <th>Người giao hàng</th>
+                        <th>Địa chỉ giao hàng</th>
+                        <!--                    <th>Ngày giao hàng</th>-->
+                        <!--                    <th>Thời gian giao hàng</th>-->
+                        <th>Chi tiết</th>
+                        <th>Tùy chọn</th>
+                    </tr>
+                    <c:forEach var="d" items="${deliveryOnCurrentPage}">
+                        <tr style="vertical-align: middle">
+    <!--                        <td>${d.id}</td>-->
+                            <td>${d.orderID.id}</td>
+                            <c:if test="${d.userName == null}">
+                                <td>Chưa có</td>
+                            </c:if>
+                            <c:if test="${d.userName != null}">
+                                <td>${d.userName.username}</td>
+                            </c:if>
+                            <td>${d.deliveryLocation}</td>
+    <!--                        <td><fmt:formatDate value="${d.deliveryDate}" pattern="dd-MM-yyyy"/></td>
+                            <td><fmt:formatDate value="${d.deliveryTime}" pattern="HH:mm"/></td>-->
+                            <td><a href="actionshop?action=od&orderId=${d.orderID.id}">Xem chi tiết</a></td>
+                            <td>
+                                <c:if test="${d.status == 2 || d.status == 3}">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#chooseEmployee${d.id}"
+                                            style="margin-left: 20px;">
+                                        Chọn người giao hàng
+                                    </button>
+                                    <div class="modal fade text-start" id="chooseEmployee${d.id}">
+                                        <div class="modal-dialog modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Danh sách người giao hàng</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="actionshop" method="post">
+                                                        <input type="hidden" name="action" value="chooseEmployee"/>
+                                                        <input type="hidden" name="orderId" value="${d.orderID.id}"/>
+                                                        <input type="hidden" name="deliveryID" value="${d.id}"/>
+                                                        <table class="table text-center">
+                                                            <tr>
+                                                                <td>Tên người giao hàng</td>
+                                                                <td>Số lượng đơn hàng</td>
+                                                                <td>Lựa chọn</td>
+                                                            </tr>
+                                                            <c:forEach var="e" items="${listEmployee}">
+                                                                <tr>
+                                                                    <td>${e.username}</td>
+                                                                    <td>${e.orderNumber}</td>
+                                                                    <td><input type="radio" name="employee" value="${e.username}" 
+                                                                               style="cursor: pointer"
+                                                                               ${d.userName.username == e.username?'checked data-waschecked="true"':""}/></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </table>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                                            <button type="submit" class="btn btn-success" id="submitButton${d.id}">Chọn</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${d.status == 4}">
-                                <span class="btn btn-success disabled">Đã giao</span>
-                            </c:if>
-                            <c:if test="${d.status == 5}">
-                                <span class="btn btn-danger disabled">Đã hủy</span>
-                            </c:if>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </table>
+                                </c:if>
+                                <c:if test="${d.status == 4}">
+                                    <span class="btn btn-success disabled">Đã giao</span>
+                                </c:if>
+                                <c:if test="${d.status == 5}">
+                                    <span class="btn btn-danger disabled">Đã hủy</span>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
 
         </div>
 
@@ -231,45 +237,45 @@
             </c:forEach>
         </ul>
 
-<!--        <ul class="pagination justify-content-center">
-            <c:if test="${totalPages > 1}">
-                 Trang đầu tiên 
+        <!--        <ul class="pagination justify-content-center">
+        <c:if test="${totalPages > 1}">
+             Trang đầu tiên 
+            <li class="page-item">
+                <a class="page-link ${1==n?'active':''}" 
+                   href="actionshop?action=orderDivision&&page=1">1</a>
+            </li>
+
+             Dấu ba chấm nếu cần 
+            <c:if test="${n > 3}">
                 <li class="page-item">
-                    <a class="page-link ${1==n?'active':''}" 
-                       href="actionshop?action=orderDivision&&page=1">1</a>
-                </li>
-
-                 Dấu ba chấm nếu cần 
-                <c:if test="${n > 3}">
-                    <li class="page-item">
-                        <span class="page-link">...</span>
-                    </li>
-                </c:if>
-
-                 Các trang gần trang hiện tại 
-                <c:forEach var="p" begin="${n-1}" end="${n+1}">
-                    <c:if test="${p > 1 && p < totalPages}">
-                        <li class="page-item">
-                            <a class="page-link ${p==n?'active':''}" 
-                               href="actionshop?action=orderDivision&&page=${p}">${p}</a>
-                        </li>
-                    </c:if>
-                </c:forEach>
-
-                 Dấu ba chấm nếu cần 
-                <c:if test="${n < totalPages - 2}">
-                    <li class="page-item">
-                        <span class="page-link">...</span>
-                    </li>
-                </c:if>
-
-                 Trang cuối cùng 
-                <li class="page-item">
-                    <a class="page-link ${totalPages==n?'active':''}" 
-                       href="actionshop?action=orderDivision&&page=${totalPages}">${totalPages}</a>
+                    <span class="page-link">...</span>
                 </li>
             </c:if>
-        </ul>-->
+
+             Các trang gần trang hiện tại 
+            <c:forEach var="p" begin="${n-1}" end="${n+1}">
+                <c:if test="${p > 1 && p < totalPages}">
+                    <li class="page-item">
+                        <a class="page-link ${p==n?'active':''}" 
+                           href="actionshop?action=orderDivision&&page=${p}">${p}</a>
+                    </li>
+                </c:if>
+            </c:forEach>
+
+             Dấu ba chấm nếu cần 
+            <c:if test="${n < totalPages - 2}">
+                <li class="page-item">
+                    <span class="page-link">...</span>
+                </li>
+            </c:if>
+
+             Trang cuối cùng 
+            <li class="page-item">
+                <a class="page-link ${totalPages==n?'active':''}" 
+                   href="actionshop?action=orderDivision&&page=${totalPages}">${totalPages}</a>
+            </li>
+        </c:if>
+    </ul>-->
 
 
         <!--        <footer>

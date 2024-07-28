@@ -98,11 +98,13 @@ public class Profile extends HttpServlet {
     private void getProfile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("acc");
-        session.setAttribute("acc", u);
+//        session.setAttribute("acc", u);
         if (u.getRoleid() == 1) {
             request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
         } else if (u.getRoleid() == 3) {
             request.getRequestDispatcher("/shipper/profileShipper.jsp").forward(request, response);
+        } else if(u.getRoleid() == 4){
+            request.getRequestDispatcher("/admin/profileAdmin.jsp").forward(request, response);
         }
 
     }
@@ -170,7 +172,9 @@ public class Profile extends HttpServlet {
                 request.getRequestDispatcher("/shop/profileShop.jsp").forward(request, response);
             } else if (u.getRoleid() == 3) {
                 request.getRequestDispatcher("/shipper/profileShipper.jsp").forward(request, response);
-            }
+            } else if (u.getRoleid() == 4) {
+                request.getRequestDispatcher("/admin/profileAdmin.jsp").forward(request, response);
+            } 
 //        request.getRequestDispatcher("/customer/profile.jsp").forward(request, response);
             // Redirect để cập nhật trang cá nhân
         } catch (Exception e) {

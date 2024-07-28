@@ -94,7 +94,8 @@ public class Register extends HttpServlet {
             ud.addUser(u);
             session.setAttribute("acc", u);
 //            request.getRequestDispatcher("actioncustomer?action=getListFood").forward(request, response);
-            response.sendRedirect("home");
+//            response.sendRedirect("home");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 

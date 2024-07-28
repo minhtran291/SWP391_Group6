@@ -106,6 +106,7 @@ public class DetailControl extends HttpServlet {
         request.setAttribute("sameF", sameF);
         request.setAttribute("listcmt", listcmt);
         request.setAttribute("detail", fd);
+        request.setAttribute("fId", fId);
         request.getRequestDispatcher("detail.jsp").forward(request, response);
     
      }

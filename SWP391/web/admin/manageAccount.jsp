@@ -75,8 +75,16 @@
                                 <i class="fa fa-user text-body"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-
-
+                                <li>
+                                    <a class="dropdown-item" href="actionadmin?action=profile">
+                                        Hồ sơ
+                                    </a>
+                                </li>
+                                <!--                                <li>
+                                                                    <a class="dropdown-item" href="actioncustomer?action=history">
+                                                                        Đơn hàng
+                                                                    </a>
+                                                                </li>-->
 
                                 <li>
                                     <a class="dropdown-item" href="logout">
@@ -98,16 +106,16 @@
 
         <div class="flex-grow-1">
 
-<!--            <div class="d-flex bg-light mb-5">
-                <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" style="font-size: 16px;">Trang chủ</a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>-->
+            <!--            <div class="d-flex bg-light mb-5">
+                            <div class="navbar navbar-expand-sm" style="padding-left: 100px; padding-right: 100px;">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" style="font-size: 16px;">Trang chủ</a>
+                                    </li>
+            
+                                </ul>
+                            </div>
+                        </div>-->
 
             <h1 class="text-center m-3">Quản lý tài khoản</h1>
             <div class="d-flex mb-3">
@@ -150,12 +158,13 @@
                                         <input type="password"
                                                class="form-control"
                                                name="password"
-                                               minlength="6" required 
-                                               id="passwordInput" 
+                                               minlength="8" required 
+                                               id="passwordInput"
+                                               pattern="(?=.*[a-zA-Z])(?=.*\d).{8,}" title="Mật khẩu phải có 8 ký tự, ít nhất 1 ký tự số."
                                                >
-                                        <h5 id="passwordError" style="color: red; display: none;">
-                                            Mật khẩu phải có ít nhất 6 ký tự.
-                                        </h5>
+                                        <!--                                        <h5 id="passwordError" style="color: red; display: none;">
+                                                                                    Mật khẩu phải có 8 ký tự, ít nhất 1 ký tự số.
+                                                                                </h5>-->
                                     </div>      
                                     <label>Giới tính:</label><br>
                                     <input name="gender" required type="radio" value="1" id="genderMale" />
@@ -181,24 +190,27 @@
                                                required=""
                                                name="email"
                                                id="emailInput"
+                                               pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" title="Hãy nhập đúng địa chỉ email hợp lệ ví dụ foody@gmail.com"
                                                >
-                                        <h5 id="emailError" style="color: red; display: none;">
-                                            Vui lòng nhập một địa chỉ email hợp lệ.
-                                        </h5>
+                                        <!--                                        <h5 id="emailError" style="color: red; display: none;">
+                                                                                    Vui lòng nhập một địa chỉ email hợp lệ.
+                                                                                </h5>-->
                                         <div><label class="text-danger" for="form3Examplea9">${requestScope.mess}</label></div>
                                         <h5 class="text-danger">${requestScope.errorEmail}</h5>
                                     </div>
 
                                     <div>
                                         <label class="form-label" for="phoneInput">Số điện thoại</label>
-                                        <input type="text"
+                                        <input type="tel"
                                                class="form-control"
                                                name="phone" required
                                                type="tel" id="phoneInput" 
+                                               pattern="[0-9]{10}"
+                                               title="Số điện thoại phải có 10 chữ số"
                                                >
-                                        <h5 id="phoneError" style="color: red; display: none;">
-                                            Số điện thoại phải có ít nhất 10 chữ số.
-                                        </h5>
+                                        <!--                                        <h5 id="phoneError" style="color: red; display: none;">
+                                                                                    Số điện thoại phải có ít nhất 10 chữ số.
+                                                                                </h5>-->
                                         <h5 class="text-danger">${requestScope.errorphone}</h5>
                                     </div>
 
@@ -240,23 +252,17 @@
                 <tr>
                     <th>ID </th>
                     <th>Tên đăng nhập </th>
-                    <th>Mật khẩu</th>
                     <th>Giới tính</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
                     <th>Vai trò</th>
+                    <th>Tùy chọn</th>
                 </tr>
                 <c:forEach var="f" items="${empOnCurrentPage}">
                     <tr style="vertical-align: middle">
                         <td>${f.userid}</td>
                         <td>${f.username}</td>             
-                        <c:forEach var="password" items="${f.password}" varStatus="status">
 
-                            <td>
-                                <span id="passwordField${status.index}" data-password="${password}">${fn:length(password) > 0 ? '******' : ''}</span>
-                            </td>
-
-                        </c:forEach>
                         <td>${f.gender == 1 ? "Nam" : "Nữ"}</td>
                         <td>${f.email}</td>
                         <td>${f.phone}</td>
@@ -265,10 +271,10 @@
                                     Quản lí cửa hàng
                                 </c:when>
                                 <c:when test="${f.roleid == 3}">
-                                    Nhân viên giao hàng
+                                    Người giao hàng
                                 </c:when>
                                 <c:when test="${f.roleid == 4}">
-                                    Quản trị hệ thống
+                                    Quản trị viên
                                 </c:when>
                                 <c:otherwise>
                                     Khách hàng
@@ -295,41 +301,23 @@
                                                            class="form-control"
                                                            readonly=""
                                                            value="${f.userid}"
-                                                           name="id"
+                                                           name="id" style="background-color: #d3d3d4"
                                                            >
                                                 </div>
 
 
                                                 <div>
                                                     <label class="form-label" for="usernameInput">Tên đăng nhập</label>
-                                                    <input type="text"
+                                                    <input type="text" 
                                                            class="form-control"
                                                            value="${f.username}"
-                                                           required
                                                            name="username"
-                                                           id="usernameInput">
-                                                    <h5 id="usernameError" style="color: red; display: none;">
-                                                        Tên đăng nhập không được để trống.
-                                                    </h5>
-                                                    <h5 class="text-danger">${requestScope.errorNameUpdate}</h5>
+                                                           id="usernameInput"
+                                                           readonly="" style="background-color: #d3d3d4">
+
+
                                                 </div>
-                                                <div>
-                                                    <label class="form-label" for="passwordInput">Mật khẩu</label>
-                                                    <input type="password"
-                                                           class="form-control"
-                                                           name="password"
-                                                           id="passwordInput"
-                                                           value="${f.password}"
-                                                           minlength="6"
-                                                           required
-                                                           pattern="^\S{6,}$"
-                                                           title="Mật khẩu phải có ít nhất 6 ký tự và không có dấu cách."
-                                                           oninvalid="this.setCustomValidity('Mật khẩu phải có ít nhất 6 ký tự và không có dấu cách.')"
-                                                           oninput="setCustomValidity('')">
-                                                    <h5 id="passwordError" style="color: red; display: none;">
-                                                        Mật khẩu phải có ít nhất 6 ký tự và không có dấu cách.
-                                                    </h5>
-                                                </div>   
+
 
 
                                                 <label>Vai trò:</label>
@@ -343,40 +331,27 @@
                                                     </select>
                                                 </div>
                                                 <div>
-                                                    <label class="form-label" for="emailInput">Email</label>
+                                                    <label class="form-label" >Email</label>
                                                     <input type="email"
-                                                           required
+
                                                            class="form-control"
                                                            value="${f.email}"
                                                            name="email"
                                                            id="email"
-                                                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
-                                                           oninvalid="this.setCustomValidity('Vui lòng nhập một địa chỉ email hợp lệ.')"
-                                                           oninput="setCustomValidity('')">
-                                                    <h5 id="emailError" style="color: red; display: none;">
-                                                        Vui lòng nhập một địa chỉ email hợp lệ.
-                                                    </h5>
-                                                    <div>
-                                                        <label class="text-danger" for="form3Examplea9">${requestScope.mess}</label>
-                                                    </div>
-                                                    <h5 class="text-danger">${requestScope.errorEmailUpdate}</h5>
+                                                           readonly="" style="background-color: #d3d3d4">
+
                                                 </div>
 
                                                 <div>
-                                                    <label class="form-label" for="phoneInput">Số điện thoại</label>
+                                                    <label class="form-label" >Số điện thoại</label>
                                                     <input type="tel"
                                                            class="form-control"
                                                            name="phone"
                                                            id="phone"
                                                            value="${f.phone}"
-                                                           pattern="\d{10}"
-                                                           required
-                                                           oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại hợp lệ.')"
-                                                           oninput="setCustomValidity('')">
-                                                    <h5 id="phoneError" style="color: red; display: none;">
-                                                        Số điện thoại phải có đúng 10 chữ số.
-                                                    </h5>
-                                                    <h5 class="text-danger">${requestScope.errorphoneUpdate}</h5>
+                                                           style="background-color: #d3d3d4"
+                                                           readonly="">
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
@@ -387,11 +362,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-lg" 
-                               href="actionadmin?action=deleteAcc&&deleteId=${f.userid}&&page=${n}"
-                               onclick="return confirm('Bạn có chắc chắn muốn xóa không tài khoản ${f.username} ?')">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </a>
+                            <!--                            <a class="btn btn-lg" 
+                                                           href="actionadmin?action=deleteAcc&&deleteId=${f.userid}&&page=${n}"
+                                                           onclick="return confirm('Bạn có chắc chắn muốn xóa không tài khoản ${f.username} ?')">
+                                                            <i class="fa-solid fa-unlock"></i>
+                                                        </a>-->
+
+                            <c:if test="${f.status==1}">
+                                <a class="fa-solid fa-unlock" style="color: black; font-size: 20px" href="actionadmin?action=updatestatusAcc&&Id=${f.userid}&&page=${n}&status=0"
+                                   onclick="return confirm('Bạn có chắc chắn muốn khóa không tài khoản ${f.username} ?')">
+
+                                </a>
+                            </c:if>
+                            <c:if test="${f.status==0}">
+                                <a class="fa-solid fa-lock" style="color: red; font-size: 20px" href="actionadmin?action=updatestatusAcc&&Id=${f.userid}&&page=${n}&status=1" 
+                                   onclick="return confirm('Bạn có chắc chắn muốn mở khóa không tài khoản ${f.username} ?')">
+
+                                </a>
+                            </c:if>
                         </td>
                     </c:forEach>
             </table>
@@ -405,9 +393,11 @@
             </div>
             <div class="offcanvas-body">
                 <p><a class="btn text-white btn-primary" 
+                      href="actionadmin?action=dashboard">Bảng điều khiển</a></p>
+                <p><a class="btn text-white btn-primary" 
                       href="actionadmin?action=manageAcc">Quản lí tài khoản</a></p>
-<!--                <p><a class="btn text-white btn-primary" 
-                      href="">Quản lí địa điểm giao nhận hàng</a></p>-->
+                <!--                <p><a class="btn text-white btn-primary" 
+                                      href="">Quản lí địa điểm giao nhận hàng</a></p>-->
                 <div class="dropdown">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
                         Quản lí địa điểm giao nhận hàng
@@ -418,10 +408,8 @@
                     </ul>
                 </div>
             </div>
-
-
-
         </div>
+                                    
         <ul class="pagination justify-content-center">
             <c:forEach var="p" begin="${1}" end="${totalPages}">
                 <li class="page-item">
@@ -441,35 +429,35 @@
 
 
 
-        <footer>
-            <div class="bg-dark p-3">
-                <div class="container text-white">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Liên hệ</h4>
-                            <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
-                            <p>Email: minh291@gmail.com</p>
-                            <p>Số điện thoại: 0123456789</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Liên kết</h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Trang chủ</a></li>
-                                <li><a href="#">Giới thiệu</a></li>
-                                <li><a href="#">Sản phẩm</a></li>
-                                <li><a href="#">Liên hệ</a></li>
-                            </ul>
+        <!--        <footer>
+                    <div class="bg-dark p-3">
+                        <div class="container text-white">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Liên hệ</h4>
+                                    <p>Địa chỉ: Thạch Hòa, Thạch Thất, Hà Nội</p>
+                                    <p>Email: minh291@gmail.com</p>
+                                    <p>Số điện thoại: 0123456789</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Liên kết</h4>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Trang chủ</a></li>
+                                        <li><a href="#">Giới thiệu</a></li>
+                                        <li><a href="#">Sản phẩm</a></li>
+                                        <li><a href="#">Liên hệ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </footer>
+                </footer>-->
 
 
         <script>
             var errorName = "${requestScope.errorName}";
-            var errorEmail = "${requestScope.errorPrice}";
-            var errorphone = "${requestScope.errorStock}";
+            var errorEmail = "${requestScope.errorEmail}";
+            var errorphone = "${requestScope.errorphone}";
             if (errorName.trim() !== "" || errorEmail.trim() !== "" || errorphone.trim() !== "") {
                 $(document).ready(function () {
                     $('#addAccount').modal('show');
@@ -485,65 +473,65 @@
             }
 
         </script>
-        <script>
-            document.getElementById('emailInput').addEventListener('input', function () {
-                var emailField = document.getElementById('emailInput');
-                var emailError = document.getElementById('emailError');
-
-                // Simple email regex for validation
-                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                if (!emailRegex.test(emailField.value)) {
-                    emailError.style.display = 'block';
-                } else {
-                    emailError.style.display = 'none';
-                }
-            });
-        </script>
-        <script>
-            document.getElementById('passwordInput').addEventListener('input', function () {
-                var passwordField = document.getElementById('passwordInput');
-                var passwordError = document.getElementById('passwordError');
-
-                // Minimum password length
-                var minLength = 6;
-
-                if (passwordField.value.length < minLength) {
-                    passwordError.style.display = 'block';
-                } else {
-                    passwordError.style.display = 'none';
-                }
-            });
-            document.getElementById('phoneInput').addEventListener('input', function () {
-                var phoneField = document.getElementById('phoneInput');
-                var phoneError = document.getElementById('phoneError');
-
-                // Remove all non-numeric characters from input
-                var phoneNumber = phoneField.value.replace(/\D/g, '');
-
-                // Minimum phone number length
-                var minLength = 10;
-
-                if (phoneNumber.length < minLength) {
-                    phoneError.style.display = 'block';
-                } else {
-                    phoneError.style.display = 'none';
-                }
-            });
-            document.getElementById('usernameInput').addEventListener('input', function () {
-                var usernameField = document.getElementById('usernameInput');
-                var usernameError = document.getElementById('usernameError');
-
-                // Check for spaces in the username
-                if (usernameField.value.includes(' ')) {
-                    usernameError.style.display = 'block';
-                } else {
-                    usernameError.style.display = 'none';
-                }
-            });
-
-
-
-        </script>
+        <!--        <script>
+                    document.getElementById('emailInput').addEventListener('input', function () {
+                        var emailField = document.getElementById('emailInput');
+                        var emailError = document.getElementById('emailError');
+        
+                        // Simple email regex for validation
+                        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        
+                        if (!emailRegex.test(emailField.value)) {
+                            emailError.style.display = 'block';
+                        } else {
+                            emailError.style.display = 'none';
+                        }
+                    });
+                </script>-->
+        <!--        <script>
+                    document.getElementById('passwordInput').addEventListener('input', function () {
+                        var passwordField = document.getElementById('passwordInput');
+                        var passwordError = document.getElementById('passwordError');
+        
+                        // Minimum password length
+        //                var minLength = 8;
+                        var passwordRegex = /(?=.*[a-zA-Z])(?=.*\d).{8,}/;
+                        if (!passwordRegex.test(passwordField.value)) {
+                            passwordError.style.display = 'block';
+                        } else {
+                            passwordError.style.display = 'none';
+                        }
+                    });
+                    document.getElementById('phoneInput').addEventListener('input', function () {
+                        var phoneField = document.getElementById('phoneInput');
+                        var phoneError = document.getElementById('phoneError');
+        
+                        // Remove all non-numeric characters from input
+                        var phoneNumber = phoneField.value.replace(/\D/g, '');
+        
+                        // Minimum phone number length
+                        var minLength = 10;
+        
+                        if (phoneNumber.length < minLength) {
+                            phoneError.style.display = 'block';
+                        } else {
+                            phoneError.style.display = 'none';
+                        }
+                    });
+                    document.getElementById('usernameInput').addEventListener('input', function () {
+                        var usernameField = document.getElementById('usernameInput');
+                        var usernameError = document.getElementById('usernameError');
+        
+                        // Check for spaces in the username
+                        if (usernameField.value.includes(' ')) {
+                            usernameError.style.display = 'block';
+                        } else {
+                            usernameError.style.display = 'none';
+                        }
+                    });
+        
+        
+        
+                </script>-->
     </body>
 </html>

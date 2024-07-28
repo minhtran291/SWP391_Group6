@@ -22,7 +22,7 @@ public class UserDAO extends DBContext {
     public User login(String username, String password) {
         String sql = "select * from users "
                 + "where [user_name] = ? "
-                + "and password = ? ";
+                + "and password = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, username);
@@ -35,7 +35,8 @@ public class UserDAO extends DBContext {
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7));
+                        rs.getInt(7),
+                        rs.getInt(9));
                 u.setAvatar(rs.getString("avatar"));
                 return u;
 
@@ -220,7 +221,16 @@ public class UserDAO extends DBContext {
 
     public ArrayList<User> getEmployee() {
         ArrayList<User> listemp = new ArrayList<>();
-        String sql = "select * from users where role_id = 3";
+        String sql = "SELECT TOP (1000) [user_id]\n"
+                + "      ,[user_name]\n"
+                + "      ,[password]\n"
+                + "      ,[gender]\n"
+                + "      ,[email]\n"
+                + "      ,[phone_number]\n"
+                + "      ,[role_id]\n"
+                + "      ,[status]\n"
+                + "  FROM [SWP391].[dbo].[users]\n"
+                + "  where role_id =3";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -231,7 +241,8 @@ public class UserDAO extends DBContext {
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7)));
+                        rs.getInt(7),
+                        rs.getInt(8)));
             }
         } catch (Exception e) {
         }
@@ -261,20 +272,16 @@ public class UserDAO extends DBContext {
 
     }
 
-    public void UpdateEmp(String username, String password, String email, String phone, int userid) {
+    public void UpdateEmp(int roleid, int userid) {
         String sql = "UPDATE [dbo].[users] "
-                + "   SET [user_name] = ?, "
-                + "      [password] = ?, "
-                + "      [email] = ?, "
-                + "      [phone_number] = ? "
+                + "   SET  [role_id] = ? "
                 + " WHERE [user_id] = ? ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.setString(3, email);
-            ps.setString(4, phone);
-            ps.setInt(5, userid);
+
+            ps.setInt(1, roleid);
+
+            ps.setInt(2, userid);
             ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -442,22 +449,16 @@ public class UserDAO extends DBContext {
         return user;
     }
 
-    public void UpdateAcc(String username, String password, int roleid, String email, String phone, int userid) {
+    public void UpdateAcc(int roleid, int userid) {
         String sql = "UPDATE [dbo].[users] "
-                + "   SET [user_name] = ?, "
-                + "      [password] = ?, "
-                + "      [role_id] = ?, "
-                + "      [email] = ?, "
-                + "      [phone_number] = ? "
+                + "   SET   [role_id] = ? "
                 + " WHERE [user_id] = ? ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.setInt(3, roleid);
-            ps.setString(4, email);
-            ps.setString(5, phone);
-            ps.setInt(6, userid);
+
+            ps.setInt(1, roleid);
+
+            ps.setInt(2, userid);
             ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -473,7 +474,9 @@ public class UserDAO extends DBContext {
                 + "      ,u.[phone_number]\n"
                 + "      ,u.[role_id]\n"
                 + "	  ,r.role_name\n"
-                + "  FROM [SWP391].[dbo].[users] u join dbo.roles r on u.role_id=r.role_id";
+                + "      ,u.[status]\n"
+                + "  FROM [SWP391].[dbo].[users] u join dbo.roles r on u.role_id=r.role_id\n"
+                + " where u.[role_id] <> 4";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -485,7 +488,8 @@ public class UserDAO extends DBContext {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7),
-                        rs.getString(8)));
+                        rs.getString(8),
+                        rs.getInt(9)));
             }
         } catch (Exception e) {
         }
@@ -516,11 +520,31 @@ public class UserDAO extends DBContext {
 
     }
 
+    public ArrayList<User> getRoleforShop() {
+        ArrayList<User> listrole = new ArrayList<>();
+        String sql = "SELECT TOP (1000) [role_id]\n"
+                + "      ,[role_name]\n"
+                + "  FROM [SWP391].[dbo].[roles]\n"
+                + "  where role_id =1 or role_id =3\n"
+                + "  order by role_id desc";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listrole.add(new User(rs.getInt("role_id"),
+                        rs.getString("role_name")));
+            }
+        } catch (Exception e) {
+        }
+        return listrole;
+    }
+
     public ArrayList<User> getAllRole() {
         ArrayList<User> listRole = new ArrayList<>();
         String sql = "SELECT TOP (1000) [role_id]\n"
                 + "      ,[role_name]\n"
-                + "  FROM [SWP391].[dbo].[roles]";
+                + "  FROM [SWP391].[dbo].[roles]\n"
+                + "  where role_id <> 4";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -543,6 +567,7 @@ public class UserDAO extends DBContext {
                 + "                 ,u.[phone_number]\n"
                 + "                  ,u.[role_id]\n"
                 + "             	  ,r.role_name\n"
+                + "             	 ,u.[status]\n"
                 + "               FROM [SWP391].[dbo].[users] u join dbo.roles r on u.role_id=r.role_id\n"
                 + "             where u.role_id =?";
         try {
@@ -558,7 +583,8 @@ public class UserDAO extends DBContext {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7),
-                        rs.getString(8)));
+                        rs.getString(8),
+                        rs.getInt(9)));
             }
         } catch (Exception e) {
         }
@@ -625,6 +651,34 @@ public class UserDAO extends DBContext {
         return false;
     }
 
+    public void updateStatusEmp(int userid, int status) {
+        String sql = "update dbo.users\n"
+                + " set [status] = ?\n"
+                + " where user_id= ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, status);
+            ps.setInt(2, userid);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
+
+    public void updateStatusAccount(int userid, int status) {
+        String sql = "update dbo.users\n"
+                + " set [status] = ?\n"
+                + " where user_id= ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, status);
+            ps.setInt(2, userid);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String[] args) throws ClassNotFoundException {
         try {
             String username = "sa";
@@ -633,12 +687,11 @@ public class UserDAO extends DBContext {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection connection = DriverManager.getConnection(url, username, password);
             UserDAO ud = new UserDAO();
-            ArrayList<User> list = ud.getEmployee();
-            for (User user : list) {
-                System.out.println(user);
-            }
+            User u = ud.login("hung", "123456");
+            System.out.println(u);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }

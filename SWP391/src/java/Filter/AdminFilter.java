@@ -24,7 +24,7 @@ import model.User;
  *
  * @author Dell
  */
-public class ShipperFilter implements Filter {
+public class AdminFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -33,12 +33,12 @@ public class ShipperFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public ShipperFilter() {
+    public AdminFilter() {
     } 
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
 	throws IOException, ServletException {
-	if (debug) log("ShipperFilter:DoBeforeProcessing");
+	if (debug) log("AdminFilter:DoBeforeProcessing");
 
 	// Write code here to process the request and/or response before
 	// the rest of the filter chain is invoked.
@@ -65,7 +65,7 @@ public class ShipperFilter implements Filter {
 
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
 	throws IOException, ServletException {
-	if (debug) log("ShipperFilter:DoAfterProcessing");
+	if (debug) log("AdminFilter:DoAfterProcessing");
 
 	// Write code here to process the request and/or response after
 	// the rest of the filter chain is invoked.
@@ -101,7 +101,7 @@ public class ShipperFilter implements Filter {
                          FilterChain chain)
 	throws IOException, ServletException {
 
-	if (debug) log("ShipperFilter:doFilter()");
+	if (debug) log("AdminFilter:doFilter()");
 
 	doBeforeProcessing(request, response);
         
@@ -111,10 +111,10 @@ public class ShipperFilter implements Filter {
         User u = (User) session.getAttribute("acc");
         if(u == null){
             res.sendRedirect(req.getContextPath() + "/login");
-        }else if(u.getRoleid() != 3){
+        }else if(u.getRoleid() != 4){
             res.sendRedirect(req.getContextPath() + "/404.jsp");
         } 
-        
+	
 	Throwable problem = null;
 	try {
 	    chain.doFilter(request, response);
@@ -167,7 +167,7 @@ public class ShipperFilter implements Filter {
 	this.filterConfig = filterConfig;
 	if (filterConfig != null) {
 	    if (debug) { 
-		log("ShipperFilter:Initializing filter");
+		log("AdminFilter:Initializing filter");
 	    }
 	}
     }
@@ -177,8 +177,8 @@ public class ShipperFilter implements Filter {
      */
     @Override
     public String toString() {
-	if (filterConfig == null) return ("ShipperFilter()");
-	StringBuffer sb = new StringBuffer("ShipperFilter(");
+	if (filterConfig == null) return ("AdminFilter()");
+	StringBuffer sb = new StringBuffer("AdminFilter(");
 	sb.append(filterConfig);
 	sb.append(")");
 	return (sb.toString());
